@@ -1,0 +1,18 @@
+<div class="dialog-content">
+  <div class="image-section">
+    <img [src]="data.image" alt="{{ data.name }}">
+  </div>
+  <div class="details-section">
+    <h1>{{ data.name }}</h1>
+    <!-- <mat-icon class="mat-18">close</mat-icon> -->
+    <p *ngIf="data.oldPrice" class="old-price">Rs {{ data.oldPrice }}</p>
+    <p class="price">Rs {{ data.price }}</p>
+    <p>Product details and description go here...</p>
+    <button mat-button (click)="addToCart(data)">Add to Cart</button>
+    <button mat-button>Add to Wishlist</button>
+    <div class="specifications">
+      <h3>Specifications</h3>
+      <p>Additional specifications go here...</p>
+    </div>
+  </div>
+</div>

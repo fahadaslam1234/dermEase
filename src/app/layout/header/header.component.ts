@@ -15,8 +15,15 @@ export class HeaderComponent implements OnInit {
 
   }
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+  toggleMenu(): void {
+    const menu = document.getElementById("dropdownMenu");
+    if (menu) {
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
+      } else {
+        menu.style.display = "block";
+      }
+    }
   }
 
   navigateTo(route: string) {

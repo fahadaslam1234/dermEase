@@ -1,0 +1,45 @@
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .image-section {
+    text-align: center;
+  }
+  
+  .image-section img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .details-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .price, .old-price {
+    font-size: 1.5em;
+  }
+  
+  .old-price {
+    text-decoration: line-through;
+    color: grey;
+  }
+  
+  .specifications {
+    margin-top: 16px;
+  }
+  
+  @media (min-width: 600px) {
+    .dialog-content {
+      flex-direction: row;
+    }
+  
+    .image-section, .details-section {
+      flex: 1;
+    }
+  }
+  

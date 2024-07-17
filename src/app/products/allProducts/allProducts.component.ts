@@ -1,21 +1,15 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { QuickViewProductComponent } from '../quickViewProduct/quickViewProduct.component';
+import { Component, OnInit } from '@angular/core';
+import { QuickViewProductComponent } from '../../layout/quickViewProduct/quickViewProduct.component';
 import { MatDialog } from '@angular/material/dialog';
+
+
+
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css']
+  selector: 'app-allProducts',
+  templateUrl: './allProducts.component.html',
+  styleUrls: ['./allProducts.component.css']
 })
-export class LayoutComponent implements AfterViewInit {
-  constructor(public dialog: MatDialog){
-
-  }
-
-  ngAfterViewInit(): void {}
-
-  ngOnInit(){
-  }
-
+export class AllProductsComponent implements OnInit {
   products = [
     {
       name: 'Bundle 5',
@@ -61,6 +55,11 @@ export class LayoutComponent implements AfterViewInit {
     }
   ];
 
+  constructor(private dialog: MatDialog) { }
+
+  ngOnInit() {
+  }
+  
   selectOptions(product: any) {
     // Handle select options
     console.log('Select Options:', product);
@@ -82,4 +81,5 @@ export class LayoutComponent implements AfterViewInit {
     // Handle add to cart
     console.log('Add to Cart:', product);
   }
+
 }

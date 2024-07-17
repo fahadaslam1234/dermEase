@@ -2,7 +2,7 @@
 .alert-banner {
     padding-inline: 365px;
     overflow: hidden;
-    background-color: #a93c3cde;
+    background-color: #f0e1f1;
     font-size: 18px;
     white-space: nowrap;
   }
@@ -13,7 +13,7 @@
     display: flex;
     justify-content: space-between;
     gap: 130px;
-    color: whitesmoke;
+    color: rgb(39, 39, 39);
   }
   
   @keyframes move-banner {
@@ -40,10 +40,11 @@
   }
   
   .footer {
-    background-color: #003300;
-    color: white;
+    background-color: #fff;
+    color: black;
     padding: 40px 0 10px 0;
     text-align: center;
+    border-top: 1px solid var(--primary-color);
   }
   
   .footer .container {
@@ -51,6 +52,7 @@
     justify-content: space-around;
     flex-wrap: wrap;
     padding: 0 20px;
+    border-bottom: 2px solid var(--primary-color);
   }
   
   .footer .footer-section {
@@ -65,12 +67,12 @@
   .footer .footer-section.logo .logo-text {
     font-family: 'Segoe Script', serif;
     font-size: 24px;
-    color: #fff;
+    color: #000;
     cursor: pointer;
   }
   
   .footer .footer-section.logo .logo-text span {
-    color: #7dbe41;
+    color: #b342cd;
   }
   
   .footer .footer-section p {
@@ -105,7 +107,6 @@
   .footer .footer-bottom {
     text-align: center;
     padding: 10px;
-    background-color: #002200;
   }
   
   .footer .footer-bottom span {
