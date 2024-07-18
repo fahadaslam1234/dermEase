@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { QuickViewProductComponent } from '../../layout/quickViewProduct/quickViewProduct.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { PageEvent } from '@angular/material/paginator';
+import { Product } from '../../models/productModel';
 
 
 @Component({
@@ -10,7 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./allProducts.component.css']
 })
 export class AllProductsComponent implements OnInit {
-  products = [
+  products: Product[] = [
     {
       name: 'Bundle 5',
       image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
@@ -47,6 +48,16 @@ export class AllProductsComponent implements OnInit {
       name: 'Glass Skin Night Cream',
       image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
       price: 2000
+    },
+    {
+      name: 'Glass Skin Moisturiser',
+      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      price: 1900
+    },
+    {
+      name: 'Glass Skin Moisturiser',
+      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      price: 1900
     },
     {
       name: 'Glass Skin Moisturiser',
@@ -55,17 +66,33 @@ export class AllProductsComponent implements OnInit {
     }
   ];
 
+  paginatedProducts: Product[] = [];
+  pageSize = 4;
+  pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
+  pageEvent!: PageEvent;
+
   constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.updatePaginatedProducts(0, this.pageSize);
   }
   
-  selectOptions(product: any) {
-    // Handle select options
+  updatePaginatedProducts(pageIndex: number, pageSize: number) {
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+    this.paginatedProducts = this.products.slice(startIndex, endIndex);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.pageEvent = event;
+    this.updatePaginatedProducts(event.pageIndex, event.pageSize);
+  }
+
+  selectOptions(product: Product) {
     console.log('Select Options:', product);
   }
 
-  quickView(product: any) {
+  quickView(product: Product) {
     const dialogRef = this.dialog.open(QuickViewProductComponent, {
       width: '80%',
       maxWidth: '800px',
@@ -77,9 +104,7 @@ export class AllProductsComponent implements OnInit {
     });
   }
 
-  addToCart(product: any) {
-    // Handle add to cart
+  addToCart(product: Product) {
     console.log('Add to Cart:', product);
   }
-
 }

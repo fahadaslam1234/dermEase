@@ -7,28 +7,26 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
   menuOpen = false;
 
   constructor(private router: Router) {}
-  ngOnInit(){
 
+  ngOnInit(): void {}
+
+  toggleMenu() {
+    const menu = document.getElementById('dropdownMenu') as HTMLElement; 
+    menu.classList.toggle('hidden');
   }
 
-  toggleMenu(): void {
-    const menu = document.getElementById("dropdownMenu");
-    if (menu) {
-      if (menu.style.display === "block") {
-        menu.style.display = "none";
-      } else {
-        menu.style.display = "block";
-      }
-    }
+  openNav() {
+    document.getElementById("mySidenav")!.style.width = "100%";
   }
 
-  navigateTo(route: string) {
+  closeNav() {
+    document.getElementById("mySidenav")!.style.width = "0";
+  }
+  navigateTo(route: string): void {
     this.router.navigate([route]);
     this.menuOpen = false;
   }
-
 }

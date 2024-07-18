@@ -1,8 +1,8 @@
 <section class="featured-products">
   <h2>Featured <span>Products</span></h2>
-  <p>Our skin care & hair care brand revolves around sustainability. As our products do not contain any harmful chemicals like parabens, phthalates and sulphates.</p>
+  <p>Our skin care & hair care brand revolves around sustainability. As our products do not contain any harmful chemicals like parabens, phthalates, and sulphates.</p>
   <div class="product-grid">
-    <div class="product-card" *ngFor="let product of products">
+    <div class="product-card" *ngFor="let product of paginatedProducts">
       <img [src]="product.image" [alt]="product.name">
       <h3>{{ product.name }}</h3>
       <div class="price">
@@ -15,4 +15,6 @@
       </div>
     </div>
   </div>
+  <mat-paginator [length]="products.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="handlePageEvent($event)">
+  </mat-paginator>
 </section>

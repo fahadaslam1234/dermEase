@@ -1,40 +1,17 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { QuickViewProductComponent } from '../quickViewProduct/quickViewProduct.component';
+import { Component, OnInit } from '@angular/core';
+import { QuickViewProductComponent } from '../../layout/quickViewProduct/quickViewProduct.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Product } from '../../models/productModel';
 import { PageEvent } from '@angular/material/paginator';
+import { Product } from '../../models/productModel';
+
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css']
+  selector: 'app-medicines',
+  templateUrl: './medicines.component.html',
+  styleUrls: ['./medicines.component.css']
 })
-export class LayoutComponent implements AfterViewInit {
-  ngAfterViewInit(): void {}
+export class MedicinesComponent implements OnInit {
 
-  paginatedProducts: Product[] = [];
-  pageSize = 4;
-  pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
-  pageEvent!: PageEvent;
-
-  constructor(private dialog: MatDialog) { }
-
-  ngOnInit() {
-    this.updatePaginatedProducts(0, this.pageSize);
-  }
-  
-  updatePaginatedProducts(pageIndex: number, pageSize: number) {
-    const startIndex = pageIndex * pageSize;
-    const endIndex = startIndex + pageSize;
-    this.paginatedProducts = this.products.slice(startIndex, endIndex);
-  }
-
-  handlePageEvent(event: PageEvent) {
-    this.pageEvent = event;
-    this.updatePaginatedProducts(event.pageIndex, event.pageSize);
-  }
-
-
-  products = [
+  products : Product[] = [
     {
       name: 'Bundle 5',
       image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
@@ -79,6 +56,29 @@ export class LayoutComponent implements AfterViewInit {
     }
   ];
 
+  paginatedProducts: Product[] = [];
+  pageSize = 4;
+  pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
+  pageEvent!: PageEvent;
+
+  constructor(private dialog: MatDialog) { }
+
+  ngOnInit() {
+    this.updatePaginatedProducts(0, this.pageSize);
+  }
+  
+  updatePaginatedProducts(pageIndex: number, pageSize: number) {
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+    this.paginatedProducts = this.products.slice(startIndex, endIndex);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.pageEvent = event;
+    this.updatePaginatedProducts(event.pageIndex, event.pageSize);
+  }
+
+  
   selectOptions(product: any) {
     // Handle select options
     console.log('Select Options:', product);
@@ -100,4 +100,5 @@ export class LayoutComponent implements AfterViewInit {
     // Handle add to cart
     console.log('Add to Cart:', product);
   }
+
 }

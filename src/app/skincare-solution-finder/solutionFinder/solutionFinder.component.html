@@ -1,0 +1,39 @@
+<div class="container">
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="firstFormGroup" label="Step 1">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Step 1</ng-template>
+        <h2>Let's start with your facial skincare.</h2>
+        <p>Please select and rank your top two concerns.</p>
+        <div class="concerns">
+          <mat-selection-list [(ngModel)]="selectedConcerns" class="concern-list">
+            <mat-list-option *ngFor="let concern of concerns" [value]="concern">
+              {{concern}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- Add other steps similarly -->
+    <mat-step label="Step 2">
+      <ng-template matStepLabel>Step 2</ng-template>
+      <!-- Content for Step 2 -->
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <!-- Add more steps as needed -->
+    <mat-step label="Finish">
+      <ng-template matStepLabel>Finish</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="onSubmit()">Submit</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

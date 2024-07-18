@@ -1,71 +1,75 @@
+/* General styles */
 .header {
   background: #fff;
-  border-bottom: 1px solid var(--primary-color);
 }
 
 .container {
+  max-width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   padding: 0 20px;
 }
 
 .logo {
-  a {
-    font-family: 'Segoe Script', serif;
-    font-size: 24px;
-    color: #000;
-    text-decoration: none;
-    span {
-      color: #7dbe41;
-    }
-  }
+  cursor: pointer;
 }
 
 .nav {
   ul {
     display: flex;
+    gap: 10px;
     list-style: none;
     margin: 0;
     padding: 0;
 
     li {
-      margin: 0 15px;
+      margin: 0 10px;
       position: relative;
+      text-transform: capitalize;
+      height: 60px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
 
-      &:hover{
-        border-bottom: 2px solid var(--primary-color);
+      &:hover {
+        transition: 0.3s ease-in-out;
+        border-bottom: 3px solid var(--primary-color);
       }
 
       span {
         text-decoration: none;
         color: #000;
+        font-family: 'inter';
 
         &:hover {
-          /* text-decoration: underline; */
-         
           cursor: pointer;
+          font-weight: 500;
         }
-
       }
 
       .dropdown-content {
         display: none;
         position: absolute;
         background-color: #f9f9f9;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 99999999999;
+        margin-top: 215px;
+        width: fit-content;
+        height: 150px;
+        margin-left: -20px;
 
         li {
-          a {
-            padding: 12px 16px;
-            display: block;
-          }
+          padding: 7px 5px;
+          display: block;
+          margin-top: 2px;
+          cursor: pointer;
         }
       }
 
       &:hover .dropdown-content {
         display: block;
+        transition: 0.7s ease-in-out;
       }
     }
   }
@@ -74,26 +78,27 @@
 .icons {
   display: flex;
   align-items: center;
+  cursor: pointer;
 
-  a {
+  span {
     margin: 0 10px;
     color: #000;
     text-decoration: none;
     position: relative;
+    cursor: pointer;
 
     .fa {
       font-size: 18px;
     }
 
-    span {
+    .badge {
       position: absolute;
-      top: -10px;
-      right: -10px;
-      background: #ff0000;
-      color: #fff;
-      border-radius: 50%;
+      top: -12px;
+      right: -22px;
+      color: #000;
+      border-radius: 16%;
       padding: 2px 6px;
-      font-size: 12px;
+      font-size: 14px;
     }
   }
 }
@@ -113,19 +118,72 @@
   position: absolute;
   top: 60px;
   right: 20px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   padding: 10px;
 }
 
-.dropdown-menu a {
+.dropdown-menu span {
   margin: 10px 0;
   color: #000;
   text-decoration: none;
 }
 
+/* Side navigation */
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a, .sidenav span {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #000;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover, .sidenav span:hover {
+  color: #818181;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.sidenav .icons span {
+  padding: 8px 8px 8px 32px;
+  font-size: 25px;
+  color: #000;
+}
+
+.sidenav .icons span .fa {
+  margin-right: 10px;
+}
+
 @media (max-width: 768px) {
-  .nav ul {
+  .container {
+    justify-content: space-between;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .icons {
     display: none;
   }
 
@@ -133,29 +191,14 @@
     display: block;
   }
 
-  .icons {
-    display: none;
-  }
-
   .dropdown-menu {
-    display: none;
+    width: 100%;
+    right: 0;
   }
 }
 
 @media (max-width: 480px) {
-  .nav ul {
-    li {
-      margin: 5px 0;
-
-      a {
-        font-size: 14px;
-      }
-    }
-  }
-
-  .icons a {
-    .fa {
-      font-size: 16px;
-    }
+  .icons span {
+    margin: 0 5px;
   }
 }

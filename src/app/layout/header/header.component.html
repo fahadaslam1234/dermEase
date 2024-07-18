@@ -1,44 +1,47 @@
 <header class="header">
   <div class="container">
     <div class="logo">
-      <img src="../../../assets/images/logooo2.png" alt="" width="100" height="80">
+      <img src="../../../assets/images/logooo2.png" alt="" width="80" height="60">
     </div>
 
     <nav class="nav">
       <ul>
-        <li><span routerLink="/">HOME</span></li>
-        <li><span routerLink="/about">ABOUT</span></li>
+        <li><span routerLink="/">Home</span></li>
         <li class="dropdown">
-          <span routerLink="/shop">SHOP</span>
-          <!-- <ul class="dropdown-content">
-            <li><a routerLink="/shop/category1">Category 1</a></li>
-            <li><a routerLink="/shop/category2">Category 2</a></li>
-          </ul> -->
+          <span routerLink="/shop/allprodcuts">Shop</span>
+          <ul class="dropdown-content">
+            <li routerLink="/shop/medicines"><span>Medicines</span></li>
+            <li routerLink="/shop/allprodcuts"><span>Skincare Essentials</span></li>
+          </ul>
         </li>
-        <li><span routerLink="/contact">CONTACT</span></li>
+        <li><span routerLink="/about">About</span></li>
+        <li><span routerLink="/contact">Contact</span></li>
+        <li><span routerLink="/solutionFinder">Skincare Solution Finder</span></li>
+        <li><span routerLink="/diseasePredictor">Skin Disease Predictor</span></li>
       </ul>
     </nav>
 
-
-
     <div class="icons">
-      <a routerLink="/search"><i class="fa fa-search"></i></a>
-      <a routerLink="/cart"><i class="fa fa-shopping-cart"></i> <span>0</span></a>
-      <a routerLink="/account">ACCOUNT</a>
-      <a routerLink="/track-order">TRACK ORDER</a>
+      <span routerLink="/search"><i class="fa fa-search"></i></span>
+      <span routerLink="/cart"><i class="fa fa-shopping-cart"></i> <span class="badge">2</span></span>
+      <span routerLink="/account">Account</span>
+      <span routerLink="/track-order">Track Order</span>
     </div>
 
     <!-- Hamburger menu button -->
-    <button class="hamburger" onclick="toggleMenu()">
+    <button class="hamburger" (click)="openNav()">
       <i class="fa fa-bars"></i>
     </button>
 
-    <!-- Dropdown menu for icons -->
-    <div class="dropdown-menu" id="dropdownMenu">
-      <a routerLink="/search"><i class="fa fa-search"></i> Search</a>
-      <a routerLink="/cart"><i class="fa fa-shopping-cart"></i> Cart <span>0</span></a>
-      <a routerLink="/account">Account</a>
-      <a routerLink="/track-order">Track Order</a>
+    <!-- Side navigation -->
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+      <span routerLink="/">Home</span>
+      <span routerLink="/shop/allprodcuts">Shop</span>
+      <span routerLink="/about">About</span>
+      <span routerLink="/contact">Contact</span>
+      <span routerLink="/solutionFinder">Skincare Solution Finder</span>
+      <span routerLink="/diseasePredictor">Skin Disease Predictor</span>
     </div>
   </div>
 </header>
