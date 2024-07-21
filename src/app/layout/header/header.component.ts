@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginSignupComponent } from '../loginSignup/loginSignup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +11,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   menuOpen = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
@@ -28,5 +30,15 @@ export class HeaderComponent implements OnInit {
   navigateTo(route: string): void {
     this.router.navigate([route]);
     this.menuOpen = false;
+  }
+  onLogin() {
+    const dialogRef = this.dialog.open(LoginSignupComponent, {
+      width: '80%',
+      maxWidth: '800px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

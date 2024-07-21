@@ -24,7 +24,7 @@ import { SkincareSolutionFinderModule } from './skincare-solution-finder/skincar
     FooterComponent
    ],
   imports: [
-    BrowserModule,
+    BrowserModule,BrowserAnimationsModule,
     AppRoutingModule,LayoutModule,
     ProductsModule, MatDialogModule,MatPaginatorModule,
     FormsModule,ReactiveFormsModule,MatButtonModule,MatListModule,

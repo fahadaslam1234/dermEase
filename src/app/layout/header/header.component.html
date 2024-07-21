@@ -10,8 +10,8 @@
         <li class="dropdown">
           <span routerLink="/shop/allprodcuts">Shop</span>
           <ul class="dropdown-content">
-            <li routerLink="/shop/medicines"><span>Medicines</span></li>
-            <li routerLink="/shop/allprodcuts"><span>Skincare Essentials</span></li>
+            <ol routerLink="/shop/medicines"><span>Medicines</span></ol>
+            <ol routerLink="/shop/allprodcuts"><span>Skincare Essentials</span></ol>
           </ul>
         </li>
         <li><span routerLink="/about">About</span></li>
@@ -24,7 +24,19 @@
     <div class="icons">
       <span routerLink="/search"><i class="fa fa-search"></i></span>
       <span routerLink="/cart"><i class="fa fa-shopping-cart"></i> <span class="badge">2</span></span>
-      <span routerLink="/account">Account</span>
+      <!-- <span routerLink="/account">Account</span> -->
+
+      <ul>
+        <li class="dropdown">
+          <span routerLink="/account">Account</span>
+          <ul class="dropdown-content">
+            <ol routerLink="/admin"><span>Admin Settings</span></ol>
+            <ol routerLink="/SignUp" (click)="onLogin()"><span>Login / Sign Up</span></ol>
+          </ul>
+        </li>
+      </ul>
+
+ 
       <span routerLink="/track-order">Track Order</span>
     </div>
 
@@ -35,7 +47,8 @@
 
     <!-- Side navigation -->
     <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+      <mat-icon href="javascript:void(0)" class="closebtn" (click)="closeNav()">close</mat-icon>
+
       <span routerLink="/">Home</span>
       <span routerLink="/shop/allprodcuts">Shop</span>
       <span routerLink="/about">About</span>
@@ -43,5 +56,7 @@
       <span routerLink="/solutionFinder">Skincare Solution Finder</span>
       <span routerLink="/diseasePredictor">Skin Disease Predictor</span>
     </div>
+
+
   </div>
 </header>

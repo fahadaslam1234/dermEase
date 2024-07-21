@@ -1,12 +1,18 @@
 /* General styles */
 .header {
   background: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .container {
   max-width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 0 20px;
 }
@@ -27,14 +33,14 @@
       margin: 0 10px;
       position: relative;
       text-transform: capitalize;
-      height: 60px;
+      height: 69px;
       font-size: 16px;
       display: flex;
       align-items: center;
 
       &:hover {
         transition: 0.3s ease-in-out;
-        border-bottom: 3px solid var(--primary-color);
+        border-bottom: 3px solid #121212;
       }
 
       span {
@@ -51,19 +57,27 @@
       .dropdown-content {
         display: none;
         position: absolute;
-        background-color: #f9f9f9;
+        background-color: #ecb6da;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 99999999999;
         margin-top: 215px;
-        width: fit-content;
+        width: 210px;
         height: 150px;
         margin-left: -20px;
+        border-radius: 10px;
 
-        li {
-          padding: 7px 5px;
+        ol {
+          padding: 10px 18px;
           display: block;
           margin-top: 2px;
           cursor: pointer;
+        }
+      
+        span{
+          color: #000;
+        }
+        span:hover{
+          border-bottom: 3px solid #121212;
         }
       }
 
@@ -134,7 +148,7 @@
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 9999999999999999;
   top: 0;
   left: 0;
   background-color: #fff;
@@ -143,37 +157,40 @@
   padding-top: 60px;
 }
 
-.sidenav a, .sidenav span {
+.sidenav span {
+
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 26px;
   color: #000;
   display: block;
   transition: 0.3s;
+  margin-bottom: 4px;
 }
 
-.sidenav a:hover, .sidenav span:hover {
-  color: #818181;
+.sidenav span:hover {
+  color: var(--primary-color);
+  transition: 0.3s ease-in-out;
+  border-bottom: 2px solid var(--primary-color);
 }
 
 .sidenav .closebtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
   position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+  top: 20px;
+  right: 26px;
+  font-size: 26px;
+  color: #543444;
 }
-
-.sidenav .icons span {
-  padding: 8px 8px 8px 32px;
-  font-size: 25px;
-  color: #000;
+.sidenav .closebtn:hover{
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 8%;
 }
-
-.sidenav .icons span .fa {
-  margin-right: 10px;
-}
-
 @media (max-width: 768px) {
   .container {
     justify-content: space-between;
@@ -183,8 +200,12 @@
     display: none;
   }
 
-  .icons {
-    display: none;
+  .icons span {
+    font-size: 12px;
+  }
+  .icons span fa{
+    font-size: 8px;
+
   }
 
   .hamburger {
@@ -200,5 +221,70 @@
 @media (max-width: 480px) {
   .icons span {
     margin: 0 5px;
+  }
+}
+ul {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin: 0 10px;
+    position: relative;
+    text-transform: capitalize;
+    height: 69px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      transition: 0.3s ease-in-out;
+      border-bottom: 3px solid #121212;
+    }
+
+    span {
+      text-decoration: none;
+      color: #000;
+      font-family: 'inter';
+
+      &:hover {
+        cursor: pointer;
+        font-weight: 500;
+      }
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #ecb6da;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 99999999999;
+      margin-top: 215px;
+      width: 210px;
+      height: 150px;
+      margin-left: -20px;
+      border-radius: 10px;
+
+      ol {
+        padding: 10px 18px;
+        display: block;
+        margin-top: 2px;
+        cursor: pointer;
+      }
+    
+      span{
+        color: #000;
+      }
+      span:hover{
+        border-bottom: 3px solid #121212;
+      }
+    }
+
+    &:hover .dropdown-content {
+      display: block;
+      transition: 0.7s ease-in-out;
+    }
   }
 }

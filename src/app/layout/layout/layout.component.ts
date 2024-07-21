@@ -3,6 +3,7 @@ import { QuickViewProductComponent } from '../quickViewProduct/quickViewProduct.
 import { MatDialog } from '@angular/material/dialog';
 import { Product } from '../../models/productModel';
 import { PageEvent } from '@angular/material/paginator';
+import { LoginSignupComponent } from '../loginSignup/loginSignup.component';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -100,4 +101,5 @@ export class LayoutComponent implements AfterViewInit {
     // Handle add to cart
     console.log('Add to Cart:', product);
   }
+
 }
