@@ -38,44 +38,44 @@ export class LayoutComponent implements AfterViewInit {
   products = [
     {
       name: 'Bundle 5',
-      image: '../../../assets/images/Product image.png',
+      image: '../../../assets/images/pi.png',
       oldPrice: 8100,
       price: 6500
     },
     {
       name: 'Brightening Serum',
-      image: '../../../assets/images/Product image.png',
+      image: '../../../assets/images/pi.png',
       price: 2350
     },
     {
       name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/Product image.png',
+      image: '../../../assets/images/pi.png',
       price: 2000
     },
     {
       name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/Product image.png',
+      image: '../../../assets/images/pi.png',
       price: 1900
     },
     {
       name: 'Bundle 5',
-      image: '../../../assets/images/Product image.png',
+      image: '../../../assets/images/pi.png',
       oldPrice: 8100,
       price: 6500
     },
     {
       name: 'Brightening Serum',
-      image: '../../../assets/images/Product image.png',
+      image: '../../../assets/images/pi.png',
       price: 2350
     },
     {
       name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/Product image.png',
+      image: '../../../assets/images/pi.png',
       price: 2000
     },
     {
       name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/Product image.png',
+      image: '../../../assets/images/pi.png',
       price: 1900
     }
   ];
