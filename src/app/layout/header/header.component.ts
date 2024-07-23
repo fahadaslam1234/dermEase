@@ -33,8 +33,9 @@ export class HeaderComponent implements OnInit {
   }
   onLogin() {
     const dialogRef = this.dialog.open(LoginSignupComponent, {
-      width: '80%',
-      maxWidth: '800px',
+      width: '90%',
+      maxWidth: '900px',
+     
     });
 
     dialogRef.afterClosed().subscribe(result => {

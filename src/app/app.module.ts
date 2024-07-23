@@ -17,6 +17,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { SkincareSolutionFinderModule } from './skincare-solution-finder/skincare-solution-finder.module';
+import { MatCard, MatCardModule } from '@angular/material/card';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [		
     AppComponent,
@@ -25,10 +28,11 @@ import { SkincareSolutionFinderModule } from './skincare-solution-finder/skincar
    ],
   imports: [
     BrowserModule,BrowserAnimationsModule,
-    AppRoutingModule,LayoutModule,
+    AppRoutingModule,LayoutModule,NgxSpinnerModule,
     ProductsModule, MatDialogModule,MatPaginatorModule,
     FormsModule,ReactiveFormsModule,MatButtonModule,MatListModule,
-    MatStepperModule, MatIconModule, BrowserAnimationsModule, SkincareSolutionFinderModule
+    MatStepperModule, MatIconModule, BrowserAnimationsModule, SkincareSolutionFinderModule,
+    MatCardModule,MatCard,HttpClientModule
   ],
   providers: [
     provideClientHydration(),

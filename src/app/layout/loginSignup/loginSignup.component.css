@@ -1,18 +1,17 @@
 .items-center{
   padding: 30px;
   font-family: 'inter' !important;
-  background: transparent;
-  /* background: linear-gradient(90deg, rgba(192,192,192,1) 0%, rgba(141,105,62,1) 43%, rgba(83,80,76,1) 100%); */
+  background-image: url('../../../assets/images/brownandwhite.png');
 }
 .bg-card{
-  background-color: rgb(251, 242, 242);
+  background-color: #fff;
 }
 .signIn{
-  background-color: var(--primary-color);
+  background-color: #b18e6f;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-
+  font-family: 'inter' !important;
 }

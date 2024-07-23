@@ -1,39 +1,133 @@
 <div class="container">
-  <mat-horizontal-stepper [linear]="true" #stepper>
-    <mat-step [stepControl]="firstFormGroup" label="Step 1">
-      <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Step 1</ng-template>
-        <h2>Let's start with your facial skincare.</h2>
-        <p>Please select and rank your top two concerns.</p>
-        <div class="concerns">
-          <mat-selection-list [(ngModel)]="selectedConcerns" class="concern-list">
-            <mat-list-option *ngFor="let concern of concerns" [value]="concern">
-              {{concern}}
-            </mat-list-option>
-          </mat-selection-list>
-        </div>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-        </div>
-      </form>
-    </mat-step>
-    <!-- Add other steps similarly -->
-    <mat-step label="Step 2">
-      <ng-template matStepLabel>Step 2</ng-template>
-      <!-- Content for Step 2 -->
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+  <div class="intro" *ngIf="isIntro">
+    <button mat-button class="intro-button" (click)="startStepper()">Let's Go!</button>
+  </div>
+  <div *ngIf="!isIntro && showStepper">
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step [stepControl]="firstFormGroup" label="Step 1">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Step 1</ng-template>
+          <h2>Let's start with your facial skincare.</h2>
+          <p>Please select your one top concern.</p>
+          <div class="cards">
+            <mat-card *ngFor="let concern of concerns"
+                      (click)="selectConcern(concern)"
+                      [class.selected]="selectedConcerns === concern">
+              <mat-card-content>
+                <p>{{concern}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div>
+            <button mat-button matStepperNext [disabled]="!selectedConcerns">Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup" label="Step 2">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Step 2</ng-template>
+          <h2>How does the skin on your face typically feel?</h2>
+          <p>Select one</p>
+          <div class="cards">
+            <mat-card *ngFor="let skinFeel of skinFeels"
+                      (click)="selectSkinFeel(skinFeel)"
+                      [class.selected]="selectedSkinFeel === skinFeel">
+              <mat-card-content>
+                <p>{{skinFeel}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="button-layout">
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext [disabled]="!selectedSkinFeel">Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="thirdFormGroup" label="Step 3">
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>Step 3</ng-template>
+          <h2>Where do you wear makeup regularly?</h2>
+          <p>Select one</p>
+          <div class="cards">
+            <mat-card *ngFor="let makeupArea of makeupAreas"
+                      (click)="selectMakeupArea(makeupArea)"
+                      [class.selected]="selectedMakeupArea === makeupArea">
+              <mat-card-content>
+                <p>{{makeupArea}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="button-layout">
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext [disabled]="!selectedMakeupArea">Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="fourthFormGroup" label="Step 4">
+        <form [formGroup]="fourthFormGroup">
+          <ng-template matStepLabel>Step 4</ng-template>
+          <h2>Let's talk sunscreen! How would you prefer to apply it?</h2>
+          <p>Select one</p>
+          <div class="cards">
+            <mat-card *ngFor="let sunscreenPreference of sunscreenPreferences"
+                      (click)="selectSunscreenPreference(sunscreenPreference)"
+                      [class.selected]="selectedSunscreenPreference === sunscreenPreference">
+              <mat-card-content>
+                <p>{{sunscreenPreference}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="button-layout">
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext [disabled]="!selectedSunscreenPreference">Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="fifthFormGroup" label="Step 5">
+        <form [formGroup]="fifthFormGroup">
+          <ng-template matStepLabel>Step 5</ng-template>
+          <h2>Now let's talk about your body, what is your main concern?</h2>
+          <p>Select one</p>
+          <div class="cards">
+            <mat-card *ngFor="let bodyConcern of bodyConcerns"
+                      (click)="selectBodyConcern(bodyConcern)"
+                      [class.selected]="selectedBodyConcern === bodyConcern">
+              <mat-card-content>
+                <p>{{bodyConcern}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="button-layout">
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="showResults()">Show Results</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+  <div *ngIf="recommendation" class="recommendation">
+    <h2>Recommended Product</h2>
+    <div class="product-card">
+      <img [src]="recommendation.product_image_url" alt="{{ recommendation.product_name }}">
+      <h3>{{ recommendation.product_name }}</h3>
+      <div class="price">
+        <span *ngIf="recommendation.old_price" class="old-price">Rs {{ recommendation.old_price }}</span>
+        <span>Rs &nbsp; {{ recommendation.product_price }}</span>
       </div>
-    </mat-step>
-    <!-- Add more steps as needed -->
-    <mat-step label="Finish">
-      <ng-template matStepLabel>Finish</ng-template>
-      <p>You are now done.</p>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="onSubmit()">Submit</button>
+      <div class="actions">
+        <span (click)="addToCart(recommendation)">Add to Cart</span>
+        <span (click)="quickView(recommendation)">Quickview</span>
       </div>
-    </mat-step>
-  </mat-horizontal-stepper>
+    </div>
+    <p>{{ recommendation.product_description }}</p>
+  </div>
+  <div class="stepper-instructions">
+    <h3>Looking for a skincare routine backed by dermatologists?</h3>
+    <h4>We’re here to help!</h4>
+    <p>This Solution Finder is offered for informational purposes only. The content is not intended to substitute for professional medical advice, diagnoses, or suggested 
+      treatments. Please consult your dermatologist or doctor if you have any skin issues or concerns.</p>
+    <p>By taking this quiz you agree to Our Terms of Use and acknowledge you read Our Privacy Policy.</p>
+  </div>
 </div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "rgb(202, 56, 185)" type = "ball-fussion" [fullScreen] = "true"></ngx-spinner>
