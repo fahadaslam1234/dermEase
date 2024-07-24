@@ -110,6 +110,7 @@
   background: var(--primary-color);
   border-radius: 8px;
   transition: 0.5s ease-in-out;
+  color: white;
 }
 
 /* Responsive Design */

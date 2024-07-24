@@ -31,15 +31,15 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([route]);
     this.menuOpen = false;
   }
-  onLogin() {
-    const dialogRef = this.dialog.open(LoginSignupComponent, {
-      width: '90%',
-      maxWidth: '900px',
+  // onLogin() {
+  //   const dialogRef = this.dialog.open(LoginSignupComponent, {
+  //     width: '90%',
+  //     maxWidth: '900px',
      
-    });
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
 }

@@ -34,20 +34,17 @@ export class SolutionFinderComponent implements OnInit {
     'Wrinkles and Fine Lines',
     'Active Acne Breakout',
     'Help Prevent New Acne',
-    'Dry Skin',
+    'Sun Damage',
     'Dark Spots',
     'Dark Circles & Puffiness Around Eyes',
     'Post-Acne Marks',
-    'General Skincare Routine'
+    'Enlarged Pores'
   ];
 
-  skinFeels: string[] = ['Dry', 'Oily', 'Combination', 'Normal/Balanced'];
-  makeupAreas: string[] = ['I don\'t wear makeup', 'Eye areas only', 'Everywhere (eyes/face)'];
-  sunscreenPreferences: string[] = ['Sunscreen applied separately', 'Sunscreen combined with my moisturizer'];
+  skinFeels: string[] = ['Dry', 'Oily', 'Combination'];
   bodyConcerns: string[] = [
     'Itchy Skin', 'Eczema', 'Psoriasis', 'Cracked, Chafed Skin',
-    'Diabetic Skin', 'Rough & Bumpy Skin', 'Dry Skin', 'Very Dry Skin',
-    'Body Acne*', 'General Bodycare', 'Prefer Not to Answer'
+    'Diabetic Skin', 'Rough & Bumpy Skin','Body Acne',
   ];
 
   constructor(private _formBuilder: FormBuilder,private service : RecommendationService, 
@@ -59,12 +56,6 @@ export class SolutionFinderComponent implements OnInit {
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
-    });
-    this.thirdFormGroup = this._formBuilder.group({
-      thirdCtrl: ['', Validators.required]
-    });
-    this.fourthFormGroup = this._formBuilder.group({
-      fourthCtrl: ['', Validators.required]
     });
     this.fifthFormGroup = this._formBuilder.group({
       fifthCtrl: ['', Validators.required]
@@ -84,16 +75,6 @@ export class SolutionFinderComponent implements OnInit {
   selectSkinFeel(skinFeel: string) {
     this.selectedSkinFeel = skinFeel;
     this.secondFormGroup.controls['secondCtrl'].setValue(this.selectedSkinFeel);
-  }
-
-  selectMakeupArea(makeupArea: string) {
-    this.selectedMakeupArea = makeupArea;
-    this.thirdFormGroup.controls['thirdCtrl'].setValue(this.selectedMakeupArea);
-  }
-
-  selectSunscreenPreference(sunscreenPreference: string) {
-    this.selectedSunscreenPreference = sunscreenPreference;
-    this.fourthFormGroup.controls['fourthCtrl'].setValue(this.selectedSunscreenPreference);
   }
 
   selectBodyConcern(bodyConcern: string) {
@@ -123,6 +104,7 @@ export class SolutionFinderComponent implements OnInit {
         console.error('Error fetching recommendation:', error);
       }
     );
+    this.spinner.hide();
   }
 
   quickView(product: Product) {

@@ -1,17 +1,23 @@
 .items-center{
-  padding: 30px;
+  padding: 100px;
   font-family: 'inter' !important;
-  background-image: url('../../../assets/images/brownandwhite.png');
+  background-image: url('../../../assets/images/Brown\ and\ White\ Modern\ Skincare\ Presentation\ \(2\).png');
+  opacity: 0.6;
 }
 .bg-card{
-  background-color: #fff;
+  background-color: #dabda5;
 }
 .signIn{
-  background-color: #b18e6f;
+  /* background-color: #b18e6f; */
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
   font-family: 'inter' !important;
+}
+.text-white{
+  background-color: var(--primary-color);
+  color: white;
+  width: 387px;
 }

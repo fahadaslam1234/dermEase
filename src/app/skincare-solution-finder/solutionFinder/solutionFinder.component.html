@@ -1,6 +1,6 @@
 <div class="container">
   <div class="intro" *ngIf="isIntro">
-    <button mat-button class="intro-button" (click)="startStepper()">Let's Go!</button>
+    <button class="intro-button" (click)="startStepper()">Let's Go!</button>
   </div>
   <div *ngIf="!isIntro && showStepper">
     <mat-horizontal-stepper [linear]="true" #stepper>
@@ -43,47 +43,7 @@
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="thirdFormGroup" label="Step 3">
-        <form [formGroup]="thirdFormGroup">
-          <ng-template matStepLabel>Step 3</ng-template>
-          <h2>Where do you wear makeup regularly?</h2>
-          <p>Select one</p>
-          <div class="cards">
-            <mat-card *ngFor="let makeupArea of makeupAreas"
-                      (click)="selectMakeupArea(makeupArea)"
-                      [class.selected]="selectedMakeupArea === makeupArea">
-              <mat-card-content>
-                <p>{{makeupArea}}</p>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="button-layout">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext [disabled]="!selectedMakeupArea">Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="fourthFormGroup" label="Step 4">
-        <form [formGroup]="fourthFormGroup">
-          <ng-template matStepLabel>Step 4</ng-template>
-          <h2>Let's talk sunscreen! How would you prefer to apply it?</h2>
-          <p>Select one</p>
-          <div class="cards">
-            <mat-card *ngFor="let sunscreenPreference of sunscreenPreferences"
-                      (click)="selectSunscreenPreference(sunscreenPreference)"
-                      [class.selected]="selectedSunscreenPreference === sunscreenPreference">
-              <mat-card-content>
-                <p>{{sunscreenPreference}}</p>
-              </mat-card-content>
-            </mat-card>
-          </div>
-          <div class="button-layout">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext [disabled]="!selectedSunscreenPreference">Next</button>
-          </div>
-        </form>
-      </mat-step>
-      <mat-step [stepControl]="fifthFormGroup" label="Step 5">
+      <mat-step [stepControl]="fifthFormGroup" label="Step 3">
         <form [formGroup]="fifthFormGroup">
           <ng-template matStepLabel>Step 5</ng-template>
           <h2>Now let's talk about your body, what is your main concern?</h2>
