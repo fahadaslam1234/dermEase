@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginSignupComponent } from '../loginSignup/loginSignup.component';
-import { MatDialog } from '@angular/material/dialog';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +8,16 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  cartCount: number = 0;
   menuOpen = false;
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(private router: Router, private cartService: CartService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cartService.getItems().subscribe(items => {
+      this.cartCount = items.length;
+    });
+  }
 
   toggleMenu() {
     const menu = document.getElementById('dropdownMenu') as HTMLElement; 

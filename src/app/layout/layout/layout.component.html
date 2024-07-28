@@ -22,3 +22,35 @@
     </div>
   </div>
 </section>
+
+<div class="cart-sidebar" [class.show]="cartVisible">
+  <div class="cart-header">
+    <div class="shopping-heading">
+     <div>SHOPPING BAG</div>  <span class="shop-count">{{ getCartCount() }}</span>
+    </div>
+    <mat-icon (click)="toggleCart()" class="close-icon">close</mat-icon>
+  </div>
+  <div *ngFor="let item of cartItems" class="cart-item">
+    <div class="item-info">
+      <img [src]="item.image" alt="product image">
+      <div>
+        <div>{{ item.name }}</div>
+        <div>Rs {{ item.price }}</div>
+        <div>
+          <mat-icon (click)="removeFromCart(item)">remove</mat-icon>
+           <span>{{ item.quantity }}</span> 
+          <mat-icon (click)="addToCart(item)">add</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="cart-footer">
+    <!-- <div>SUBTOTAL: Rs {{ getTotal() }}</div> -->
+    <button (click)="checkout()">View Cart </button>
+    <button (click)="checkout()">CHECKOUT →</button>
+  </div>
+</div>
+
+
+

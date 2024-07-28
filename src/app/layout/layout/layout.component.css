@@ -152,3 +152,137 @@
   letter-spacing: .009375em;
   margin: 0 0 8px !important;
 }
+
+
+
+.cart-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000; /* High z-index to be on top of other content */
+}
+
+.cart-sidebar.show {
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .cart-sidebar {
+    width: 100%; /* Full screen on mobile devices */
+  }
+}
+
+
+
+/* FOR CART CSS */
+
+.cart-sidebar {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Adjust according to your layout */
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 350px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000; /* High z-index to be on top of other content */
+}
+
+.cart-sidebar.show {
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .cart-sidebar {
+    width: 100%; /* Full screen on mobile devices */
+  }
+}
+
+
+.cart-header {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart-items {
+  overflow-y: auto; /* Makes it scrollable if items exceed the height */
+  height: calc(100% - 50px); /* Adjust 50px or whatever the height of the actions bar */
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+}
+
+.item-info img {
+  width: 55px;
+  height: 62px;
+  margin-right: 10px;
+}
+
+.item-total {
+  font-weight: bold;
+}
+
+.cart-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap : 20px;
+  text-align: right;
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.cart-footer button {
+  background-color: #FFC0CB; /* Example pink color */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.close-icon{
+  float: right;
+   display: flex;
+   padding: 5px;
+   justify-content: center;
+}
+.close-icon:hover{
+  cursor: pointer;
+  background-color: #eddcd9;
+  border-radius: 6px;
+}
+.mat-icon {
+    height: unset; 
+   width: unset; 
+}
+.shop-count{
+  font-size: 10px;
+  color: var(--primary-color);
+  margin-top: -4px;
+}
+.shopping-heading{
+  display: flex;
+}

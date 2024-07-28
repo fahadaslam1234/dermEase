@@ -1,65 +1,72 @@
 <header class="header">
   <div class="container">
+
+    <div>
+      <span routerLink="/search"><mat-icon>search</mat-icon></span>
+    </div>
     <div class="logo">
-      <img src="../../../assets/images/logo.png" routerLink="/" alt="" width="80" height="60">
+      <img src="../../../assets/images/logo.png" routerLink="/" alt="" width="100" height="90">
     </div>
 
-    <nav class="nav">
-      <ul>
-        <li><span routerLink="/">Home</span></li>
-        <li class="dropdown">
-          <span routerLink="/shop/allprodcuts">Shop</span>
-          <ul class="dropdown-content">
-            <ol routerLink="/shop/medicines"><span>Medicines</span></ol>
-            <ol routerLink="/shop/allprodcuts"><span>Skincare Essentials</span></ol>
-          </ul>
-        </li>
-        <li><span routerLink="/about">About</span></li>
-        <li><span routerLink="/contact">Contact</span></li>
-       <li><span routerLink="/diseasePredictor">Derm Connect</span></li> 
-        <li><span routerLink="/solutionFinder">Skincare Solution Finder</span></li>
-        <li><span routerLink="/diseasePredictor">Skin Disease Predictor</span></li>
-      </ul>
-    </nav>
 
-    <div class="icons">
-      <span routerLink="/search"><i class="fa fa-search"></i></span>
-      <span routerLink="/cart"><mat-icon>add_shopping_cart</mat-icon> <span class="badge">2</span></span>
-      <!-- <span routerLink="/account">Account</span> -->
 
+    <div class="icons"> 
+      <span routerLink="/cart"><mat-icon>add_shopping_cart</mat-icon> <span class="badge">{{ cartCount }}</span></span>
       <ul>
         <li class="dropdown">
-          <span routerLink="/account">Account</span>
+          <span routerLink="/account"><mat-icon>account_circle</mat-icon></span>
           <ul class="dropdown-content">
             <ol routerLink="/admin"><span>Admin Settings</span></ol>
             <ol routerLink="/login" ><span>Login / Sign Up</span></ol>
           </ul>
         </li>
       </ul>
-
- 
-      <span routerLink="/track-order">Track Order</span>
-    </div>
-
-    <!-- Hamburger menu button -->
-    <button class="hamburger" (click)="openNav()">
-      <i class="fa fa-bars"></i>
-    </button>
-
-    <!-- Side navigation -->
-    <div id="mySidenav" class="sidenav">
-      <mat-icon href="javascript:void(0)" class="closebtn" (click)="closeNav()">close</mat-icon>
-
-      <span routerLink="/">Home</span>
-      <span routerLink="/shop/allprodcuts">Shop</span>
-      <span routerLink="/about">About</span>
-      <span routerLink="/contact">Contact</span>
-      <span routerLink="/diseasePredictor">Derm Connect</span>
-      <span routerLink="/solutionFinder">Skincare Solution Finder</span>
-      <span routerLink="/diseasePredictor">Skin Disease Predictor</span>
+                      <mat-icon class="hamburger" (click)="openNav()">menu</mat-icon>
+                
+                    <!-- Side navigation -->
+                    <div id="mySidenav" class="sidenav">
+                      <mat-icon href="javascript:void(0)" class="closebtn" (click)="closeNav()">close</mat-icon>
+                
+                      <span routerLink="/">Home</span>
+                      <span routerLink="/shop/allprodcuts">Shop</span>
+                      <span routerLink="/about">About</span>
+                      <span routerLink="/contact">Contact</span>
+                      <span routerLink="/diseasePredictor">Derm Connect</span>
+                      <span routerLink="/solutionFinder">Skincare Solution Finder</span>
+                      <span routerLink="/diseasePredictor">Skin Disease Predictor</span>
+                    </div>
     </div>
 
 
   </div>
+
+  <nav class="nav">
+    <ul>
+      <li><span routerLink="/">Home</span></li>
+      <li class="dropdown">
+        <span routerLink="/shop/allprodcuts">Shop</span>
+        <ul class="dropdown-content">
+          <ol routerLink="/shop/medicines"><span>Medicines</span></ol>
+          <ol routerLink="/shop/allprodcuts"><span>Skincare Essentials</span></ol>
+        </ul>
+      </li>
+      <li><span routerLink="/about">About</span></li>
+      <li><span routerLink="/contact">Contact</span></li>
+     <li><span routerLink="/diseasePredictor">Derm Connect</span></li> 
+      <li><span routerLink="/solutionFinder">Skincare Solution Finder</span></li>
+      <li><span routerLink="/diseasePredictor">Skin Disease Predictor</span></li>
+    </ul>
+
+
+
+  </nav>
+
+  <div>
+
+
+  </div>
+
+
+
 </header>
 

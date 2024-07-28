@@ -49,7 +49,7 @@
           <h2>Now let's talk about your body, what is your main concern?</h2>
           <p>Select one</p>
           <div class="cards">
-            <mat-card *ngFor="let bodyConcern of bodyConcerns"
+            <mat-card *ngFor="let bodyConcern of ingredientPreferences"
                       (click)="selectBodyConcern(bodyConcern)"
                       [class.selected]="selectedBodyConcern === bodyConcern">
               <mat-card-content>

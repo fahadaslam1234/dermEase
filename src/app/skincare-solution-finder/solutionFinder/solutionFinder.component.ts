@@ -30,21 +30,27 @@ export class SolutionFinderComponent implements OnInit {
   recommendation: any;
 
   concerns: string[] = [
-    'Skin Texture/Dullness',
-    'Wrinkles and Fine Lines',
-    'Active Acne Breakout',
-    'Help Prevent New Acne',
-    'Sun Damage',
-    'Dark Spots',
-    'Dark Circles & Puffiness Around Eyes',
-    'Post-Acne Marks',
-    'Enlarged Pores'
+    "Skin Texture/Dullness",
+    "Wrinkles & Fine Lines",
+    "Active Acne Breakout",
+    "Dark Spots",
+    "Dark Circles & Puffiness Around Eyes",
+    "Cracked, Chafed Skin",
+    "Itchy Skin",
+    "Psoriasis",
+    "Sun Damage",
+    "Enlarged Pores",
+    "Rough & Bumpy Skin",
+    "Body Acne"
   ];
 
   skinFeels: string[] = ['Dry', 'Oily', 'Combination'];
-  bodyConcerns: string[] = [
-    'Itchy Skin', 'Eczema', 'Psoriasis', 'Cracked, Chafed Skin',
-    'Diabetic Skin', 'Rough & Bumpy Skin','Body Acne',
+  ingredientPreferences: string[] = [
+    "Natural",
+  "Organic",
+  "Hypoallergenic",
+  "Vegan",
+  "Fragrance Free"
   ];
 
   constructor(private _formBuilder: FormBuilder,private service : RecommendationService, 
