@@ -7,8 +7,13 @@ import { ProductsModule } from '../products/products.module';
 import { CarosuelComponent } from './carosuel/carosuel.component';
 import { LoginSignupComponent } from './loginSignup/loginSignup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+<<<<<<< HEAD
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { QuickViewProductComponent } from './quickViewProduct/quickViewProduct.component';
+=======
+import { AboutUsModule } from '../about-us/about-us.module';
+import { ContactUsModule } from '../contact-us/contact-us.module';
+>>>>>>> 8f845cd5f3ab129dfa4989e61e629270f1fc94e9
 
 
 @NgModule({
