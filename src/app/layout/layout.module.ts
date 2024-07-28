@@ -7,6 +7,8 @@ import { ProductsModule } from '../products/products.module';
 import { CarosuelComponent } from './carosuel/carosuel.component';
 import { LoginSignupComponent } from './loginSignup/loginSignup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AboutUsModule } from '../about-us/about-us.module';
+import { ContactUsModule } from '../contact-us/contact-us.module';
 
 
 @NgModule({
@@ -15,7 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    LayoutRoutingModule,
+    LayoutRoutingModule,AboutUsModule,ContactUsModule,
     ProductsModule,FormsModule,ReactiveFormsModule
   ]
 })

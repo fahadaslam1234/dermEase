@@ -1,6 +1,6 @@
 <div class="container">
   <div class="intro" *ngIf="isIntro">
-    <button class="intro-button" (click)="startStepper()">Let's Go!</button>
+    <button class="intro-button" (click)="startStepper()">LET'S GO!</button>
   </div>
   <div *ngIf="!isIntro && showStepper">
     <mat-horizontal-stepper [linear]="true" #stepper>
@@ -82,9 +82,9 @@
     <p>{{ recommendation.product_description }}</p>
   </div>
   <div class="stepper-instructions">
-    <h3>Looking for a skincare routine backed by dermatologists?</h3>
-    <h4>We’re here to help!</h4>
-    <p>This Solution Finder is offered for informational purposes only. The content is not intended to substitute for professional medical advice, diagnoses, or suggested 
+    <h3>Looking for a dermatologist-recommended skincare routine?</h3>
+    <h4>DermEase is here to help!</h4>
+    <p>This Solution Finder is provided for informational purposes only and is not intended to replace professional medical advice, diagnoses, or 
       treatments. Please consult your dermatologist or doctor if you have any skin issues or concerns.</p>
     <p>By taking this quiz you agree to Our Terms of Use and acknowledge you read Our Privacy Policy.</p>
   </div>
