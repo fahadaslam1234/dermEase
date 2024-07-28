@@ -9,6 +9,23 @@
     </div>
 
 
+    <nav class="nav">
+      <ul>
+        <li><span routerLink="/">Home</span></li>
+        <li class="dropdown">
+          <span routerLink="/shop/allprodcuts">Shop</span>
+          <ul class="dropdown-content">
+            <ol routerLink="/shop/medicines"><span>Medicines</span></ol>
+            <ol routerLink="/shop/allprodcuts"><span>Skincare Essentials</span></ol>
+          </ul>
+        </li>
+        <li><span routerLink="/about">About Us</span></li>
+        <li><span routerLink="/contact">Contact Us</span></li>
+       <li><span routerLink="/diseasePredictor">Derm Connect</span></li> 
+        <li><span routerLink="/solutionFinder">Skincare Solution Finder</span></li>
+        <li><span routerLink="/diseasePredictor">Skin Disease Predictor</span></li>
+      </ul>
+    </nav>
 
     <div class="icons"> 
       <span routerLink="/cart"><mat-icon>add_shopping_cart</mat-icon> <span class="badge">{{ cartCount }}</span></span>

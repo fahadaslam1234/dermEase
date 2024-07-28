@@ -14,54 +14,125 @@ export class AllProductsComponent implements OnInit {
   products: Product[] = [
     {
       name: 'Bundle 5',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P1.png',
       oldPrice: 8100,
       price: 6500
     },
     {
       name: 'Brightening Serum',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P2.png',
       price: 2350
     },
     {
       name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P3.png',
       price: 2000
     },
     {
       name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P4.png',
       price: 1900
     },
     {
       name: 'Bundle 5',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P5.png',
       oldPrice: 8100,
       price: 6500
     },
     {
       name: 'Brightening Serum',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P6.png',
       price: 2350
     },
     {
       name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P7.png',
       price: 2000
     },
     {
       name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P8.png',
       price: 1900
     },
     {
       name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P9.png',
+      price: 1900
+    },
+    {
+      name: 'Brightening Serum',
+      image: '../../../assets/images/P10.png',
+      price: 2350
+    },
+    {
+      name: 'Glass Skin Night Cream',
+      image: '../../../assets/images/P11.png',
+      price: 2000
+    },
+    {
+      name: 'Glass Skin Moisturiser',
+      image: '../../../assets/images/P12.png',
       price: 1900
     },
     {
       name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/Gluta-One-Night-Cream.jpg',
+      image: '../../../assets/images/P13.png',
+      price: 1900
+    },
+    {
+      name: 'Brightening Serum',
+      image: '../../../assets/images/P14.png',
+      price: 2350
+    },
+    {
+      name: 'Glass Skin Night Cream',
+      image: '../../../assets/images/P15.png',
+      price: 2000
+    },
+    {
+      name: 'Glass Skin Moisturiser',
+      image: '../../../assets/images/P16.png',
+      price: 1900
+    },
+    {
+      name: 'Glass Skin Moisturiser',
+      image: '../../../assets/images/P17.png',
+      price: 1900
+    },
+    {
+      name: 'Brightening Serum',
+      image: '../../../assets/images/P18.png',
+      price: 2350
+    },
+    {
+      name: 'Glass Skin Night Cream',
+      image: '../../../assets/images/P19.png',
+      price: 2000
+    },
+    {
+      name: 'Glass Skin Moisturiser',
+      image: '../../../assets/images/P20.png',
+      price: 1900
+    },
+    {
+      name: 'Glass Skin Moisturiser',
+      image: '../../../assets/images/P21.png',
+      price: 1900
+    },
+    {
+      name: 'Brightening Serum',
+      image: '../../../assets/images/P22.png',
+      price: 2350
+    },
+    {
+      name: 'Glass Skin Night Cream',
+      image: '../../../assets/images/P23.png',
+      price: 2000
+    },
+   
+    {
+      name: 'Glass Skin Moisturiser',
+      image: '../../../assets/images/P24.png',
       price: 1900
     }
   ];
