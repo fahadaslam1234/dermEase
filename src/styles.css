@@ -10,4 +10,11 @@ body { margin: 0;
     --primary-color: #cda079;
     --primary-color2: rgb(236, 236, 236);
 }
-
+button{
+    background: linear-gradient(to right,#8b5e3c, #cda079);
+}
+button:hover{
+    /* background: conic-gradient(#cda079, #8b5e3c, #ffffff, #cda079); */
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    transition: 0.5s ease-in-out;
+}
