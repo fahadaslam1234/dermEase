@@ -24,7 +24,7 @@ export class LayoutComponent implements AfterViewInit {
 
   ngOnInit() {
     this.updatePaginatedProducts(0, this.pageSize);
-    this.subscribeToCartUpdates();
+   
   }
   
   updatePaginatedProducts(pageIndex: number, pageSize: number) {
@@ -191,6 +191,8 @@ export class LayoutComponent implements AfterViewInit {
   addToCart(product: Product) {
     this.cartService.addToCart(product);
     this.cartVisible = true; // Show the cart sidebar when an item is added
+
+    this.subscribeToCartUpdates();
   }
 
   toggleCart() {
@@ -209,9 +211,8 @@ export class LayoutComponent implements AfterViewInit {
       this.cartVisible = false; // Hide cart sidebar if no items are left
     }
   }
-  // getTotal(): number {
-  //   return this.products.reduce((total, item) => total + (item.price * item.quantity), 0);
-  // }
 
-
+  getTotal(){
+    return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  }
 }

@@ -3,6 +3,7 @@ import { QuickViewProductComponent } from '../../layout/quickViewProduct/quickVi
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Product } from '../../models/productModel';
+import { CartService } from '../../services/cart.service';
 
 
 @Component({
@@ -136,13 +137,15 @@ export class AllProductsComponent implements OnInit {
       price: 1900
     }
   ];
-
+  
+  cartVisible = false;
+  cartItems: any[] = [];
   paginatedProducts: Product[] = [];
   pageSize = 4;
   pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
   pageEvent!: PageEvent;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private cartService: CartService) { }
 
   ngOnInit() {
     this.updatePaginatedProducts(0, this.pageSize);
@@ -159,11 +162,14 @@ export class AllProductsComponent implements OnInit {
     this.updatePaginatedProducts(event.pageIndex, event.pageSize);
   }
 
-  selectOptions(product: Product) {
-    console.log('Select Options:', product);
+  subscribeToCartUpdates() {
+    this.cartService.getItems().subscribe(items => {
+      this.cartItems = items;
+      this.cartVisible = items.length > 0; // Automatically show cart when items are added
+    });
   }
 
-  quickView(product: Product) {
+  quickView(product: any) {
     const dialogRef = this.dialog.open(QuickViewProductComponent, {
       width: '80%',
       maxWidth: '800px',
@@ -176,6 +182,30 @@ export class AllProductsComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    console.log('Add to Cart:', product);
+    this.cartService.addToCart(product);
+    this.cartVisible = true; // Show the cart sidebar when an item is added
+
+    this.subscribeToCartUpdates();
+  }
+
+  toggleCart() {
+    this.cartVisible = !this.cartVisible;
+  }
+
+  getCartCount(): number {
+    return this.cartService.getCartCount();
+  }
+  checkout(){
+
+  }
+  removeFromCart(product: Product) {
+    this.cartService.removeFromCart(product);
+    if (this.products.length === 0) {
+      this.cartVisible = false; // Hide cart sidebar if no items are left
+    }
+  }
+
+  getTotal(){
+    return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 }

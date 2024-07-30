@@ -11,18 +11,26 @@ import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { QuickViewProductComponent } from './quickViewProduct/quickViewProduct.component';
 import { AboutUsModule } from '../about-us/about-us.module';
 import { ContactUsModule } from '../contact-us/contact-us.module';
+import { ViewCartComponent } from './viewCart/viewCart.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 
 
 @NgModule({
   declarations: [
-    LayoutComponent,CarosuelComponent,LoginSignupComponent,QuickViewProductComponent
+    LayoutComponent,CarosuelComponent,LoginSignupComponent,QuickViewProductComponent,ViewCartComponent
   ],
   imports: [
     CommonModule,
     LayoutRoutingModule,
     ProductsModule,FormsModule,ReactiveFormsModule,
-    MatIconModule,MatIcon,AboutUsModule,ContactUsModule
+    MatIconModule,MatIcon,AboutUsModule,ContactUsModule,FlexLayoutModule,
+    MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule
   ]
 })
 export class LayoutModule { }

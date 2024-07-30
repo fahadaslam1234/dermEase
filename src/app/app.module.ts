@@ -20,6 +20,8 @@ import { SkincareSolutionFinderModule } from './skincare-solution-finder/skincar
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { FlexLayoutServerModule } from '@angular/flex-layout/server';
+import { ServerModule } from '@angular/platform-server';
 @NgModule({
   declarations: [		
     AppComponent,
@@ -32,7 +34,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ProductsModule, MatDialogModule,MatPaginatorModule,
     FormsModule,ReactiveFormsModule,MatButtonModule,MatListModule,
     MatStepperModule, MatIconModule, BrowserAnimationsModule, SkincareSolutionFinderModule,
-    MatCardModule,MatCard,HttpClientModule
+    MatCardModule,MatCard,HttpClientModule,FlexLayoutServerModule,ServerModule
   ],
   providers: [
     provideClientHydration(),

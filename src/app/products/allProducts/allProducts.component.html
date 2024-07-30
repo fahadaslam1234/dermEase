@@ -1,18 +1,14 @@
 
-<!-- <div>
-  <img src="../../../assets/images/DermeaseShop (1).png" alt="DermEase Shop" width="100%">
-</div> -->
 <div class="shop-banner">
-  <img src="../../../assets/images/DermeaseShop.png" alt="shop" height="400px">
-  <!-- <div class="shop-content">
-    
+  <div class="shop-content">
     <p>DermEase</p>
     <h1>SHOP</h1>
-  </div> -->
+  </div>
 </div>
 
 <section class="featured-products">
   <h2>Featured <span>Products</span></h2>
+  <hr>
   <p>Our skin care & hair care brand revolves around sustainability. As our products do not contain any harmful chemicals like parabens, phthalates, and sulphates.</p>
   <div class="product-grid">
     <div class="product-card" *ngFor="let product of paginatedProducts">
@@ -31,3 +27,42 @@
   <mat-paginator [length]="products.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="handlePageEvent($event)">
   </mat-paginator>
 </section>
+
+
+<div class="cart-sidebar" [class.show]="cartVisible">
+  <div class="cart-header">
+    <div class="shopping-heading">
+      <div>SHOPPING BAG</div>
+      <span class="shop-count">{{ getCartCount() }}</span>
+    </div>
+    <mat-icon (click)="toggleCart()" class="close-icon">close</mat-icon>
+  </div>
+  <div *ngFor="let item of cartItems" class="cart-item">
+    <div class="item-info">
+      <img [src]="item.image" alt="product image" />
+      <div>
+        <div class="itemName">{{ item.name }}</div>
+        <div class="quantityAdd">
+          <mat-icon (click)="removeFromCart(item)" class="removeIcon">remove</mat-icon>
+          <span>{{ item.quantity }}</span>
+          <mat-icon (click)="addToCart(item)" class="removeIcon">add</mat-icon>
+            &nbsp;
+          <div class="price">Rs {{ item.price }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="subtotal">
+     <span>SUBTOTAL:</span>
+     <span> Rs {{ getTotal() }}</span>
+    </div>
+    <hr class="center-diamond">
+    <div class="footer-button">
+      <button (click)="checkout()">View Cart</button>
+      <button (click)="checkout()">CHECKOUT →</button>
+    </div>
+
+  </div>
+</div>

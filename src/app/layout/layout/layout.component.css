@@ -178,7 +178,10 @@
   }
 }
 
-
+mat-icon{
+  cursor: pointer;
+  font-size: 24px;
+}
 
 /* FOR CART CSS */
 
@@ -246,21 +249,28 @@
 }
 
 .cart-footer {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap : 20px;
-  text-align: right;
+  text-align: left;
   margin-top: auto;
   margin-bottom: 20px;
 }
+.footer-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.subtotal{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-.cart-footer button {
-  background-color: #FFC0CB; /* Example pink color */
+.cart-footer button{
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+  color: white;
 }
 
 .close-icon{
@@ -285,4 +295,115 @@
 }
 .shopping-heading{
   display: flex;
+}
+.quantityAdd{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  /* border: 1px solid var(--primary-color); */
+  padding: 3px;
+}
+.itemName{
+  font-size: 18px;
+  font-weight: 500;
+
+}
+.price{
+  color: #5c2d17;
+  font-weight: 700;
+}
+.removeIcon{
+  font-size: 16px;
+
+}
+.removeIcon:hover{
+  cursor: pointer;
+  background-color: #eddcd9;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+
+/* FOR HR TAG */
+hr{
+  
+  border: 0;
+  height: 1px;
+  width: 80%;
+  position: relative;
+  margin: 30px auto;
+  
+  
+  &.center-ball{
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    
+    &:before{
+      content: "";
+      width: 80%;
+      height: 6px;
+      background: linear-gradient(to right, #cda079, #8b5e3c);
+      display: inline-block;
+      border: 2px solid linear-gradient(to right, #cda079, #8b5e3c);
+      border-radius:50%;
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      margin: 0 0 0 -3px;
+    }
+  }
+  
+  &.center-diamond{
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    
+    &:before{
+      content: "";
+      width: 80%;
+      height: 6px;
+      background: linear-gradient(to right, #cda079, #8b5e3c);
+      display: inline-block;
+      border: 2px solid \linear-gradient(to right, #cda079, #8b5e3c);;
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      margin: 0 0 0 -3px;
+      transform:rotate(45deg);
+      -ms-transform:rotate(45deg); /* IE 9 */
+      -webkit-transform:rotate(45deg); /* Opera, Chrome, and Safari */
+    }
+  }
+  
+  &.center-square{
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    
+    &:before{
+      content: "";
+      width: 80%;
+      height: 6px;
+      background: linear-gradient(to right, #cda079, #8b5e3c);
+      display: inline-block;
+      border: 2px solid linear-gradient(to right, #cda079, #8b5e3c);;
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      margin: 0 0 0 -3px;
+    }
+  }
+  
+  &.center-star{
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    
+    &:before{
+      content: "★";
+      color: linear-gradient(to right, #cda079, #8b5e3c);;
+      display: inline-block;
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      margin: 0 0 0 -3px;
+      font-size: 15px;
+      line-height: 0;
+      /* text-shadow: 0 0 3px lighten, 5%); */
+    }
+  }
 }

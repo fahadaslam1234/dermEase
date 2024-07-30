@@ -34,9 +34,6 @@
     width: calc(25% - 40px);
     box-sizing: border-box;
     text-align: center;
-    /* box-shadow: rgb(96 96 96 / 25%) 0px 2px 2px; */
-    /* border-bottom: 0.6px solid var(--primary-color);
-    border-top: 0.4px solid var(--primary-color); */
   }
   
   .product-card img {
@@ -122,9 +119,10 @@
     justify-content: center;
     align-items: center;
     height: 400px;
-    /* background: linear-gradient(135deg,#dabb9a,#86564e); */
-    background: url('../../../assets/images/DermeaseShop.png') no-repeat ;
+    background: linear-gradient(180deg,#dabb9a,#86564e);
+    /* background: url('../../../assets/images/DermeaseShop.png') no-repeat ; */
     background-size: cover;
+    background-position: center center;
     border-radius: 20px;
     margin: 20px;
     position: relative;
@@ -153,9 +151,8 @@
     left: 20px;
     width: 100px;
     height: 100px;
-    /* background: url('../../../assets/images/DermeaseShop.png') no-repeat center center; */
     background-size: cover;
-    opacity: 0.5;
+    opacity: 0.9;
   }
   
   @media (max-width: 768px) {
@@ -168,3 +165,228 @@
     }
   }
   
+
+/* FOR CART CSS */
+
+.cart-sidebar {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Adjust according to your layout */
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 350px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.1);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000; /* High z-index to be on top of other content */
+}
+
+.cart-sidebar.show {
+  transform: translateX(0);
+}
+
+@media (max-width: 768px) {
+  .cart-sidebar {
+    width: 100%; /* Full screen on mobile devices */
+  }
+}
+
+
+.cart-header {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart-items {
+  overflow-y: auto; /* Makes it scrollable if items exceed the height */
+  height: calc(100% - 50px); /* Adjust 50px or whatever the height of the actions bar */
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item-info img {
+  width: 55px;
+  height: 55px;
+  margin-right: 10px;
+}
+
+.item-total {
+  font-weight: bold;
+}
+
+.cart-footer {
+  text-align: left;
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+.footer-button{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.subtotal{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart-footer button{
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  color: white;
+}
+
+.close-icon{
+  float: right;
+   display: flex;
+   padding: 5px;
+   justify-content: center;
+}
+.close-icon:hover{
+  cursor: pointer;
+  background-color: #eddcd9;
+  border-radius: 6px;
+}
+.mat-icon {
+    height: unset; 
+   width: unset; 
+}
+.shop-count{
+  font-size: 10px;
+  color: var(--primary-color);
+  margin-top: -4px;
+}
+.shopping-heading{
+  display: flex;
+}
+.quantityAdd{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  /* border: 1px solid var(--primary-color); */
+  padding: 3px;
+}
+.itemName{
+  font-size: 18px;
+  font-weight: 500;
+
+}
+.price{
+  color: #5c2d17;
+  font-weight: 700;
+}
+.removeIcon{
+  font-size: 16px;
+
+}
+.removeIcon:hover{
+  cursor: pointer;
+  background-color: #eddcd9;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+/* FOR HR TAG */
+hr{
+  
+  border: 0;
+  height: 1px;
+  width: 80%;
+  position: relative;
+  margin: 30px auto;
+  
+  
+  &.center-ball{
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    
+    &:before{
+      content: "";
+      width: 80%;
+      height: 6px;
+      background: linear-gradient(to right, #cda079, #8b5e3c);
+      display: inline-block;
+      border: 2px solid linear-gradient(to right, #cda079, #8b5e3c);
+      border-radius:50%;
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      margin: 0 0 0 -3px;
+    }
+  }
+  
+  &.center-diamond{
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    
+    &:before{
+      content: "";
+      width: 80%;
+      height: 6px;
+      background: linear-gradient(to right, #cda079, #8b5e3c);
+      display: inline-block;
+      border: 2px solid \linear-gradient(to right, #cda079, #8b5e3c);;
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      margin: 0 0 0 -3px;
+      transform:rotate(45deg);
+      -ms-transform:rotate(45deg); /* IE 9 */
+      -webkit-transform:rotate(45deg); /* Opera, Chrome, and Safari */
+    }
+  }
+  
+  &.center-square{
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    
+    &:before{
+      content: "";
+      width: 80%;
+      height: 6px;
+      background: linear-gradient(to right, #cda079, #8b5e3c);
+      display: inline-block;
+      border: 2px solid linear-gradient(to right, #cda079, #8b5e3c);;
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      margin: 0 0 0 -3px;
+    }
+  }
+  
+  &.center-star{
+    background: linear-gradient(to right, #cda079, #8b5e3c);
+    
+    &:before{
+      content: "★";
+      color: linear-gradient(to right, #cda079, #8b5e3c);;
+      display: inline-block;
+      position: absolute;
+      top: 0px;
+      left: 50%;
+      margin: 0 0 0 -3px;
+      font-size: 15px;
+      line-height: 0;
+      /* text-shadow: 0 0 3px lighten, 5%); */
+    }
+  }
+}

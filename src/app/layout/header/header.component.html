@@ -1,41 +1,43 @@
 <header class="header">
   <div class="container">
-
     <div>
       <span routerLink="/search"><mat-icon>search</mat-icon></span>
     </div>
     <div class="logo">
-      <img src="../../../assets/images/logo.png" routerLink="/" alt="" width="100" height="90">
+      <img src="../../../assets/images/logo.png" routerLink="/" alt="" width="100" height="90" />
     </div>
 
-    <div class="icons"> 
-      <span routerLink="/cart"><mat-icon>add_shopping_cart</mat-icon> <span class="badge">{{ cartCount }}</span></span>
+    <div class="icons">
+      <span (click)="toggleCart()" (click)="subscribeToCartUpdates()"><mat-icon>add_shopping_cart</mat-icon>
+        <span class="badge">{{ cartCount }}</span></span>
       <ul>
         <li class="dropdown">
           <span routerLink="/account"><mat-icon>account_circle</mat-icon></span>
           <ul class="dropdown-content">
-            <ol routerLink="/admin"><span>Admin Settings</span></ol>
-            <ol routerLink="/login" ><span>Login / Sign Up</span></ol>
+            <ol routerLink="/admin">
+              <span>Admin Settings</span>
+            </ol>
+            <ol routerLink="/login">
+              <span>Login / Sign Up</span>
+            </ol>
           </ul>
         </li>
       </ul>
-                      <mat-icon class="hamburger" (click)="openNav()">menu</mat-icon>
-                
-                    <!-- Side navigation -->
-                    <div id="mySidenav" class="sidenav">
-                      <mat-icon href="javascript:void(0)" class="closebtn" (click)="closeNav()">close</mat-icon>
-                
-                      <span routerLink="/">Home</span>
-                      <span routerLink="/shop/allprodcuts">Shop</span>
-                      <span routerLink="/about">About</span>
-                      <span routerLink="/contact">Contact</span>
-                      <span routerLink="/diseasePredictor">Derm Connect</span>
-                      <span routerLink="/solutionFinder">Skincare Solution Finder</span>
-                      <span routerLink="/diseasePredictor">Skin Disease Predictor</span>
-                    </div>
+      <mat-icon class="hamburger" (click)="openNav()">menu</mat-icon>
+
+      <!-- Side navigation -->
+      <div id="mySidenav" class="sidenav">
+        <mat-icon href="javascript:void(0)" class="closebtn" (click)="closeNav()">close</mat-icon>
+
+        <span routerLink="/">Home</span>
+        <span routerLink="/shop/allprodcuts">Shop</span>
+        <span routerLink="/about">About</span>
+        <span routerLink="/contact">Contact</span>
+        <span routerLink="/diseasePredictor">Derm Connect</span>
+        <span routerLink="/solutionFinder">Skincare Solution Finder</span>
+        <span routerLink="/diseasePredictor">Skin Disease Predictor</span>
+      </div>
     </div>
-
-
   </div>
 
   <nav class="nav">
@@ -43,28 +45,54 @@
       <li><span routerLink="/">Home</span></li>
       <li class="dropdown">
         <span routerLink="/shop/allprodcuts">Shop</span>
-        <ul class="dropdown-content">
-          <ol routerLink="/shop/medicines"><span>Medicines</span></ol>
-          <ol routerLink="/shop/allprodcuts"><span>Skincare Essentials</span></ol>
-        </ul>
       </li>
       <li><span routerLink="/about">About</span></li>
       <li><span routerLink="/contact">Contact</span></li>
-     <li><span routerLink="/diseasePredictor">Derm Connect</span></li> 
-      <li><span routerLink="/solutionFinder">Skincare Solution Finder</span></li>
-      <li><span routerLink="/diseasePredictor">Skin Disease Predictor</span></li>
+      <li><span routerLink="/diseasePredictor">Derm Connect</span></li>
+      <li>
+        <span routerLink="/solutionFinder">Skincare Solution Finder</span>
+      </li>
+      <li>
+        <span routerLink="/diseasePredictor">Skin Disease Predictor</span>
+      </li>
     </ul>
-
-
-
   </nav>
-
-  <div>
-
-
-  </div>
-
-
-
 </header>
 
+<div class="cart-sidebar" [class.show]="cartVisible">
+  <div class="cart-header">
+    <div class="shopping-heading">
+      <div>SHOPPING BAG</div>
+      <span class="shop-count">{{ getCartCount() }}</span>
+    </div>
+    <mat-icon (click)="toggleCart()" class="close-icon">close</mat-icon>
+  </div>
+  <div *ngFor="let item of cartItems" class="cart-item">
+    <div class="item-info">
+      <img [src]="item.image" alt="product image" />
+      <div>
+        <div class="itemName">{{ item.name }}</div>
+        <div class="quantityAdd">
+          <mat-icon (click)="removeFromCart(item)" class="removeIcon">remove</mat-icon>
+          <span>{{ item.quantity }}</span>
+          <mat-icon (click)="addToCart(item)" class="removeIcon">add</mat-icon>
+            &nbsp;
+          <div class="price">Rs {{ item.price }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-footer">
+    <div class="subtotal">
+     <span>SUBTOTAL:</span>
+     <span> Rs {{ getTotal() }}</span>
+    </div>
+    <hr class="center-diamond">
+    <div class="footer-button">
+      <button (click)="onViewCart()">View Cart</button>
+      <button (click)="checkout()">CHECKOUT →</button>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,91 @@
+.shopping-cart-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .shopping-cart, .order-summary {
+    flex: 1;
+    margin: 10px;
+  }
+  
+  table {
+    width: 100%;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .shopping-cart-container {
+      flex-direction: column;
+    }
+  
+    .shopping-cart, .order-summary {
+      margin: 10px 0;
+    }
+  }
+  .product-image{
+    height: 55px;
+    width: 55px;
+  }
+  .quantityAdd{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    /* border: 1px solid var(--primary-color); */
+    padding: 3px;
+  }
+  .itemName{
+    font-size: 18px;
+    font-weight: 500;
+  
+  }
+  .price{
+    color: #5c2d17;
+    font-weight: 700;
+  }
+  .removeIcon{
+    font-size: 16px;
+  
+  }
+  .removeIcon:hover{
+    cursor: pointer;
+    background-color: #eddcd9;
+    border-radius: 6px;
+    padding: 2px;
+  }
+  
+  /* viewCart.component.css */
+.cart-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  mat-card {
+    margin: 10px;
+  }
+  
+  .order-summary .cart-totals {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .order-summary .totals-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+  
+  .coupon-field {
+    margin: 20px 0;
+  }
+  
+  @media (max-width: 768px) {
+    .cart-container {
+      flex-direction: column;
+    }
+  }
+  

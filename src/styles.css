@@ -18,3 +18,57 @@ button:hover{
     background: linear-gradient(to right, #cda079, #8b5e3c);
     transition: 0.5s ease-in-out;
 }
+
+/* Shopper Banner */
+
+.shop-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    background: linear-gradient(180deg,#dabb9a,#86564e);
+    /* background: url('../../../assets/images/DermeaseShop.png') no-repeat ; */
+    background-size: cover;
+    background-position: center center;
+    border-radius: 20px;
+    margin: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shop-content {
+    text-align: center;
+    color: #fff;
+  }
+  
+  .shop-content p {
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  .shop-content h1 {
+    font-size: 3rem;
+    margin: 10px 0 0;
+  }
+  
+  .shop-banner::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    opacity: 0.9;
+  }
+  
+  @media (max-width: 768px) {
+    .shop-banner {
+      height: 200px;
+    }
+  
+    .shop-content h1 {
+      font-size: 2rem;
+    }
+  }
+

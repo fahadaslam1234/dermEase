@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MedicinesComponent } from '../products/medicines/medicines.component';
 import { LoginSignupComponent } from './loginSignup/loginSignup.component';
+import { AllProductsComponent } from '../products/allProducts/allProducts.component';
+import { ViewCartComponent } from './viewCart/viewCart.component';
 
 const routes: Routes = [
   {
-    path:'shop/medicines',
-    component: MedicinesComponent
-  },
-  {
-    path:'shop/allessentials',
-    component: MedicinesComponent
+    path:'shop/products',
+    component: AllProductsComponent
   },
   {
     path:'login',
     component: LoginSignupComponent
+  },
+  {
+    path: 'viewCart',
+    component: ViewCartComponent
   }
 
 ];

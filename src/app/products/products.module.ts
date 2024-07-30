@@ -3,17 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { AllProductsComponent } from './allProducts/allProducts.component';
-import { MedicinesComponent } from './medicines/medicines.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
   declarations: [
-    AllProductsComponent,MedicinesComponent
+    AllProductsComponent,
   ],
   imports: [
     CommonModule,
-    ProductsRoutingModule,MatPaginatorModule
+    ProductsRoutingModule,MatPaginatorModule,
+    MatIconModule
   ]
 })
 export class ProductsModule { }

@@ -1,0 +1,66 @@
+
+<div class="shop-banner">
+  <div class="shop-content">
+    <p>DermEase</p>
+    <h1>CART</h1>
+  </div>
+</div>
+
+<div fxLayout="row" fxLayout.lt-md="column" class="shopping-cart-container">
+  <mat-card fxFlex="100%" fxFlex.gt-sm="30" class="shopping-cart">
+    <mat-card-title>Shopping Bag</mat-card-title>
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef> Product </th>
+          <td mat-cell *matCellDef="let element"> <img [src]=[element.image] alt="" class="product-image">
+            {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element"> {{element.price | currency:'Rs '}} </td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef> Quantity </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="quantityAdd">
+              <mat-icon (click)="removeFromCart(element)" class="removeIcon">remove</mat-icon>
+              <span>{{ element.quantity }}</span>
+              <mat-icon (click)="addToCart(element)" class="removeIcon">add</mat-icon>
+            </div>
+
+
+
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="subtotal">
+          <th mat-header-cell *matHeaderCellDef> Subtotal </th>
+          <td mat-cell *matCellDef="let element"> {{element.price * element.quantity | currency:'INR'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+  <mat-card fxFlex="100%" fxFlex.gt-sm="40" class="order-summary">
+    <mat-card-title>Cart Totals</mat-card-title>
+    <mat-card-content>
+      <div class="cart-totals">
+        <div class="totals-row">
+          <span>SUBTOTAL</span>
+          <span>{{ calculateSubtotal() | currency:'INR' }}</span>
+        </div>
+        <div class="totals-row">
+          <span>ESTIMATED DELIVERY</span>
+          <span>4 days</span>
+        </div>
+        <div class="totals-row">
+          <span>Total</span>
+          <span>{{ calculateTotal() | currency:'INR' }}</span>
+        </div>
+        <button mat-raised-button color="accent">Proceed to Checkout</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
