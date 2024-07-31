@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { QuickViewProductComponent } from '../../layout/quickViewProduct/quickViewProduct.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
-import { Product } from '../../models/productModel';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
-import { OverlayService } from '../../services/overlay.service';
-
+import { Product } from '../../models/productModel';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-allProducts',
-  templateUrl: './allProducts.component.html',
-  styleUrls: ['./allProducts.component.css']
+  selector: 'app-addToCart',
+  templateUrl: './addToCart.component.html',
+  styleUrls: ['./addToCart.component.css']
 })
-export class AllProductsComponent implements OnInit {
+export class AddToCartComponent implements OnInit {
+
   products: Product[] = [
     {
       name: 'Bundle 5',
@@ -144,13 +142,14 @@ export class AllProductsComponent implements OnInit {
   cartItems: any[] = [];
   paginatedProducts: Product[] = [];
   pageSize = 4;
-  pageSizeOptions: number[] = [1, 8, 12]; // Custom page size options
+  pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
   pageEvent!: PageEvent;
 
-  constructor(private dialog: MatDialog, private cartService: CartService, private router: Router,private overlayService : OverlayService) { }
+  constructor(private dialog: MatDialog, private cartService: CartService, private router: Router) { }
 
   ngOnInit() {
     this.updatePaginatedProducts(0, this.pageSize);
+    this.subscribeToCartUpdates();
   }
   
   updatePaginatedProducts(pageIndex: number, pageSize: number) {
@@ -171,24 +170,12 @@ export class AllProductsComponent implements OnInit {
     });
   }
 
-  quickView(product: any) {
-    const dialogRef = this.dialog.open(QuickViewProductComponent, {
-      width: '80%',
-      maxWidth: '800px',
-      data: product
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
     this.cartVisible = true; // Show the cart sidebar when an item is added
 
     this.subscribeToCartUpdates();
-    this.overlayService.openCart();
   }
 
   toggleCart() {
@@ -214,5 +201,8 @@ export class AllProductsComponent implements OnInit {
   }
   onViewCart(){
     this.router.navigate(['/viewCart']);
+    this.cartVisible = false;
   }
+
+
 }

@@ -1,29 +1,4 @@
-<!-- <app-carosuel></app-carosuel> -->
-
-<section>
-  <img src="../../../assets/images/Brown and White Modern Skincare Presentation (2).png" alt="" width="100%" >
-</section>
-
-<section class="featured-products">
-  <h2>Featured <span>Products</span></h2>
-  <p>Our skin care & hair care brand revolves around sustainability. As our products do not contain any harmful chemicals like parabens, phthalates and sulphates.</p>
-  <div class="product-grid">
-    <div class="product-card" *ngFor="let product of products">
-      <img [src]="product.image" [alt]="product.name">
-      <h3>{{ product.name }}</h3>
-      <div class="price">
-        <span *ngIf="product.oldPrice" class="old-price">Rs {{ product.oldPrice }}</span>
-        <span>Rs {{ product.price }}</span>
-      </div>
-      <div class="actions">
-        <span (click)="addToCart(product)" >Add to Cart</span>
-        <span (click)="quickView(product)">Quickview</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- <div class="cart-sidebar" [class.show]="cartVisible">
+<div class="cart-sidebar" [class.show]="cartVisible">
   <div class="cart-header">
     <div class="shopping-heading">
       <div>SHOPPING BAG</div>
@@ -59,6 +34,4 @@
     </div>
 
   </div>
-</div> -->
-
-
+</div>

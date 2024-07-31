@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Product } from '../../models/productModel';
 import { PageEvent } from '@angular/material/paginator';
 import { CartService } from '../../services/cart.service';
+import { Router } from '@angular/router';
+import { OverlayService } from '../../services/overlay.service';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
@@ -20,11 +22,10 @@ export class LayoutComponent implements AfterViewInit {
   pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
   pageEvent!: PageEvent;
 
-  constructor(private dialog: MatDialog,  private cartService: CartService) { }
+  constructor(private dialog: MatDialog,  private cartService: CartService, private router: Router, private overlayService: OverlayService) { }
 
   ngOnInit() {
     this.updatePaginatedProducts(0, this.pageSize);
-   
   }
   
   updatePaginatedProducts(pageIndex: number, pageSize: number) {
@@ -164,11 +165,6 @@ export class LayoutComponent implements AfterViewInit {
     }
   ];
 
-  selectOptions(product: any) {
-    // Handle select options
-    console.log('Select Options:', product);
-  }
-
   subscribeToCartUpdates() {
     this.cartService.getItems().subscribe(items => {
       this.cartItems = items;
@@ -193,6 +189,7 @@ export class LayoutComponent implements AfterViewInit {
     this.cartVisible = true; // Show the cart sidebar when an item is added
 
     this.subscribeToCartUpdates();
+    this.overlayService.openCart();
   }
 
   toggleCart() {
@@ -215,4 +212,6 @@ export class LayoutComponent implements AfterViewInit {
   getTotal(){
     return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
+
+
 }

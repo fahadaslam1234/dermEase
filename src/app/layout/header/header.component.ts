@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/productModel';
+import { OverlayService } from '../../services/overlay.service';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,7 @@ export class HeaderComponent implements OnInit {
   cartVisible = false;
   cartItems: any[] = [];
 
-  constructor(private router: Router, private cartService: CartService) {}
+  constructor(private router: Router, private cartService: CartService ,private overlayService: OverlayService) {}
 
   ngOnInit(): void {
     this.cartService.getItems().subscribe(items => {
@@ -46,10 +47,6 @@ export class HeaderComponent implements OnInit {
     this.cartVisible = !this.cartVisible;
   }
 
-  checkout(){
-
-  }
-
   addToCart(product : any){
     this.cartService.addToCart(product);
     this.cartVisible = true; // Show the cart sidebar when an item is added
@@ -78,6 +75,10 @@ export class HeaderComponent implements OnInit {
 
   onViewCart(){
     this.router.navigate(['viewCart']);
+  }
+
+  onCart(){
+    this.overlayService.openCart();
   }
   // 
 

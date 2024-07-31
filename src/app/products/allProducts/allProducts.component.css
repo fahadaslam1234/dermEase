@@ -151,7 +151,7 @@
     top: 20px;
     left: 20px;
     width: 100px;
-    height: 100px;
+    height: 400px;
     background-size: cover;
     opacity: 0.9;
   }
@@ -296,6 +296,7 @@
 }
 .price{
   color: #5c2d17;
+  font-weight: 700;
   font-weight: 700;
 }
 .removeIcon{
