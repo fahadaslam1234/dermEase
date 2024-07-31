@@ -8,7 +8,7 @@
     </div>
 
     <div class="icons">
-      <span (click)="toggleCart()" (click)="subscribeToCartUpdates()"><mat-icon>add_shopping_cart</mat-icon>
+      <span (click)="toggleCart()" (click)="onCart()"><mat-icon>add_shopping_cart</mat-icon>
         <span class="badge">{{ cartCount }}</span></span>
       <ul>
         <li class="dropdown">
@@ -59,7 +59,7 @@
   </nav>
 </header>
 
-<div class="cart-sidebar" [class.show]="cartVisible">
+<!-- <div class="cart-sidebar" [class.show]="cartVisible">
   <div class="cart-header">
     <div class="shopping-heading">
       <div>SHOPPING BAG</div>
@@ -95,4 +95,4 @@
     </div>
 
   </div>
-</div>
+</div> -->

@@ -1,8 +1,8 @@
 
 <div class="shop-banner">
-  <div class="shop-content">
-    <p>DermEase</p>
-    <h1>SHOP</h1>
+  <div class="shop-content text-center p-4">
+    <p class="text-2xl mb-2">DermEase</p>
+    <h1 class="text-4xl font-bold">SHOP</h1>
   </div>
 </div>
 
@@ -29,40 +29,3 @@
 </section>
 
 
-<div class="cart-sidebar" [class.show]="cartVisible">
-  <div class="cart-header">
-    <div class="shopping-heading">
-      <div>SHOPPING BAG</div>
-      <span class="shop-count">{{ getCartCount() }}</span>
-    </div>
-    <mat-icon (click)="toggleCart()" class="close-icon">close</mat-icon>
-  </div>
-  <div *ngFor="let item of cartItems" class="cart-item">
-    <div class="item-info">
-      <img [src]="item.image" alt="product image" />
-      <div>
-        <div class="itemName">{{ item.name }}</div>
-        <div class="quantityAdd">
-          <mat-icon (click)="removeFromCart(item)" class="removeIcon">remove</mat-icon>
-          <span>{{ item.quantity }}</span>
-          <mat-icon (click)="addToCart(item)" class="removeIcon">add</mat-icon>
-            &nbsp;
-          <div class="price">Rs {{ item.price }}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="cart-footer">
-    <div class="subtotal">
-     <span>SUBTOTAL:</span>
-     <span> Rs {{ getTotal() }}</span>
-    </div>
-    <hr class="center-diamond">
-    <div class="footer-button">
-      <button (click)="checkout()">View Cart</button>
-      <button (click)="checkout()">CHECKOUT →</button>
-    </div>
-
-  </div>
-</div>

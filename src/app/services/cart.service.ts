@@ -10,8 +10,13 @@ export class CartService {
   private itemsInCart: Product[] = [];
 
   constructor() {
-    this.itemsInCartSubject.subscribe(_ => this.itemsInCart = _);
+    this.loadCart();
+    this.itemsInCartSubject.subscribe(_ => {
+      this.itemsInCart = _;
+      this.saveCart();
+    });
   }
+
   public addToCart(item: Product) {
     let existingItem = this.itemsInCart.find(product => product.name === item.name);
     if (existingItem) {
@@ -45,5 +50,22 @@ export class CartService {
   public getCartCount(): number {
     // Sum up all quantities in the cart to get the total count
     return this.itemsInCart.reduce((total, item) => total + (item.quantity ?? 0), 0);
+  }
+
+  private saveCart(): void {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('cartItems', JSON.stringify(this.itemsInCart));
+    }
+  }
+
+  private loadCart(): void {
+    if (typeof localStorage !== 'undefined') {
+      const savedCart = localStorage.getItem('cartItems');
+      this.itemsInCart = savedCart ? JSON.parse(savedCart) : [];
+      this.itemsInCartSubject.next(this.itemsInCart);
+    } else {
+      this.itemsInCart = [];
+      this.itemsInCartSubject.next(this.itemsInCart);
+    }
   }
 }

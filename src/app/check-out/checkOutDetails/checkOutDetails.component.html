@@ -1,0 +1,106 @@
+
+<div class="shop-banner">
+  <div class="shop-content text-center p-4">
+    <p class="text-2xl mb-2">DermEase</p>
+    <h1 class="text-4xl font-bold">CHECKOUT</h1>
+  </div>
+</div>
+
+<div class="checkout-container">
+  <div class="left-section">
+    <mat-card class="billing-info">
+      <mat-card-title>Billing Info</mat-card-title>
+      <form>
+        <mat-form-field class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Enter name">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Email Address</mat-label>
+          <input matInput placeholder="Enter email">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Phone</mat-label>
+          <input matInput placeholder="Enter phone number">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Address</mat-label>
+          <input matInput placeholder="Enter full address">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Country</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let country of countries" [value]="country">
+              {{ country }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="row">
+          <mat-form-field class="half-width">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="Enter city">
+          </mat-form-field>
+
+          <mat-form-field class="half-width">
+            <mat-label>Zip / Postal code</mat-label>
+            <input matInput placeholder="Enter postal code">
+          </mat-form-field>
+        </div>
+      </form>
+    </mat-card>
+
+    <mat-card class="shipping-info mt-6">
+      <mat-card-title>Shipping Method</mat-card-title>
+      <mat-radio-group [(ngModel)]="selectedShippingMethod">
+        <mat-radio-button value="cod">Cash on Delivery (COD)</mat-radio-button>
+        <mat-radio-button value="easypaisa">Easypaisa</mat-radio-button>
+      </mat-radio-group>
+    </mat-card>
+
+  </div>
+  
+  <div class="right-section">
+    <mat-card class="order-summary">
+      <mat-card-title>Order Summary</mat-card-title>
+      <table>
+        <tr>
+          <th>Product</th>
+          <th>Total</th>
+        </tr>
+        <tr *ngFor="let product of products">
+          <td><img [src]="product.image" alt="{{product.name}}" width="50">{{ product.name }}</td>
+          <td>{{ calculateTotalOfItem(product) }}</td>
+        </tr>
+      </table>
+      <div class="summary-details">
+        <div class="summary-item">
+          <span>Sub Total:</span>
+          <span>{{ calculateSubtotal() | currency }}</span>
+        </div>
+        <div class="summary-item">
+          <span>Discount:</span>
+          <span>RS 1000</span>
+        </div>
+        <div class="summary-item">
+          <span>Shipping Charge:</span>
+          <span>RS 150</span>
+        </div>
+        <div class="summary-item">
+          <span>Estimated Tax:</span>
+          <span>RS 100</span>
+        </div>
+        <div class="summary-item total">
+          <span>Total:</span>
+          <span>{{ calculateTotal() | currency }}</span>
+        </div>
+      </div>
+
+      <button  class="w-full bg-pink-500 text-white py-3 mt-4 rounded-lg">PLACE ORDER</button>
+    </mat-card>
+  </div>
+</div>

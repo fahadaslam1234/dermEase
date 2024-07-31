@@ -1,66 +1,86 @@
-
 <div class="shop-banner">
-  <div class="shop-content">
-    <p>DermEase</p>
-    <h1>CART</h1>
+  <div class="shop-content text-center p-4">
+    <p class="text-2xl">DermEase</p>
+    <h1 class="text-4xl font-bold">CART</h1>
   </div>
 </div>
 
-<div fxLayout="row" fxLayout.lt-md="column" class="shopping-cart-container">
-  <mat-card fxFlex="100%" fxFlex.gt-sm="30" class="shopping-cart">
-    <mat-card-title>Shopping Bag</mat-card-title>
-    <mat-card-content>
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="product">
-          <th mat-header-cell *matHeaderCellDef> Product </th>
-          <td mat-cell *matCellDef="let element"> <img [src]=[element.image] alt="" class="product-image">
-            {{element.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="price">
-          <th mat-header-cell *matHeaderCellDef> Price </th>
-          <td mat-cell *matCellDef="let element"> {{element.price | currency:'Rs '}} </td>
-        </ng-container>
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef> Quantity </th>
-          <td mat-cell *matCellDef="let element">
-            <div class="quantityAdd">
-              <mat-icon (click)="removeFromCart(element)" class="removeIcon">remove</mat-icon>
-              <span>{{ element.quantity }}</span>
-              <mat-icon (click)="addToCart(element)" class="removeIcon">add</mat-icon>
-            </div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 mb-4 rounded">
+      <mat-card class="p-4">
+        <mat-card-title class="p-2">Shopping Bag</mat-card-title>
+        <div class="table-responsive">
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Product Column -->
+            <ng-container matColumnDef="product">
+              <th mat-header-cell *matHeaderCellDef class="product-column"> Product </th>
+              <td mat-cell *matCellDef="let element" class="product-column">
+                <div class="d-flex align-items-center">
+                  <img [src]="element.image" alt="" class="product-image mr-2">
+                  {{element.name}}
+                </div>
+              </td>
+            </ng-container>
 
+            <!-- Price Column -->
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef class="price-column"> Price </th>
+              <td mat-cell *matCellDef="let element" class="price-column"> {{element.price | currency:'Rs '}} </td>
+            </ng-container>
 
+            <!-- Quantity Column -->
+            <ng-container matColumnDef="quantity">
+              <th mat-header-cell *matHeaderCellDef class="quantity-column" style="text-align: center;"> Quantity </th>
+              <td mat-cell *matCellDef="let element" class="quantity-column">
+                <div class="d-flex align-items-center quantity-controls">
+                  <span (click)="removeFromCart(element)" class="quantity-btn">
+                    <mat-icon class="removeIcon">remove</mat-icon>
+                  </span>
+                  <span class="mx-2">{{ element.quantity }}</span>
+                  <span (click)="addToCart(element)" class="quantity-btn">
+                    <mat-icon class="removeIcon">add</mat-icon>
+                  </span>
+                </div>
+              </td>
+            </ng-container>
 
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="subtotal">
-          <th mat-header-cell *matHeaderCellDef> Subtotal </th>
-          <td mat-cell *matCellDef="let element"> {{element.price * element.quantity | currency:'INR'}} </td>
-        </ng-container>
+            <!-- Subtotal Column -->
+            <ng-container matColumnDef="subtotal">
+              <th mat-header-cell *matHeaderCellDef class="subtotal-column"> Subtotal </th>
+              <td mat-cell *matCellDef="let element" class="subtotal-column"> {{element.price * element.quantity | currency:'Rs'}} </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-  <mat-card fxFlex="100%" fxFlex.gt-sm="40" class="order-summary">
-    <mat-card-title>Cart Totals</mat-card-title>
-    <mat-card-content>
-      <div class="cart-totals">
-        <div class="totals-row">
-          <span>SUBTOTAL</span>
-          <span>{{ calculateSubtotal() | currency:'INR' }}</span>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
         </div>
-        <div class="totals-row">
+      </mat-card>
+    </div>
+
+    <div class="col-lg-4 bg-white shadow-md mb-8 rounded p-4">
+      <h2 class="text-xl font-bold mb-4">Cart Totals</h2>
+      <mat-card-content>
+        <div class="flex justify-between mb-2">
+          <span>SUBTOTAL</span>
+          <span>{{ calculateSubtotal() | currency:'Rs' }}</span>
+        </div>
+        <hr class="my-2">
+        <div class="flex justify-between mb-2">
           <span>ESTIMATED DELIVERY</span>
           <span>4 days</span>
         </div>
-        <div class="totals-row">
-          <span>Total</span>
-          <span>{{ calculateTotal() | currency:'INR' }}</span>
+        <hr class="my-2">
+        <div class="text-center mb-4">
+          <p>Taxes and Shipping are calculated at Checkout.</p>
         </div>
-        <button mat-raised-button color="accent">Proceed to Checkout</button>
-      </div>
-    </mat-card-content>
-  </mat-card>
+        <hr class="center-diamond">
+        <div class="flex justify-between mb-2">
+          <span>Total</span>
+          <span>{{ calculateTotal() | currency:'Rs' }}</span>
+        </div>
+        <button mat-raised-button color="primary" class="w-full bg-pink-500 text-white py-3 rounded-lg">PROCEED TO CHECKOUT</button>
+      </mat-card-content>
+    </div>
+  </div>
 </div>

@@ -62,6 +62,7 @@ nav{
         color: #000;
         font-family: "DM Sans", sans-serif;
         font-weight: 500;
+        text-transform: uppercase;
 
         &:hover {
           cursor: pointer;
@@ -265,6 +266,7 @@ ul {
       text-decoration: none;
       color: #000;
       font-family: "DM Sans", sans-serif;
+      /* font-family: var(--primary-ff); */
 
       &:hover {
         cursor: pointer;
@@ -305,6 +307,10 @@ ul {
     }
   }
 }
+
+
+
+
 mat-icon{
   cursor: pointer;
   font-size: 24px;

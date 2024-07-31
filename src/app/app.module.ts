@@ -22,6 +22,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { ServerModule } from '@angular/platform-server';
+import { CheckOutModule } from './check-out/check-out.module';
 @NgModule({
   declarations: [		
     AppComponent,

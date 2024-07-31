@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 import { ProductsModule } from '../products/products.module';
-import { CarosuelComponent } from './carosuel/carosuel.component';
 import { LoginSignupComponent } from './loginSignup/loginSignup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
@@ -18,19 +17,22 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { AddToCartComponent } from './addToCart/addToCart.component';
+import { CheckOutModule } from '../check-out/check-out.module';
 
 
 
 @NgModule({
   declarations: [
-    LayoutComponent,CarosuelComponent,LoginSignupComponent,QuickViewProductComponent,ViewCartComponent
+    LayoutComponent,AddToCartComponent,LoginSignupComponent,QuickViewProductComponent,ViewCartComponent
   ],
   imports: [
     CommonModule,
     LayoutRoutingModule,
     ProductsModule,FormsModule,ReactiveFormsModule,
     MatIconModule,MatIcon,AboutUsModule,ContactUsModule,FlexLayoutModule,
-    MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule
+    MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
+    CheckOutModule
   ]
 })
 export class LayoutModule { }
