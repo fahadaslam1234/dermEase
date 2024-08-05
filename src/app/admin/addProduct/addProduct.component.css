@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 16px;
+  }
+  
+  mat-card {
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .image-upload {
+    margin: 16px 0;
+  }
+  
+  .image-preview {
+    max-width: 100%;
+    max-height: 200px;
+    display: block;
+    margin-top: 16px;
+  }
+  
+  @media (max-width: 600px) {
+    mat-card {
+      padding: 16px;
+    }
+  }
+  

@@ -18,7 +18,8 @@ export class AppComponent implements OnInit {
       .subscribe(() => {
         window.scrollTo(0, 0);
       });
-  }
+     }
     }
+    
    
 }

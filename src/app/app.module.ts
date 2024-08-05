@@ -23,6 +23,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { FlexLayoutServerModule } from '@angular/flex-layout/server';
 import { ServerModule } from '@angular/platform-server';
 import { CheckOutModule } from './check-out/check-out.module';
+import { AdminModule } from './admin/admin.module';
 @NgModule({
   declarations: [		
     AppComponent,
@@ -35,7 +36,7 @@ import { CheckOutModule } from './check-out/check-out.module';
     ProductsModule, MatDialogModule,MatPaginatorModule,
     FormsModule,ReactiveFormsModule,MatButtonModule,MatListModule,
     MatStepperModule, MatIconModule, BrowserAnimationsModule, SkincareSolutionFinderModule,
-    MatCardModule,MatCard,HttpClientModule,FlexLayoutServerModule,ServerModule
+    MatCardModule,MatCard,HttpClientModule,FlexLayoutServerModule,ServerModule,AdminModule
   ],
   providers: [
     provideClientHydration(),

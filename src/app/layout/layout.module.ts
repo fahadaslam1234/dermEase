@@ -19,6 +19,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { AddToCartComponent } from './addToCart/addToCart.component';
 import { CheckOutModule } from '../check-out/check-out.module';
+import { MatInput, MatInputModule } from '@angular/material/input';
 
 
 
@@ -32,7 +33,7 @@ import { CheckOutModule } from '../check-out/check-out.module';
     ProductsModule,FormsModule,ReactiveFormsModule,
     MatIconModule,MatIcon,AboutUsModule,ContactUsModule,FlexLayoutModule,
     MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
-    CheckOutModule
+    CheckOutModule,MatInputModule,MatInput,ReactiveFormsModule
   ]
 })
 export class LayoutModule { }

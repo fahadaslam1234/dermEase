@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <h1>Admin Portal</h1>
+</mat-toolbar>
+
+<mat-sidenav-container autosize>
+  <mat-sidenav [ngClass]="!isCollapsed ? 'expanded' : ''" [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile">
+    <mat-nav-list>
+      <ng-container *ngFor="let item of navItems">
+        <ng-container >
+          <span mat-list-item *ngFor="let tile of item.tiles" (click)="loadComponent(tile)" [ngClass]="{ active: active === tile.title }">
+            <span class="entry">
+              <mat-icon>{{ tile.icon }}</mat-icon>
+              <span *ngIf="!isCollapsed">{{ tile.title }}</span>
+            </span>
+          </span>
+        </ng-container>
+      </ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <h2>Content</h2>
+    <div #componentContainer></div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,51 @@
+h1 {
+  padding: 0 1rem;
+}
+
+h2 {padding: 1rem;}
+
+mat-toolbar{
+  position:fixed;
+  top:70px;
+  z-index: 2;
+}
+
+mat-sidenav-container {
+  height:80vh;
+  width: 100%;
+}
+mat-sidenav-content{
+  height: 100%;
+}
+
+.expanded {
+  width: 200px;   
+}
+mat-sidenav{
+  height: 100%;
+}
+
+mat-sidenav {
+  @media screen and (min-width: 600px) {
+    /* padding-top: 4rem; */
+  }
+
+  .entry{
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding:0.75rem;
+      cursor: pointer;
+  }
+  .entry:hover{
+    background-color: var(--primary-color);
+    color: white;
+  }
+}
+
+mat-sidenav-content{
+  /* padding-top: 3.5rem; */
+  @media screen and (min-width: 600px) {
+      /* padding-top: 4rem; */
+  }
+}

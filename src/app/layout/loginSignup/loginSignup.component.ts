@@ -16,16 +16,12 @@ export class LoginSignupComponent implements OnInit {
 
   ngOnInit(): void {}
 
-    onSwitchMode() {
-      this.isLoginMode = !this.isLoginMode;
-    }
-  
-    onSubmit() {
-      if (this.isLoginMode) {
-        // Handle login logic
-      } else {
-        // Handle signup logic
-      }
-    }
+  onSwitchMode() {
+    this.isLoginMode = !this.isLoginMode;
+  }
+
+  onSubmit() {
+    // Add your login/signup logic here
+  }
 
 }
