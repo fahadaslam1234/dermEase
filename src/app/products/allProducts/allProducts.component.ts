@@ -144,7 +144,7 @@ export class AllProductsComponent implements OnInit {
   cartItems: any[] = [];
   paginatedProducts: Product[] = [];
   pageSize = 4;
-  pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
+  pageSizeOptions: number[] = [1, 8, 12]; // Custom page size options
   pageEvent!: PageEvent;
 
   constructor(private dialog: MatDialog, private cartService: CartService, private router: Router,private overlayService : OverlayService) { }
