@@ -20,12 +20,14 @@ import { MatTableModule } from '@angular/material/table';
 import { AddToCartComponent } from './addToCart/addToCart.component';
 import { CheckOutModule } from '../check-out/check-out.module';
 import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { FAQsComponent } from './FAQs/FAQs.component';
 
 
 
 @NgModule({
   declarations: [
-    LayoutComponent,AddToCartComponent,LoginSignupComponent,QuickViewProductComponent,ViewCartComponent
+    LayoutComponent,AddToCartComponent,LoginSignupComponent,QuickViewProductComponent,ViewCartComponent,FAQsComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,7 @@ import { MatInput, MatInputModule } from '@angular/material/input';
     ProductsModule,FormsModule,ReactiveFormsModule,
     MatIconModule,MatIcon,AboutUsModule,ContactUsModule,FlexLayoutModule,
     MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
-    CheckOutModule,MatInputModule,MatInput,ReactiveFormsModule
+    CheckOutModule,MatInputModule,MatInput,ReactiveFormsModule,MatIconModule,MatExpansionModule
   ]
 })
 export class LayoutModule { }
