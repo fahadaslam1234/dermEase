@@ -1,17 +1,16 @@
 .dialog-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 16px;
+  /* align-items: center; */
+  gap: 10px;
   font-family: 'Arial', sans-serif; /* Font style can be adjusted as needed */
   color: #333; /* Adjust text color as needed */
   background: #fff; /* Adjust background color as needed */
+  padding-right: 20px;
 }
 
 .image-section {
   text-align: center;
-  padding: 16px;
-  border-bottom: 1px solid #ccc; /* Separator style */
 }
 
 .image-section img {
@@ -21,7 +20,7 @@
 
 .details-section {
   width: 100%;
-  padding: 16px;
+  padding: 30px;
   overflow-y: auto;
   max-height: 450px;
   height: fit-content;
@@ -34,14 +33,16 @@
 
 .price {
   font-size: 20px; /* Adjust the price font size as needed */
-  color: #E91E63; /* Price color */
+  color: #5c2d17; /* Price color */
+  font-weight: 500;
 }
 
 .quantity-section{
   border: 1px solid #9F675F;
+  padding-inline: 6px;
   padding: 4px;
   border-radius: 10px;
-  width: 104px;
+  width: fit-content;
 }
 
 .quantity-selector {
@@ -52,7 +53,9 @@
 }
 
 .quantity-selector label {
-  font-size: 14px; /* Adjust label font size as needed */
+  font-size: 12px; /* Adjust label font size as needed */
+  font-weight: 600;
+  padding: 10px;
 }
 
 .quantity-selector input {
@@ -62,19 +65,8 @@
   width: 50px;
   outline: none;
 }
-
-.btn {
-  padding: 10px 20px;
-  color: white;
-  background-color: var(--primary-color); /* Button background color */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #ac7c75; /* Darker shade on hover */
-  transition: 0.2s ease-in-out;
+.btn{
+  width: 100%;
 }
 
 .specifications {
@@ -85,7 +77,7 @@
   .dialog-content {
     flex-direction: row;
   }
-  
+
   .image-section, .details-section {
     flex: 1;
   }
@@ -106,6 +98,20 @@
   border-radius: 6px;
 }
 .mat-icon {
-    height: unset; 
-   width: unset; 
+    height: unset;
+   width: unset;
+}
+.share-links{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+h5{
+  font: 400 16px / 24px Roboto, sans-serif;
+    letter-spacing: .0125em;
+    color: grey;
+   margin: unset;
+}
+p {
+  margin: 12px 0px;
 }

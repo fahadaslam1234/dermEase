@@ -20,6 +20,8 @@ export class AppComponent implements OnInit {
       });
      }
     }
-    
+    Notadmin(): boolean{
+      return this.router.url.startsWith('/admin');
+    }
    
 }

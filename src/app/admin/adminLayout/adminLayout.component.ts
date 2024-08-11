@@ -37,7 +37,15 @@ export class AdminLayoutComponent implements OnInit {
     this.initializeModules();
     this.dynamicComponentService.component$.subscribe((comp)=>{
       this.dynamicComponentService.loadComponent(comp, this.componentContainer);
-    })
+    });
+    this.route.queryParams.subscribe(params => {
+      const componentName = params['component'];
+      if (componentName) {
+        this.loadComponentByName(componentName);
+      } else {
+        this.loadComponent(this.navItems[0].tiles[0]); // Load default component
+      }
+    });
   }
 
   ngOnInit() {
@@ -121,5 +129,9 @@ export class AdminLayoutComponent implements OnInit {
     });
     this.navItems.push(group);
 
+   }
+
+   onHome(){
+    this.router.navigate(['/']);
    }
 }

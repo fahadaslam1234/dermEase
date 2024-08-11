@@ -1,6 +1,6 @@
 <div class="container">
   <div class="intro" *ngIf="isIntro">
-    <button class="intro-button" (click)="startStepper()">LET'S GO!</button>
+    <button class="intro-button primary-button" (click)="startStepper()">LET'S GO!</button>
   </div>
   <div *ngIf="!isIntro && showStepper">
     <mat-horizontal-stepper [linear]="true" #stepper>
@@ -19,7 +19,7 @@
             </mat-card>
           </div>
           <div>
-            <button mat-button matStepperNext [disabled]="!selectedConcerns">Next</button>
+            <button class="primary-button" matStepperNext [disabled]="!selectedConcerns">Next</button>
           </div>
         </form>
       </mat-step>
@@ -38,8 +38,8 @@
             </mat-card>
           </div>
           <div class="button-layout">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext [disabled]="!selectedSkinFeel">Next</button>
+            <button class="primary-button" matStepperPrevious>Back</button>
+            <button class="primary-button" matStepperNext [disabled]="!selectedSkinFeel">Next</button>
           </div>
         </form>
       </mat-step>
@@ -58,8 +58,8 @@
             </mat-card>
           </div>
           <div class="button-layout">
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="showResults()">Show Results</button>
+            <button matStepperPrevious class="primary-button">Back</button>
+            <button (click)="showResults()" class="primary-button">Show Results</button>
           </div>
         </form>
       </mat-step>

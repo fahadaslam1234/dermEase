@@ -1,13 +1,14 @@
 <div class="shop-banner">
   <div class="shop-content text-center p-4">
-    <p class="text-2xl">DermEase</p>
+    <p class="text-4xl">DermEase</p>
+    <br>
     <h1 class="text-4xl font-bold">CART</h1>
   </div>
 </div>
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-8 mb-4 rounded">
+    <div class="col-lg-8 col-md-12 mb-4 rounded">
       <mat-card class="p-4">
         <mat-card-title class="p-2">Shopping Bag</mat-card-title>
         <div class="table-responsive">
@@ -58,7 +59,7 @@
       </mat-card>
     </div>
 
-    <div class="col-lg-4 bg-white shadow-md mb-8 rounded p-4">
+    <div class="col-lg-4 col-md-12 bg-white shadow-md mb-8 rounded p-4 order-summary">
       <h2 class="text-xl font-bold mb-4">Cart Totals</h2>
       <mat-card-content>
         <div class="flex justify-between mb-2">
@@ -79,7 +80,7 @@
           <span>Total</span>
           <span>{{ calculateTotal() | currency:'Rs' }}</span>
         </div>
-        <button mat-raised-button color="primary" class="w-full bg-pink-500 text-white py-3 rounded-lg">PROCEED TO CHECKOUT</button>
+        <button mat-raised-button class="w-full primary-button">PROCEED TO CHECKOUT</button>
       </mat-card-content>
     </div>
   </div>

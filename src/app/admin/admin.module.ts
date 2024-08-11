@@ -14,15 +14,21 @@ import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCard, MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { ProductListComponent } from './productList/productList.component';
 
 @NgModule({
-  declarations: [AdminLayoutComponent,AddProductComponent,UsersComponent],
+  declarations: [AdminLayoutComponent,AddProductComponent,UsersComponent,ProductListComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,MatIconModule,
     MatSidenavModule,MatToolbarModule,MatButtonModule,
     MatListModule,MatExpansionModule,MatInputModule,MatInput,
-    MatFormFieldModule,MatCardModule,MatCard
+    MatFormFieldModule,MatCardModule,MatCard,MatPaginator,MatPaginatorModule,
+    MatTableModule,BrowserModule,BrowserAnimationsModule,
   ]
 })
 export class AdminModule { }

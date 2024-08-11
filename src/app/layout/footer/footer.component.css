@@ -12,6 +12,7 @@
     animation: move-banner 15s linear infinite;
     display: flex;
     justify-content: space-between;
+    padding-inline: 200px;
     gap: 130px;
     color: #fff;
   }
@@ -45,11 +46,13 @@
     padding: 40px 0 10px 0;
     text-align: center;
     border-top: 1px solid var(--primary-color);
+    padding-inline: 100px;
   }
   
   .footer .container {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     flex-wrap: wrap;
     padding: 0 20px;
     border-bottom: 2px solid var(--primary-color);
@@ -72,7 +75,7 @@
   }
   
   .footer .footer-section.logo .logo-text span {
-    color: #9F675F;
+    color: #8b5e3c;
   }
   
   .footer .footer-section p {
@@ -88,6 +91,7 @@
   .footer .footer-section .social-icons i {
     font-size: 20px;
     cursor: pointer;
+    color: #8b5e3c;
   }
   
   .footer .footer-section h4 {
@@ -101,7 +105,8 @@
   }
   
   .footer .footer-section div:hover {
-    text-decoration: underline;
+  color: linear-gradient(to right,#8b5e3c, #cda079); 
+   cursor: pointer;
   }
   
   .footer .footer-bottom {
