@@ -8,11 +8,13 @@ body {
   text-align: center;
   padding: 50px 20px;
   background-color: #fff;
+  width: 50%;
+  margin: auto;
 }
 
 .faq-container h2 {
   font-size: 1rem;
-  color: #e41f27;
+  color: var(--primary-color3);
   margin-bottom: 10px;
 }
 
@@ -23,7 +25,7 @@ body {
 }
 
 .faq-accordion {
-  width: 100%;
+  width: 50%;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -33,14 +35,14 @@ mat-expansion-panel {
 }
 
 mat-expansion-panel-header {
-  border: 1px solid #e41f27;
+  border: 1px solid var(--primary-color3);
   border-radius: 25px;
   margin-bottom: 10px;
 }
 
 mat-expansion-panel-header.mat-expanded {
-  border-color: #e41f27;
-  color: #e41f27;
+  border-color: var(--primary-color3);
+  color: var(--primary-color3);
 }
 
 mat-expansion-panel-header .mat-panel-title {
@@ -50,13 +52,19 @@ mat-expansion-panel-header .mat-panel-title {
 @media (max-width: 768px) {
   .faq-container {
     padding: 30px 10px;
+    margin: auto;
+    width: 90%
   }
 
   .faq-container h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .faq-accordion {
     width: 100%;
   }
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: unset;
 }
