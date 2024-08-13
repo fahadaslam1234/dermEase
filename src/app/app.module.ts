@@ -22,6 +22,8 @@ import { ServerModule } from '@angular/platform-server';
 import { AdminModule } from './admin/admin.module';
 import { isPlatformBrowser } from '@angular/common';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { DermConnectModule } from './derm-connect/derm-connect.module';
+import { DiseasePredictorModule } from './disease-predictor/disease-predictor.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     HttpClientModule,
     FlexLayoutServerModule,
     ServerModule,
-    AdminModule
+    AdminModule,
+    DermConnectModule,
+    DiseasePredictorModule
   ],
   providers: [
     provideClientHydration(),

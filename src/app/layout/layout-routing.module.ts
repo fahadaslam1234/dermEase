@@ -5,6 +5,8 @@ import { AllProductsComponent } from '../products/allProducts/allProducts.compon
 import { ViewCartComponent } from './viewCart/viewCart.component';
 import { AddToCartComponent } from './addToCart/addToCart.component';
 import { FAQsComponent } from './FAQs/FAQs.component';
+import { PrivacyPolicyComponent } from './PrivacyPolicy/PrivacyPolicy.component';
+import { RefundPolicyComponent } from './RefundPolicy/RefundPolicy.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,22 @@ const routes: Routes = [
   {
     path: 'faqs',
     component:FAQsComponent
+  },
+  {
+    path: 'PrivacyPolicy',
+    component:PrivacyPolicyComponent
+  },
+  {
+    path: 'faqs',
+    component:FAQsComponent
+  },
+  {
+    path: 'PrivacyPolicy',
+    component:PrivacyPolicyComponent
+  },
+  {
+    path: 'RefundPolicy',
+    component:RefundPolicyComponent
   }
 
 ];
