@@ -27,7 +27,7 @@ export class LayoutComponent implements AfterViewInit {
   ngOnInit() {
     this.updatePaginatedProducts(0, this.pageSize);
   }
-  
+
   updatePaginatedProducts(pageIndex: number, pageSize: number) {
     const startIndex = pageIndex * pageSize;
     const endIndex = startIndex + pageSize;
@@ -174,7 +174,7 @@ export class LayoutComponent implements AfterViewInit {
 
   quickView(product: any) {
     const dialogRef = this.dialog.open(QuickViewProductComponent, {
-      width: '80%',
+      width: '100%',
       maxWidth: '800px',
       data: product
     });

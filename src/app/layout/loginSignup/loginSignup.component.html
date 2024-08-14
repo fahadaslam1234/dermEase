@@ -1,27 +1,28 @@
 <div class="flex-container">
   <mat-card class="login-card">
     <mat-card-header>
-      <mat-card-title>{{ isLoginMode ? 'Login' : 'Sign Up' }}</mat-card-title>
+      <mat-card-title>{{ isLoginMode ? 'Sign In' : 'Sign Up' }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Username</mat-label>
           <input matInput id="username" type="text" placeholder="Username" required [(ngModel)]="username" name="username">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width" *ngIf="!isLoginMode">
-          <mat-label>Email</mat-label>
           <input matInput id="email" type="email" placeholder="Email" required [(ngModel)]="email" name="email">
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Password</mat-label>
           <input matInput id="password" type="password" placeholder="Password" required [(ngModel)]="password" name="password">
         </mat-form-field>
 
+        <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isDermatologist" name="isDermatologist">
+          Is Dermatologist
+        </mat-checkbox>
+
         <div class="signIn">
-          <button type="submit">
+          <button class="primary-button" type="submit">
             {{ isLoginMode ? 'Sign In' : 'Sign Up' }}
           </button>
         </div>

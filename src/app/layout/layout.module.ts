@@ -22,6 +22,7 @@ import { CheckOutModule } from '../check-out/check-out.module';
 import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FAQsComponent } from './FAQs/FAQs.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 
@@ -35,7 +36,8 @@ import { FAQsComponent } from './FAQs/FAQs.component';
     ProductsModule,FormsModule,ReactiveFormsModule,
     MatIconModule,MatIcon,AboutUsModule,ContactUsModule,FlexLayoutModule,
     MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
-    CheckOutModule,MatInputModule,MatInput,ReactiveFormsModule,MatIconModule,MatExpansionModule
+    CheckOutModule,MatInputModule,MatInput,ReactiveFormsModule,MatIconModule,MatExpansionModule,
+    MatCheckboxModule
   ]
 })
 export class LayoutModule { }

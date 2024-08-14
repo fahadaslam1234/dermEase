@@ -26,4 +26,13 @@ export class QuickViewProductComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  validateQuantity(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const maxQuantity = 20;
+
+    if (+inputElement.value > maxQuantity) {
+      inputElement.value = maxQuantity.toString();
+    }
+  }
+
 }

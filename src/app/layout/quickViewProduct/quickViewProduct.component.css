@@ -43,6 +43,7 @@
   padding: 4px;
   border-radius: 10px;
   width: fit-content;
+  height: 37px;
 }
 
 .quantity-selector {
@@ -62,8 +63,10 @@
   padding: 5px;
   border: none;
   border-radius: 5px;
-  width: 50px;
+  width: 35px;
   outline: none;
+  height: 10px;
+  float: right;;
 }
 .btn{
   width: 100%;
@@ -86,20 +89,20 @@
 [multiple]:focus, [type=date]:focus, [type=datetime-local]:focus, [type=email]:focus, [type=month]:focus, [type=number]:focus, [type=password]:focus, [type=search]:focus, [type=tel]:focus, [type=text]:focus, [type=time]:focus, [type=url]:focus, [type=week]:focus, select:focus, textarea:focus {
 --tw-ring-shadow: unset;
 }
-.close-icon{
+.mat-icon{
   float: right;
    display: flex;
    padding: 5px;
    justify-content: center;
 }
-.close-icon:hover{
+.mat-icon:hover{
   cursor: pointer;
-  background-color: #eddcd9;
+  background-color: hsl(9, 36%, 89%);
   border-radius: 6px;
 }
 .mat-icon {
-    height: unset;
-   width: unset;
+    height: 25px;
+   width: 25px;
 }
 .share-links{
   display: flex;
@@ -114,4 +117,14 @@ h5{
 }
 p {
   margin: 12px 0px;
+}
+.social-icons {
+  display: flex;
+  /* justify-content: center; */
+  gap: 10px;
+}
+.social-icons i {
+  font-size: 20px;
+  cursor: pointer;
+  color: #8b5e3c;
 }

@@ -2,7 +2,7 @@
 <div class="dialog-content">
 
   <div class="image-section">
-    <img [src]="data.image" alt="{{ data.name }}">
+    <img [src]="data.image" alt="{{ data.name }}" height="35  0px" width="400px">
   </div>
   <div class="details-section">
 
@@ -12,7 +12,7 @@
     <div class="quantity-selector">
       <div class="quantity-section">
         <label for="quantity" class="qty-label">QTY</label>&nbsp;&nbsp;
-        <input type="number" id="quantity" name="quantity" min="1" value="1">
+        <input type="number" id="quantity" name="quantity" min="1" value="1" max="20" (input)="validateQuantity($event)">
       </div>
 
 
@@ -26,7 +26,7 @@
          Hyaluronic Acid & Niacinamide helps to visibly plump, hydrate, calm, brighten, and firm skin.
       </p>
 
-      <div class="share-links">
+      <div class="social-icons">
         <h5> SHARE</h5>
         <div class="social-icons">
           <i class="fa fa-instagram"></i>
@@ -39,5 +39,5 @@
 
     </div>
   </div>
-  <div class="close-icon" (click)="closeDialog()"><mat-icon class="mat-18">close</mat-icon></div>
+   <mat-icon class="mat-18" (click)="closeDialog()">close </mat-icon>
 </div>

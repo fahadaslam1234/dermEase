@@ -11,6 +11,7 @@ export class LoginSignupComponent implements OnInit {
   email: string = '';
   password: string = '';
   username:string = '';
+  isDermatologist=false;
 
   constructor() {}
 
