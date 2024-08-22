@@ -1,0 +1,12 @@
+<div class="chat-modal">
+  <h2>Chat with Smith Jone</h2>
+  <div class="chat-messages">
+    <p>Doctor: Hello! How can I help you?</p>
+    <p>You: I have a question about my skin condition...</p>
+  </div>
+  <div class="chat-input">
+    <input matInput type="text" placeholder="Type your message...">
+    <button mat-button (click)="sendMessage()">Send</button>
+  </div>
+  <button mat-button (click)="closeDialog()">Close Chat</button>
+</div>

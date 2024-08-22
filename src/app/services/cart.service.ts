@@ -43,6 +43,17 @@ export class CartService {
     }
   }
 
+
+    // New method to remove the entire item
+    public removeItemCompletely(item: Product) {
+      const index = this.itemsInCart.findIndex(product => product.name === item.name);
+      if (index !== -1) {
+        this.itemsInCart.splice(index, 1);
+        this.itemsInCartSubject.next(this.itemsInCart);
+      }
+    }
+
+    
   public getItems(): Observable<Product[]> {
     return this.itemsInCartSubject.asObservable();
   }

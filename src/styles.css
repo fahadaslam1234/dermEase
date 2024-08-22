@@ -1,5 +1,5 @@
 html, body { height: 100%; }
-body { margin: 0; 
+body { margin: 0;
     font-family:"DM Sans", sans-serif !important;
     font-optical-sizing: auto;
  }
@@ -94,17 +94,17 @@ body { margin: 0;
 
   /* FOR HR TAG */
 hr{
-  
+
   border: 0;
   height: 1px;
   width: 80%;
   position: relative;
   margin: 30px auto;
-  
-  
+
+
   &.center-ball{
     background: linear-gradient(to right, #cda079, #8b5e3c);
-    
+
     &:before{
       content: "";
       width: 80%;
@@ -119,10 +119,10 @@ hr{
       margin: 0 0 0 -3px;
     }
   }
-  
+
   &.center-diamond{
     background: linear-gradient(to right, #cda079, #8b5e3c);
-    
+
     &:before{
       content: "";
       width: 80%;
@@ -139,10 +139,10 @@ hr{
       -webkit-transform:rotate(45deg); /* Opera, Chrome, and Safari */
     }
   }
-  
+
   &.center-square{
     background: linear-gradient(to right, #cda079, #8b5e3c);
-    
+
     &:before{
       content: "";
       width: 80%;
@@ -156,10 +156,10 @@ hr{
       margin: 0 0 0 -3px;
     }
   }
-  
+
   &.center-star{
     background: linear-gradient(to right, #cda079, #8b5e3c);
-    
+
     &:before{
       content: "★";
       color: linear-gradient(to right, #cda079, #8b5e3c);;
@@ -200,4 +200,17 @@ hr{
     cursor: pointer;
   }
 
+}
+
+/* For Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  /* -webkit-appearance: none; */
+  background-color: #86564e;
+  margin-top: 1px;
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }

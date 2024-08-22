@@ -12,14 +12,17 @@
       <div>
         <div class="itemName">{{ item.name }}</div>
         <div class="quantityAdd">
-          <mat-icon (click)="removeFromCart(item)" class="removeIcon">remove</mat-icon>
-          <span>{{ item.quantity }}</span>
-          <mat-icon (click)="addToCart(item)" class="removeIcon">add</mat-icon>
-            &nbsp;
+          <div class="quantityIcons">
+            <mat-icon (click)="removeFromCart(item)" class="removeIcon">remove</mat-icon>
+            <span >{{ item.quantity }}</span>
+            <mat-icon (click)="addToCart(item)" class="removeIcon">add</mat-icon>
+          </div>
+          &nbsp;
           <div class="price">Rs {{ item.price }}</div>
         </div>
       </div>
     </div>
+    <mat-icon (click)="removeItemFromCart(item)" class="removeCart">close</mat-icon>
   </div>
 
   <div class="cart-footer">

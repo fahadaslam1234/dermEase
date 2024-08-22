@@ -130,14 +130,14 @@ export class AddToCartComponent implements OnInit {
       image: '../../../assets/images/P23.png',
       price: 2000
     },
-   
+
     {
       name: 'Glass Skin Moisturiser',
       image: '../../../assets/images/P24.png',
       price: 1900
     }
   ];
-  
+
   cartVisible = false;
   cartItems: any[] = [];
   paginatedProducts: Product[] = [];
@@ -151,7 +151,7 @@ export class AddToCartComponent implements OnInit {
     this.updatePaginatedProducts(0, this.pageSize);
     this.subscribeToCartUpdates();
   }
-  
+
   updatePaginatedProducts(pageIndex: number, pageSize: number) {
     const startIndex = pageIndex * pageSize;
     const endIndex = startIndex + pageSize;
@@ -203,6 +203,11 @@ export class AddToCartComponent implements OnInit {
     this.router.navigate(['/viewCart']);
     this.cartVisible = false;
   }
-
+  removeItemFromCart(product: Product) {
+    this.cartService.removeItemCompletely(product);
+    if (this.cartItems.length === 0) {
+      this.cartVisible = false; // Hide cart sidebar if no items are left
+    }
+  }
 
 }
