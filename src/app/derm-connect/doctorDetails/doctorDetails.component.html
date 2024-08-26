@@ -11,13 +11,15 @@
         <p>{{ doctor.education }}</p>
         <p><strong>Contact:</strong> {{ doctor.contact }}</p>
         <p><strong>Email:</strong> {{ doctor.email }}</p>
+
+
+    <div class="communication-buttons">
+      <!-- <button class="video-call-btn" (click)="startVideoCall()">Video Call</button> -->
+      <button class="chat-btn primary-button" (click)="startChat()">Get in Touch</button>
+    </div>
       </div>
     </div>
 
-    <div class="communication-buttons">
-      <button class="video-call-btn" (click)="startVideoCall()">Video Call</button>
-      <button class="chat-btn" (click)="startChat()">Chat</button>
-    </div>
 
     <div class="doctor-biography">
       <h3>Biography Of {{ doctor.name }}</h3>

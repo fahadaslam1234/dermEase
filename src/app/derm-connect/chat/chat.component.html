@@ -1,12 +1,36 @@
-<div class="chat-modal">
-  <h2>Chat with Smith Jone</h2>
-  <div class="chat-messages">
-    <p>Doctor: Hello! How can I help you?</p>
-    <p>You: I have a question about my skin condition...</p>
+<div class="chat-container">
+  <!-- Sidebar for conversation list -->
+  <div class="chat-sidebar">
+    <div class="sidebar-header">
+      <h2>Conversations</h2>
+    </div>
+    <div class="conversations">
+      <div *ngFor="let conversation of conversations" (click)="selectConversation(conversation)" class="conversation-item">
+        <p>{{ conversation.name }}</p>
+      </div>
+    </div>
   </div>
-  <div class="chat-input">
-    <input matInput type="text" placeholder="Type your message...">
-    <button mat-button (click)="sendMessage()">Send</button>
+
+  <!-- Main Chat Area -->
+  <div class="chat-main">
+    <div class="chat-header">
+      <h2>{{ selectedConversation?.name }}</h2>
+      <div class="chat-actions">
+        <button mat-icon-button (click)="startVideoCall()">
+          <mat-icon>videocam</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="chat-messages">
+      <div *ngFor="let message of selectedConversation?.messages" [ngClass]="{'sent': message.sentByUser, 'received': !message.sentByUser}">
+        <p>{{ message.text }}</p>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <input [(ngModel)]="newMessage" placeholder="Type your message..." />
+      <button mat-button (click)="sendMessage()">Send</button>
+    </div>
   </div>
-  <button mat-button (click)="closeDialog()">Close Chat</button>
 </div>

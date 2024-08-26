@@ -11,10 +11,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DoctorDetailsComponent } from './doctorDetails/doctorDetails.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ChatComponent } from './chat/chat.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [DermConnectComponent,DoctorDetailsComponent],
+  declarations: [DermConnectComponent,DoctorDetailsComponent, ChatComponent],
   imports: [
     CommonModule,
     DermConnectRoutingModule,
@@ -22,7 +24,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatButtonModule,MatIconModule
+    MatButtonModule,MatIconModule,
+    FormsModule,ReactiveFormsModule
   ]
 })
 export class DermConnectModule { }

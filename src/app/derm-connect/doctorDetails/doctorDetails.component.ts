@@ -76,19 +76,6 @@ export class DoctorDetailsComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id')!;
     this.doctor = this.doctors.find(doctor => doctor.id === id);
   }
-
-  startVideoCall() {
-    const dialogRef = this.dialog.open(VideoCallComponent, {
-      width: '90%', // Adjust the width as needed
-      maxWidth: '600px', // Maximum width for larger screens
-      data: { doctor: this.doctor }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Video call dialog was closed');
-    });
-  }
-
   startChat() {
     const dialogRef = this.dialog.open(ChatComponent, {
       width: '90%', // Adjust the width as needed
