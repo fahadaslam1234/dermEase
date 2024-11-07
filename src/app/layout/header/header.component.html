@@ -12,13 +12,24 @@
         <span class="badge">{{ cartCount }}</span></span>
       <ul>
         <li class="dropdown">
-          <span routerLink="/account"><mat-icon>account_circle</mat-icon></span>
+          <span  routerLink="/account">
+            <mat-icon>account_circle</mat-icon>
+            <span *ngIf="isLoggedIn()" > {{ user?.user_name }} </span>
+            </span>
           <ul class="dropdown-content">
-            <ol routerLink="/admin">
+            <!-- Show Admin Settings if user is an admin -->
+            <ol *ngIf="isAdmin" routerLink="/admin">
               <span>Admin Settings</span>
             </ol>
-            <ol routerLink="/login">
+
+            <!-- Show Login/Signup if user is not logged in -->
+            <ol *ngIf="!isLoggedIn()" routerLink="/login">
               <span>Login / Sign Up</span>
+            </ol>
+
+            <!-- Show Logout if user is logged in -->
+            <ol *ngIf="isLoggedIn()" (click)="logout()">
+              <span>Logout</span>
             </ol>
           </ul>
         </li>

@@ -1,0 +1,19 @@
+<!-- toast.component.html -->
+<div *ngIf="toast" class="toast-wrapper">
+  <div class="toast-backdrop"></div>
+
+<div [ngClass]="['toast', 'toast-' + toast.type]" class="toast">
+  <div class="toast-body">
+    <div>
+      {{ toast.message }}
+    </div>
+  </div>
+  <div>
+    
+    <button mat-icon-button (click)="toastService.clearToast()">
+      <mat-icon aria-label="Close">close</mat-icon>
+    </button>
+  </div>
+</div>
+</div>
+

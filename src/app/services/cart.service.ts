@@ -18,7 +18,7 @@ export class CartService {
   }
 
   public addToCart(item: Product) {
-    let existingItem = this.itemsInCart.find(product => product.name === item.name);
+    let existingItem = this.itemsInCart.find(product => product.product_name === item.product_name);
     if (existingItem) {
       // Ensure quantity is initialized before incrementing
       existingItem.quantity = (existingItem.quantity ?? 0) + 1; // Use nullish coalescing to default to 0 if undefined
@@ -30,7 +30,7 @@ export class CartService {
   }
 
   public removeFromCart(item: Product) {
-    const index = this.itemsInCart.findIndex(product => product.name === item.name);
+    const index = this.itemsInCart.findIndex(product => product.product_name === item.product_name);
     if (index !== -1) {
       // Decrement the quantity or remove the item if quantity falls below 1
       const product = this.itemsInCart[index];
@@ -46,14 +46,14 @@ export class CartService {
 
     // New method to remove the entire item
     public removeItemCompletely(item: Product) {
-      const index = this.itemsInCart.findIndex(product => product.name === item.name);
+      const index = this.itemsInCart.findIndex(product => product.product_name === item.product_name);
       if (index !== -1) {
         this.itemsInCart.splice(index, 1);
         this.itemsInCartSubject.next(this.itemsInCart);
       }
     }
 
-    
+
   public getItems(): Observable<Product[]> {
     return this.itemsInCartSubject.asObservable();
   }

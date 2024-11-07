@@ -9,7 +9,7 @@ export class ToastService {
   private toastSubject = new Subject<ToastMessage | null>();
   toastState = this.toastSubject.asObservable();
 
-  showToast(message: string, type: string = 'info', timeout: number = 2000) {
+  showToast(message: string, type: string = 'info', timeout: number = 3333000) {
     this.toastSubject.next({ message, type });
 
     if (timeout > 0) {

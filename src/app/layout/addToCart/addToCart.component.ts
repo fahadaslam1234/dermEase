@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 import { Product } from '../../models/productModel';
+import { ProductService } from '../../services/productService'; // Import ProductService
 import { PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -11,145 +12,37 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./addToCart.component.css']
 })
 export class AddToCartComponent implements OnInit {
-
-  products: Product[] = [
-    {
-      name: 'Bundle 5',
-      image: '../../../assets/images/P1.png',
-      oldPrice: 8100,
-      price: 6500
-    },
-    {
-      name: 'Brightening Serum',
-      image: '../../../assets/images/P2.png',
-      price: 2350
-    },
-    {
-      name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/P3.png',
-      price: 2000
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P4.png',
-      price: 1900
-    },
-    {
-      name: 'Bundle 5',
-      image: '../../../assets/images/P5.png',
-      oldPrice: 8100,
-      price: 6500
-    },
-    {
-      name: 'Brightening Serum',
-      image: '../../../assets/images/P6.png',
-      price: 2350
-    },
-    {
-      name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/P7.png',
-      price: 2000
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P8.png',
-      price: 1900
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P9.png',
-      price: 1900
-    },
-    {
-      name: 'Brightening Serum',
-      image: '../../../assets/images/P10.png',
-      price: 2350
-    },
-    {
-      name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/P11.png',
-      price: 2000
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P12.png',
-      price: 1900
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P13.png',
-      price: 1900
-    },
-    {
-      name: 'Brightening Serum',
-      image: '../../../assets/images/P14.png',
-      price: 2350
-    },
-    {
-      name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/P15.png',
-      price: 2000
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P16.png',
-      price: 1900
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P17.png',
-      price: 1900
-    },
-    {
-      name: 'Brightening Serum',
-      image: '../../../assets/images/P18.png',
-      price: 2350
-    },
-    {
-      name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/P19.png',
-      price: 2000
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P20.png',
-      price: 1900
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P21.png',
-      price: 1900
-    },
-    {
-      name: 'Brightening Serum',
-      image: '../../../assets/images/P22.png',
-      price: 2350
-    },
-    {
-      name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/P23.png',
-      price: 2000
-    },
-
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P24.png',
-      price: 1900
-    }
-  ];
-
-  cartVisible = false;
-  cartItems: any[] = [];
+  products: Product[] = [];
   paginatedProducts: Product[] = [];
+  cartItems: any[] = [];
+  cartVisible = false;
   pageSize = 4;
   pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
   pageEvent!: PageEvent;
 
-  constructor(private dialog: MatDialog, private cartService: CartService, private router: Router) { }
+  constructor(
+    private dialog: MatDialog,
+    private cartService: CartService,
+    private productService: ProductService,  // Inject ProductService
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.updatePaginatedProducts(0, this.pageSize);
+    this.fetchProducts(); // Fetch products from the backend
     this.subscribeToCartUpdates();
+  }
+
+  // Fetch products from the backend
+  fetchProducts(): void {
+    this.productService.getAllProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+        this.updatePaginatedProducts(0, this.pageSize); // Initialize paginated products after fetching
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+      }
+    });
   }
 
   updatePaginatedProducts(pageIndex: number, pageSize: number) {
@@ -170,11 +63,9 @@ export class AddToCartComponent implements OnInit {
     });
   }
 
-
   addToCart(product: Product) {
     this.cartService.addToCart(product);
     this.cartVisible = true; // Show the cart sidebar when an item is added
-
     this.subscribeToCartUpdates();
   }
 
@@ -185,10 +76,12 @@ export class AddToCartComponent implements OnInit {
   getCartCount(): number {
     return this.cartService.getCartCount();
   }
-  checkout(){
+
+  checkout() {
     this.router.navigate(['/checkOut']);
     this.cartVisible = false;
   }
+
   removeFromCart(product: Product) {
     this.cartService.removeFromCart(product);
     if (this.products.length === 0) {
@@ -196,18 +89,19 @@ export class AddToCartComponent implements OnInit {
     }
   }
 
-  getTotal(){
+  getTotal() {
     return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
-  onViewCart(){
+
+  onViewCart() {
     this.router.navigate(['/viewCart']);
     this.cartVisible = false;
   }
+
   removeItemFromCart(product: Product) {
     this.cartService.removeItemCompletely(product);
     if (this.cartItems.length === 0) {
       this.cartVisible = false; // Hide cart sidebar if no items are left
     }
   }
-
 }

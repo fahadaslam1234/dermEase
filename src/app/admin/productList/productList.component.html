@@ -9,33 +9,48 @@
       <!-- Product ID Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let product" data-header="Product ID"> {{product.id}} </td>
+        <td mat-cell *matCellDef="let product" data-header="ID"> {{ product._id }} </td>
       </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="name">
+      <ng-container matColumnDef="product_name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let product" data-header="Name"> {{product.name}} </td>
+        <td mat-cell *matCellDef="let product" data-header="Name"> {{ product.product_name }} </td>
       </ng-container>
 
       <!-- Description Column -->
-      <ng-container matColumnDef="description">
+      <ng-container matColumnDef="product_description">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-        <td mat-cell *matCellDef="let product" data-header="Description"> {{product.description}} </td>
+        <td mat-cell *matCellDef="let product" data-header="Description"> {{ product.product_description }} </td>
       </ng-container>
 
       <!-- Image Column -->
-      <ng-container matColumnDef="image">
+      <ng-container matColumnDef="product_image">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Image </th>
         <td mat-cell *matCellDef="let product" data-header="Image">
-          <img [src]="product.image" alt="{{product.name}}">
+          <img [src]="getFullImageUrl(product.product_image)" alt="{{product.product_name}}" class="product-image">
         </td>
       </ng-container>
 
       <!-- Price Column -->
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
-        <td mat-cell *matCellDef="let product" data-header="Price"> {{product.price | currency}} </td>
+        <td mat-cell *matCellDef="let product" data-header="Price"> {{ product.price | currency }} </td>
+      </ng-container>
+
+      <!-- Actions Column (Delete and Edit Icons) -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let product">
+          <!-- Delete Icon -->
+          <button mat-icon-button (click)="deleteProduct(product._id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <!-- Edit Icon -->
+          <button mat-icon-button (click)="openEditDialog(product)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

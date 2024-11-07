@@ -17,22 +17,23 @@ import { SkincareSolutionFinderModule } from './skincare-solution-finder/skincar
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { FlexLayoutServerModule } from '@angular/flex-layout/server';
-import { ServerModule } from '@angular/platform-server';
 import { AdminModule } from './admin/admin.module';
 import { isPlatformBrowser } from '@angular/common';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DermConnectModule } from './derm-connect/derm-connect.module';
 import { DiseasePredictorModule } from './disease-predictor/disease-predictor.module';
+import { CheckOutModule } from './check-out/check-out.module';
+import { ToastComponentComponent } from './toastComponent/toastComponent.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ToastComponentComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'your-app-id' }),
+    BrowserModule,
     AppRoutingModule,
     LayoutModule,
     NgxSpinnerModule,
@@ -48,8 +49,6 @@ import { DiseasePredictorModule } from './disease-predictor/disease-predictor.mo
     SkincareSolutionFinderModule,
     MatCardModule,
     HttpClientModule,
-    FlexLayoutServerModule,
-    ServerModule,
     AdminModule,
     DermConnectModule,
     DiseasePredictorModule

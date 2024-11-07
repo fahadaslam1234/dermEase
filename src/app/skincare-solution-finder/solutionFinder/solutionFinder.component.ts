@@ -53,7 +53,7 @@ export class SolutionFinderComponent implements OnInit {
   "Fragrance Free"
   ];
 
-  constructor(private _formBuilder: FormBuilder,private service : RecommendationService, 
+  constructor(private _formBuilder: FormBuilder,private service : RecommendationService,
     private spinner: NgxSpinnerService,private dialog : MatDialog) {}
 
   ngOnInit() {
@@ -91,11 +91,9 @@ export class SolutionFinderComponent implements OnInit {
   showResults() {
     this.spinner.show();
     const data = {
-      condition: this.selectedConcerns,
-      skin_feel: this.selectedSkinFeel, 
-      makeup_area: this.selectedMakeupArea, 
-      sunscreen_preference: this.selectedSunscreenPreference, 
-      body_concern:  this.selectedBodyConcern, 
+      skin_conditions: this.selectedConcerns,
+      skin_feel: this.selectedSkinFeel,
+      ingredient_preferences:  this.selectedBodyConcern,
     };
 
     this.service.getRecommendation(data).subscribe(

@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, throwError, map } from 'rxjs';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -10,63 +10,70 @@ export class AuthService {
 
   constructor(private http: HttpClient, private service: CommonService) { }
 
-  AuthenticateUser<ApiResponse>(userName: string, password: string) {
-    const body = { 'username': userName, 'password': password };
-    let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<ApiResponse>(this.service.API_URL + 'auth/login', body, options)
+  // Public login method
+  public login<ApiResponse>(username: string, password: string): Observable<ApiResponse> {
+    const body = { 'user_name': username, 'password': password };
+    const options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+
+    return this.http.post<ApiResponse>(`${this.service.API_URL}authentication/login`, body, options)
+      .pipe(
+        map((response: any) => {
+          // Save user info and token in session storage after successful login
+          if (response.status) {
+            sessionStorage.setItem('user', JSON.stringify(response.data.user));
+            sessionStorage.setItem('token', response.data.token);
+          }
+          return response;
+        }),
+        catchError(this.handleError)
+      );
   }
 
-  public saveUserName(userName: string) {
-    sessionStorage.setItem('userName', userName);
+    // Public signup method
+    public signup<ApiResponse>(user_name: string, email: string, password: string, is_dermatologist: boolean, file?: File): Observable<ApiResponse> {
+      const formData: FormData = new FormData();
+      formData.append('user_name', user_name);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('is_dermatologist', is_dermatologist.toString());
+
+      if (is_dermatologist && file) {
+        formData.append('certification', file, file.name);
+      }
+
+      const options = { headers: new HttpHeaders({ /* No content-type header for multipart/form-data */ }) };
+      return this.http.post<ApiResponse>(`${this.service.API_URL}authentication/register`, formData, options)
+        .pipe(catchError(this.handleError));
+    }
+
+  // Public method to logout the user
+  public logout(): void {
+    // Clear session storage on logout
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
   }
 
-
-  public async signOut() {
-    let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-   return  await this.http.post(this.service.API_URL + 'auth/logout', options);
-  // return  this.http.post(this.service.API_URL + 'auth/logout', options);
-
-      
+  // Public method to check if the user is logged in
+  public isLoggedIn(): boolean {
+    return !!sessionStorage.getItem('user');  // Return true if user is logged in
   }
 
-  // public isSignedIn(){
-  // // var response!:any;
-  // // this.http.get(this.service.API_URL + 'auth/IsSignedIn').subscribe({
-  // //   next:(res:any)=>{
-  // //     response=res.status
-  // //   }
-  // // })
-  // //   return  response;
-  // return this.http.get(this.service.API_URL + 'auth/IsSignedIn')
-  // }
-  isSignedIn(): Observable<boolean> {
-    return this.http.get(this.service.API_URL + 'auth/IsSignedIn').pipe(
-      map((response: any) => {
-        if (response.status == true) {
-          return true;
-        }
-        return false;
-      })
-    );
+  // Public method to get the logged-in user's details
+  public getLoggedInUser(): any {
+    const user = sessionStorage.getItem('user');
+    return user ? JSON.parse(user) : null;  // Return the parsed user details
   }
 
-  VerifyOTP<UserInfo>(userName: string, otp: string){
-    const body = {'username': userName, 'password': otp};
-    let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.http.post<UserInfo>(this.service.API_URL + 'auth/verifyOtp', body, options).pipe(catchError(this.handleError));
+  // Public method to get the authentication token
+  public getToken(): string | null {
+    return sessionStorage.getItem('token');
   }
-  
-  ResendOTP(userName: string){
-   const body = {'username': userName};
-   let options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-   return this.http.post<boolean>(this.service.API_URL + 'auth/resendOtp', body, options).pipe(catchError(this.handleError));
-  }
-  handleError(error: HttpErrorResponse) {
-      
-    if(error.status==403)
-    {
-        return throwError(()=>new Error("You don't have permissions for this operation."))
+
+  // Error handling
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 403) {
+      return throwError(() => new Error("You don't have permissions for this operation."));
     }
     return throwError(() => new Error('Something went wrong. Please try again.'));
-}
+  }
 }

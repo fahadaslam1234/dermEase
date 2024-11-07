@@ -41,3 +41,13 @@ mat-card-header{
   margin: auto;
   padding-bottom: 20px;
 }
+input[type="file"] {
+  display: block;
+  margin-top: 10px;
+}
+
+label[for="certification"] {
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}

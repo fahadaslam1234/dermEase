@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './adminLayout/adminLayout.component';
+import { FormsModule } from '@angular/forms';
 import { UsersComponent } from './users/users.component';
 import { AddProductComponent } from './addProduct/addProduct.component';
 

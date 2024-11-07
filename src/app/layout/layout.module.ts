@@ -11,7 +11,6 @@ import { QuickViewProductComponent } from './quickViewProduct/quickViewProduct.c
 import { AboutUsModule } from '../about-us/about-us.module';
 import { ContactUsModule } from '../contact-us/contact-us.module';
 import { ViewCartComponent } from './viewCart/viewCart.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -34,7 +33,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     CommonModule,
     LayoutRoutingModule,
     ProductsModule,FormsModule,ReactiveFormsModule,
-    MatIconModule,MatIcon,AboutUsModule,ContactUsModule,FlexLayoutModule,
+    MatIconModule,MatIcon,AboutUsModule,ContactUsModule,
     MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
     CheckOutModule,MatInputModule,MatInput,ReactiveFormsModule,MatIconModule,MatExpansionModule,
     MatCheckboxModule

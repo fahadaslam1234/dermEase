@@ -6,7 +6,6 @@ import { CheckOutDetailsComponent } from './checkOutDetails/checkOutDetails.comp
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { ContactUsModule } from '../contact-us/contact-us.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -25,7 +24,7 @@ import { MatRadioModule } from '@angular/material/radio';
   declarations: [CheckOutDetailsComponent],
   imports: [
     CommonModule,CheckOutRoutingModule,FormsModule,ReactiveFormsModule,
-    MatIconModule,MatIcon,ContactUsModule,FlexLayoutModule,
+    MatIconModule,MatIcon,ContactUsModule,
     MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
     MatFormFieldModule,MatRadioModule,
     MatInputModule,

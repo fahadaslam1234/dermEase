@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/productModel';
 import { OverlayService } from '../../services/overlay.service';
+import { AuthService } from '../../services/auth.service'; // Import AuthService
 
 @Component({
   selector: 'app-header',
@@ -14,19 +15,31 @@ export class HeaderComponent implements OnInit {
   menuOpen = false;
   cartVisible = false;
   cartItems: any[] = [];
+  user: any = null;  // User object to store the logged-in user
+  isAdmin: boolean = false;  // To store whether the user is an admin or not
 
-  constructor(private router: Router, private cartService: CartService ,private overlayService: OverlayService) {}
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+    private overlayService: OverlayService,
+    private authService: AuthService  // Inject AuthService
+  ) {}
 
   ngOnInit(): void {
     this.cartService.getItems().subscribe(items => {
       this.cartCount = items.length;
     });
 
-    // this.subscribeToCartUpdates();
+    // Get logged-in user details and check if the user is an admin
+    this.user = this.authService.getLoggedInUser();
+    if (this.user) {
+      this.isAdmin = this.user.role === 'admin';  // Assuming 'role' field in user object
+    }
+    console.log(this.user);
   }
 
   toggleMenu() {
-    const menu = document.getElementById('dropdownMenu') as HTMLElement; 
+    const menu = document.getElementById('dropdownMenu') as HTMLElement;
     menu.classList.toggle('hidden');
   }
 
@@ -37,11 +50,11 @@ export class HeaderComponent implements OnInit {
   closeNav() {
     document.getElementById("mySidenav")!.style.width = "0";
   }
+
   navigateTo(route: string): void {
     this.router.navigate([route]);
     this.menuOpen = false;
   }
-
 
   toggleCart() {
     this.cartVisible = !this.cartVisible;
@@ -51,9 +64,10 @@ export class HeaderComponent implements OnInit {
     this.cartService.addToCart(product);
     this.cartVisible = true; // Show the cart sidebar when an item is added
   }
+
   removeFromCart(product: Product) {
     this.cartService.removeFromCart(product);
-    if (this.products.length === 0) {
+    if (this.cartItems.length === 0) {
       this.cartVisible = false; // Hide cart sidebar if no items are left
     }
   }
@@ -69,19 +83,28 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  getTotal(){
+  getTotal() {
     return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 
-  onViewCart(){
+  onViewCart() {
     this.router.navigate(['viewCart']);
   }
 
-  onCart(){
+  onCart() {
     this.overlayService.openCart();
   }
-  // 
 
+  // Logout method
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);  // Redirect to login after logout
+  }
+
+  // Check if the user is logged in
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
 
   products = [
     {
@@ -207,5 +230,4 @@ export class HeaderComponent implements OnInit {
       price: 1900
     }
   ];
-  
 }

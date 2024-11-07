@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { ProductService } from '../../services/productService';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/productModel';
 
@@ -13,59 +14,56 @@ import { Product } from '../../models/productModel';
 export class ViewCartComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort, {static: false}) sort!: MatSort;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
-  products: Product[] = [
-    {
-      name: 'Bundle 5',
-      image: '../../../assets/images/P1.png',
-      oldPrice: 8100,
-      price: 6500,
-      quantity: 1
-    },
-    {
-      name: 'Brightening Serum',
-      image: '../../../assets/images/P2.png',
-      price: 2350,
-      quantity: 1
-    },
-    {
-      name: 'Glass Skin Night Cream',
-      image: '../../../assets/images/P3.png',
-      price: 2000,
-      quantity: 1
-    },
-    {
-      name: 'Glass Skin Moisturiser',
-      image: '../../../assets/images/P4.png',
-      price: 1900,
-      quantity: 1
-    },
-  ];
-
+  products: Product[] = [];
   dataSource = new MatTableDataSource<Product>(this.products);
   displayedColumns: string[] = ['product', 'price', 'quantity', 'subtotal'];
 
-  constructor(private cartService: CartService) { }
+  constructor(
+    private productService: ProductService, // Inject ProductService
+    private cartService: CartService
+  ) { }
+
+  ngOnInit(): void {
+    this.fetchProducts();
+    this.subscribeToCartUpdates();
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
 
-  ngOnInit(): void {
+  // Fetch products from the backend using ProductService
+  fetchProducts(): void {
+    this.productService.getAllProducts().subscribe({
+      next: (products) => {
+        this.products = products;
+        this.dataSource.data = products; // Update table data source
+      },
+      error: (err) => {
+        console.error('Error fetching products:', err);
+      }
+    });
+  }
+
+  // Subscribe to cart updates and update the table
+  subscribeToCartUpdates() {
     this.cartService.getItems().subscribe(products => {
       this.products = products;
-      this.dataSource.data = products;
+      this.dataSource.data = products; // Update the table when cart changes
     });
   }
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
+    this.subscribeToCartUpdates(); // Re-subscribe to update changes
   }
 
   removeFromCart(product: Product) {
     this.cartService.removeFromCart(product);
+    this.subscribeToCartUpdates(); // Re-subscribe to update changes
   }
 
   calculateSubtotal(): number {
@@ -73,7 +71,7 @@ export class ViewCartComponent implements OnInit, AfterViewInit {
   }
 
   calculateTotal(): number {
-    // Add any additional calculations for total here (e.g., taxes, shipping)
+    // You can add extra calculations like shipping or taxes
     return this.calculateSubtotal();
   }
 }

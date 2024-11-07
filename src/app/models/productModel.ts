@@ -1,7 +1,8 @@
 export class Product{
-    name!: string;
-    image!: string;
+    _id: string;
+    product_name!: string;
+    product_image!: string;
     price!: number;
-    oldPrice?: number;
+    product_description!: string;
     quantity?: number;
 }

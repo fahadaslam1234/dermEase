@@ -4,30 +4,29 @@
   </div>
   <div class="container">
     <mat-card>
-      <form>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Product Name</mat-label>
-          <input matInput type="text" id="productName" />
+          <input matInput type="text" id="productName" name="productName" ngModel required />
         </mat-form-field>
+
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Product Description</mat-label>
-          <textarea matInput id="productDescription"></textarea>
+          <textarea matInput id="productDescription" name="productDescription" ngModel required></textarea>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width">
           <mat-label>Product Price</mat-label>
-          <input matInput type="text" id="productPrice" />
+          <input matInput type="number" id="productPrice" name="productPrice" ngModel required />
         </mat-form-field>
+
         <div class="image-upload">
           <input type="file" (change)="onFileSelected($event)" />
           <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" class="image-preview" />
         </div>
-        <button class="primary-button submit-btn"  type="submit">Submit</button>
+
+        <button class="primary-button submit-btn" type="submit" [disabled]="f.invalid || !selectedFile">Submit</button>
       </form>
     </mat-card>
   </div>
 </div>
-
-
-
-
