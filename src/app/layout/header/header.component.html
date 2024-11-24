@@ -1,7 +1,18 @@
 <header class="header">
   <div class="container">
-    <div>
-      <span routerLink="/search"><mat-icon>search</mat-icon></span>
+    <div (click)="toggleSearch()">
+      <mat-icon>search</mat-icon>
+    </div>
+
+    <!-- Search Bar -->
+    <div *ngIf="isSearchBarVisible" class="search-bar">
+      <input
+        type="text"
+        placeholder="Search for products"
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="onSearch()"
+      />
+      <button (click)="onSearch()">Search</button>
     </div>
     <div class="logo">
       <img src="../../../assets/images/logo.png" routerLink="/" alt="" width="100" height="80" />
@@ -40,13 +51,13 @@
       <div id="mySidenav" class="sidenav">
         <mat-icon href="javascript:void(0)" class="closebtn" (click)="closeNav()">close</mat-icon>
 
-        <span routerLink="/">Home</span>
-        <span routerLink="/shop/allprodcuts">Shop</span>
-        <span routerLink="/about">About</span>
-        <span routerLink="/contact">Contact</span>
-        <span routerLink="/dermConnect">Derm Connect</span>
-        <span routerLink="/solutionFinder">Skincare Solution Finder</span>
-        <span routerLink="/diseasePredictor">Skin Disease Predictor</span>
+        <span routerLink="/"  (click)="closeNav()">Home</span>
+        <span routerLink="/shop/allprodcuts"  (click)="closeNav()">Shop</span>
+        <span routerLink="/about"  (click)="closeNav()">About</span>
+        <span routerLink="/contact"  (click)="closeNav()">Contact</span>
+        <span routerLink="/dermConnect"  (click)="closeNav()">Derm Connect</span>
+        <span routerLink="/solutionFinder"  (click)="closeNav()">Skincare Solution Finder</span>
+        <span routerLink="/diseasePredictor"  (click)="closeNav()">Skin Disease Predictor</span>
       </div>
     </div>
   </div>

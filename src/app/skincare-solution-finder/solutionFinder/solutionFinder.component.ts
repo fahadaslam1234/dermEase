@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Product } from '../../models/productModel';
 import { QuickViewProductComponent } from '../../layout/quickViewProduct/quickViewProduct.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ToastService } from 'src/app/services/toastService';
 
 @Component({
   selector: 'app-solutionFinder',
@@ -46,7 +47,7 @@ export class SolutionFinderComponent implements OnInit {
 
   skinFeels: string[] = ['Dry', 'Oily', 'Combination'];
   ingredientPreferences: string[] = [
-    "Natural",
+  "Natural",
   "Organic",
   "Hypoallergenic",
   "Vegan",
@@ -54,7 +55,7 @@ export class SolutionFinderComponent implements OnInit {
   ];
 
   constructor(private _formBuilder: FormBuilder,private service : RecommendationService,
-    private spinner: NgxSpinnerService,private dialog : MatDialog) {}
+    private spinner: NgxSpinnerService,private dialog : MatDialog, private toastService : ToastService) {}
 
   ngOnInit() {
     this.firstFormGroup = this._formBuilder.group({
@@ -99,13 +100,12 @@ export class SolutionFinderComponent implements OnInit {
     this.service.getRecommendation(data).subscribe(
       response => {
         this.spinner.hide();
-        console.log(response);
         this.recommendation = response;
         this.showStepper = false;
-        console.log('Recommendation:', this.recommendation);
+        this.toastService.showToast("Here's your recommended product.", 'success');
       },
       error => {
-        console.error('Error fetching recommendation:', error);
+        this.toastService.showToast('Something went wrong. Please try again.', 'error');
       }
     );
     this.spinner.hide();

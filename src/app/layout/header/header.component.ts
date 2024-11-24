@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   cartItems: any[] = [];
   user: any = null;  // User object to store the logged-in user
   isAdmin: boolean = false;  // To store whether the user is an admin or not
+  isSearchBarVisible: boolean = false;
 
   constructor(
     private router: Router,
@@ -36,6 +37,10 @@ export class HeaderComponent implements OnInit {
       this.isAdmin = this.user.role === 'admin';  // Assuming 'role' field in user object
     }
     console.log(this.user);
+  }
+
+  toggleSearch() {
+    this.isSearchBarVisible = !this.isSearchBarVisible;
   }
 
   toggleMenu() {

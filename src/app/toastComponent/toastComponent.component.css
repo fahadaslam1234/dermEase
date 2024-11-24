@@ -43,24 +43,27 @@
     width: 400px;
     height: 18px;
     border-radius: 6px;
+    padding: 18px;
   }
 
   .toast-success {
     background-color: #bfe9af;
     border-color: #d6e9c6;
-    color: #164817;
+    color: black;
     width: 400px;
     height: 18px;
     border-radius: 6px;
+    padding: 18px;
   }
 
   .toast-warning {
     background-color: #fcf8e3;
     border-color: #faebcc;
-    color: #8a6d3b;
+    color: black;;
     width: 400px;
     height: 18px;
     border-radius: 6px;
+    padding: 18px;
   }
 
   .toast-danger {
@@ -70,6 +73,7 @@
     width: 400px;
     height: 18px;
     border-radius: 6px;
+    padding: 18px;
   }
 
   .toast .toast-body {

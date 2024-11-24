@@ -24,6 +24,7 @@ import { DermConnectModule } from './derm-connect/derm-connect.module';
 import { DiseasePredictorModule } from './disease-predictor/disease-predictor.module';
 import { CheckOutModule } from './check-out/check-out.module';
 import { ToastComponentComponent } from './toastComponent/toastComponent.component';
+import { ContactUsModule } from './contact-us/contact-us.module';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ToastComponentComponent } from './toastComponent/toastComponent.compone
     HttpClientModule,
     AdminModule,
     DermConnectModule,
-    DiseasePredictorModule
+    DiseasePredictorModule,
+    ContactUsModule
   ],
   providers: [
     provideClientHydration(),

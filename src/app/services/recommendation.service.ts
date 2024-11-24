@@ -11,8 +11,8 @@ export class RecommendationService {
     constructor(private http: HttpClient, private service: CommonService) {
 
     }
-  
+
     getRecommendation(data: any): Observable<any> {
-      return this.http.post<any>(this.service.API_URL + '/recommend', data);
+      return this.http.post<any>(this.service.API_URL + '/recommendation', data);
     }
 }

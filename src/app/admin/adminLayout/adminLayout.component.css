@@ -4,6 +4,14 @@ h1 {
 
 h2 {padding: 1rem;}
 
+mat-icon{
+  height: 30px !important;
+  width: 30px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 mat-toolbar{
   position:fixed;
   top:0;
@@ -20,7 +28,7 @@ mat-sidenav-content{
 }
 
 .expanded {
-  width: 200px;   
+  width: 200px;
 }
 mat-sidenav{
   height: 100%;
@@ -31,8 +39,9 @@ mat-sidenav {
       display: flex;
       align-items: center;
       gap: 1rem;
-      padding:1.3rem;
+      padding:16px;
       cursor: pointer;
+      margin-top: 20px;
   }
   .entry:hover{
     background-color: var(--primary-color);
@@ -43,23 +52,30 @@ mat-sidenav {
 
 span.mat-nav-item.active {
   color: var(--primary-color3);
+  font-weight: 500;
 }
 
-.menuIcon{
-  font-size: 24;
+
+ mat-icon .menuIcon{
   cursor: pointer;
   color : #000;
+  margin: auto;
+
 }
 .menuIcon:hover{
-  padding: 1px;
+  padding: 3px;
+  border-radius: 15px;
   transition: 0.2s ease-in-out;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
 }
 .admin-nav{
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  
+
   color: #000;
 }
 .heading{

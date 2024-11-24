@@ -36,7 +36,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatIconModule,MatIcon,AboutUsModule,ContactUsModule,
     MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
     CheckOutModule,MatInputModule,MatInput,ReactiveFormsModule,MatIconModule,MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,ContactUsModule
   ]
 })
 export class LayoutModule { }
