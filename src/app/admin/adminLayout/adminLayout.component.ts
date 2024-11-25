@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsersComponent } from '../users/users.component';
 import { AddProductComponent } from '../addProduct/addProduct.component';
 import { ProductListComponent } from '../productList/productList.component';
+import { ApprovalsComponent } from '../Approvals/Approvals.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-adminLayout',
@@ -27,11 +29,14 @@ export class AdminLayoutComponent implements OnInit {
   isNavbarOpen = true;
   activeModuleName: string = '';
   icon!: string;
+  user: any = null;
+  isAdmin: boolean = false;
+  isVendor: boolean = false;
 
 
   constructor(private observer: BreakpointObserver, private router: Router,
     private dynamicComponentService: DynamicComponentLoaderService,
-    private route: ActivatedRoute,) {}
+    private route: ActivatedRoute, private authService : AuthService) {}
 
   ngAfterViewInit(): void {
     this.initializeModules();
@@ -56,6 +61,13 @@ export class AdminLayoutComponent implements OnInit {
         this.isMobile = false;
       }
     });
+
+    this.user = this.authService.getLoggedInUser();
+    if (this.user) {
+      this.isAdmin = this.user.role === 'admin';  // Assuming 'role' field in user object
+      this.isVendor = this.user.role === 'vendor';  // Assuming 'role' field in user object
+    }
+    console.log(this.user);
   }
   toggleMenu() {
     if(this.isMobile){
@@ -71,13 +83,13 @@ export class AdminLayoutComponent implements OnInit {
     this.active = navItem.title;
     this.icon = navItem.icon;
     this.activeModuleName = navItem.modulename;
-  
+
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { component: navItem.title },
       queryParamsHandling: 'merge',
     });
-  
+
     this.dynamicComponentService.loadComponent(navItem.component, this.componentContainer);
   }
 
@@ -105,8 +117,26 @@ export class AdminLayoutComponent implements OnInit {
       component: UsersComponent,
       permission: '',
       modulename: user.name,
+      roles: ['admin']
     });
-    this.navItems.push(user);
+    user.tiles = user.tiles.filter(tile => this.hasRole(tile.roles)); // Filter tiles by role
+    if (user.tiles.length > 0) this.navItems.push(user);
+
+        //Approval User
+        var Approvals = new NavModule();
+        Approvals.name = 'Approvals';
+        Approvals.tiles = [];
+        Approvals.icon = 'person';
+        Approvals.tiles.push({
+          title: 'Approvals',
+          icon: 'list',
+          component: ApprovalsComponent,
+          permission: '',
+          modulename: Approvals.name,
+          roles: ['admin']
+        });
+        Approvals.tiles = Approvals.tiles.filter(tile => this.hasRole(tile.roles)); // Filter tiles by role
+        if (Approvals.tiles.length > 0) this.navItems.push(Approvals);
 
     // GROUP
     var group = new NavModule();
@@ -118,18 +148,27 @@ export class AdminLayoutComponent implements OnInit {
       icon: 'add_circle',
       component: AddProductComponent,
       permission: '',
-      modulename: group.name
+      modulename: group.name,
+      roles: ['admin','vendor']
     });
     group.tiles.push({
       title: 'All Products',
       icon: 'group_add',
       component: ProductListComponent,
       permission: '',
-      modulename: group.name
+      modulename: group.name,
+      roles: ['admin','vendor']
     });
-    this.navItems.push(group);
-
+    group.tiles = group.tiles.filter(tile => this.hasRole(tile.roles)); // Filter tiles by role
+    if (group.tiles.length > 0) this.navItems.push(group);
    }
+
+   hasRole(allowedRoles: string[]): boolean {
+    if (!allowedRoles || allowedRoles.length === 0) {
+      return true; // If no roles are specified, allow access to everyone
+    }
+    return allowedRoles.includes(this.user.role); // Check if user's role is allowed
+  }
 
    onHome(){
     this.router.navigate(['/']);

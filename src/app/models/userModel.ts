@@ -5,5 +5,6 @@ export interface User {
   document?: string | null;       // Document, default is null
   password: string;               // Password is required
   is_dermatologist?: boolean;     // Boolean flag for dermatologist, default is false
+  is_vendor?: boolean; // Boolean flag for vendor
   role?: string;                  // Role field
 }

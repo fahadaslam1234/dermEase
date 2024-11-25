@@ -26,11 +26,15 @@
           <span  routerLink="/account">
             <mat-icon>account_circle</mat-icon>
             <span *ngIf="isLoggedIn()" > {{ user?.user_name }} </span>
-            </span>
+          </span>
           <ul class="dropdown-content">
             <!-- Show Admin Settings if user is an admin -->
-            <ol *ngIf="isAdmin" routerLink="/admin">
-              <span>Admin Settings</span>
+            <ol *ngIf="isAdmin && isLoggedIn()" routerLink="/admin">
+              <span>Admin Dashboard</span>
+            </ol>
+
+            <ol *ngIf="isVendor && isLoggedIn()" routerLink="/admin">
+              <span>Vendor Dashboard</span>
             </ol>
 
             <!-- Show Login/Signup if user is not logged in -->

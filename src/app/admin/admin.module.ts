@@ -20,9 +20,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { ProductListComponent } from './productList/productList.component';
 import { EditProductDialogComponent } from './EditProductDialogComponent/EditProductDialogComponent.component';
+import { ApprovalsComponent } from './Approvals/Approvals.component';
 
 @NgModule({
-  declarations: [AdminLayoutComponent,AddProductComponent,UsersComponent,ProductListComponent,EditProductDialogComponent],
+  declarations: [AdminLayoutComponent,AddProductComponent,UsersComponent,ProductListComponent,EditProductDialogComponent,ApprovalsComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,MatIconModule,

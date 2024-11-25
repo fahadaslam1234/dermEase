@@ -38,7 +38,7 @@
 
 mat-icon {
   cursor: pointer;
-  font-size: 24px;
+  font-size: 28px;
 }
 
 nav {
@@ -180,6 +180,9 @@ nav {
     text-decoration: none;
     position: relative;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .fa {
       font-size: 18px;

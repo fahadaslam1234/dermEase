@@ -30,21 +30,25 @@ export class AuthService {
   }
 
     // Public signup method
-    public signup<ApiResponse>(user_name: string, email: string, password: string, is_dermatologist: boolean, file?: File): Observable<ApiResponse> {
+    public signup<ApiResponse>(user_name: string, email: string, password: string, is_dermatologist: boolean, is_vendor : boolean, file?: File): Observable<ApiResponse> {
       const formData: FormData = new FormData();
       formData.append('user_name', user_name);
       formData.append('email', email);
       formData.append('password', password);
       formData.append('is_dermatologist', is_dermatologist.toString());
+      formData.append('is_vendor', is_vendor.toString());
+
+      console.log(user_name, email, password,is_dermatologist);
 
       if (is_dermatologist && file) {
         formData.append('certification', file, file.name);
       }
-
+      console.log(formData);
       const options = { headers: new HttpHeaders({ /* No content-type header for multipart/form-data */ }) };
       return this.http.post<ApiResponse>(`${this.service.API_URL}authentication/register`, formData, options)
         .pipe(catchError(this.handleError));
     }
+
 
   // Public method to logout the user
   public logout(): void {

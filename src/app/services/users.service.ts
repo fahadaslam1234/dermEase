@@ -18,6 +18,28 @@ export class UserService {
     );
   }
 
+  // Get all pending approvals
+  getAllApprovals(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.commonService.API_URL}authentication/getAllPendingUsers`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  approveOrRejectUser(user_id: string, status: 'approve' | 'reject'): Observable<any> {
+    const body = {
+      user_id,
+      status: status === 'approve' ? 'approved' : 'rejected' // Map action to status value
+    };
+    console.log(body);
+    return this.http.post<any>(
+      `${this.commonService.API_URL}authentication/approveReject`,
+      body
+    ).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
   // Delete a user by ID
   deleteUser(user_id: string): Observable<any> {
     const body = { user_id }; // Send the user ID in the request body
@@ -26,6 +48,7 @@ export class UserService {
     );
   }
 
+  // Handle errors
   private handleError(error: HttpErrorResponse) {
     if (error.status === 403) {
       return throwError(() => new Error("You don't have permissions for this operation."));

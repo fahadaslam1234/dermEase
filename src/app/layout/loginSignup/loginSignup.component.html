@@ -17,12 +17,17 @@
           <input matInput id="password" type="password" placeholder="Password" required [(ngModel)]="password" name="password">
         </mat-form-field>
 
-        <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isDermatologist" name="isDermatologist">
+        <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isDermatologist" name="isDermatologist" (change)="onCheckboxChange('isDermatologist')">
           Is Dermatologist
         </mat-checkbox>
 
+        <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isVendor" name="isVendor" (change)="onCheckboxChange('isVendor')">
+          Is Vendor
+        </mat-checkbox>
+
+
         <!-- Show file attachment input if Is Dermatologist is checked -->
-        <div *ngIf="!isLoginMode && isDermatologist">
+        <div *ngIf="!isLoginMode && (isDermatologist || isVendor)">
           <label for="certification">Upload Certification</label>
           <input type="file" id="certification" (change)="onFileSelected($event)">
         </div>

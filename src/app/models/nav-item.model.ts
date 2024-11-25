@@ -1,16 +1,16 @@
 export class NavModule{
     name!: string;
     tiles!: NavModuleItem[]
-    role!: string;
+    role: [];
     icon!:string;
     hidden?: boolean;
   }
-  
+
   export class NavModuleItem{
     title!: string;
     icon!: string;
     component!: any;
     permission!: string;
-    modulename!:string
+    modulename!:string;
+    roles!: any
   }
-  
