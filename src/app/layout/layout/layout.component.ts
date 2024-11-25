@@ -40,15 +40,17 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   // Fetch products from backend
   fetchProducts(): void {
     this.productService.getAllProducts().subscribe({
-      next: (products) => {
+      next: (response: any) => {
+        const products = response.data;
         this.products = products;
-        this.updatePaginatedProducts(0, this.pageSize); // Set paginated products after fetching
+        console.log(products);
       },
       error: (err) => {
         console.error('Error fetching products:', err);
       }
     });
   }
+
 
   updatePaginatedProducts(pageIndex: number, pageSize: number) {
     const startIndex = pageIndex * pageSize;
