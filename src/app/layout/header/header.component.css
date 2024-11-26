@@ -10,31 +10,53 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.search-bar {
-  margin-left: 10px;
+/* Container for the search icon and bar */
+.search-container {
   display: flex;
   align-items: center;
 }
 
+/* Search Icon */
+.search-icon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* Search Bar */
+.search-bar {
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out; /* Smoothly reveal the input */
+}
+
+/* Search Input */
 .search-bar input {
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  width: 200px; /* Width of the input field */
 }
 
-.search-bar button {
-  margin-left: 5px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.search-bar input:focus {
+  outline: none;
+  border: 1px solid var(--primary-color3); /* Blue border on focus */
 }
 
-.search-bar button:hover {
-  background-color: #0056b3;
+/* Animation for the search bar */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 
 mat-icon {
   cursor: pointer;
@@ -122,7 +144,7 @@ nav {
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 10000;
         margin-top: 221px;
-        width: 210px;
+        width: 150px;
         height: 150px;
         margin-left: -20px;
         border-radius: 0 0px 10px 10px;

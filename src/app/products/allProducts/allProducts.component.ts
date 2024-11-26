@@ -38,8 +38,8 @@ export class AllProductsComponent implements OnInit {
   // Fetch all products from the backend using ProductService
   fetchAllProducts(): void {
     this.productService.getAllProducts().subscribe({
-      next: (products) => {
-        this.products = products;
+      next: (response: any) => {
+        this.products = response.data;
         this.updatePaginatedProducts(0, this.pageSize); // Initialize pagination
       },
       error: (err) => {

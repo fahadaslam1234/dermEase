@@ -1,19 +1,23 @@
 <header class="header">
   <div class="container">
-    <div (click)="toggleSearch()">
-      <mat-icon>search</mat-icon>
+    <div class="search-container">
+
+      <div  class="search-bar">
+        <input
+          type="text"
+          placeholder="Search for products"
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+          (input)="onInputChange()"
+          *ngIf="isSearchBarVisible"
+        />
+        <div class="search-icon" (click)="toggleSearch()">
+          <mat-icon>search</mat-icon>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Search Bar -->
-    <div *ngIf="isSearchBarVisible" class="search-bar">
-      <input
-        type="text"
-        placeholder="Search for products"
-        [(ngModel)]="searchQuery"
-        (keyup.enter)="onSearch()"
-      />
-      <button (click)="onSearch()">Search</button>
-    </div>
     <div class="logo">
       <img src="../../../assets/images/logo.png" routerLink="/" alt="" width="100" height="80" />
     </div>

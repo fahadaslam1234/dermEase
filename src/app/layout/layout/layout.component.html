@@ -6,9 +6,11 @@
 
 <section class="featured-products">
   <h2>Featured <span>Products</span></h2>
-  <p>Our skin care & hair care brand revolves around sustainability. As our products do not contain any harmful chemicals like parabens, phthalates and sulphates.</p>
+  <p>
+      Our skin care & hair care brand revolves around sustainability. As our products do not contain any harmful chemicals like parabens, phthalates, and sulphates.
+  </p>
   <div class="product-grid">
-    <div class="product-card" *ngFor="let product of products">
+    <div class="product-card" *ngFor="let product of filteredProducts">
       <img [src]="product.product_image" [alt]="product.product_name">
       <h3>{{ product.product_name }}</h3>
       <div class="price">
@@ -20,9 +22,10 @@
         <span (click)="quickView(product)" class="quickView">Quickview</span>
       </div>
     </div>
-
   </div>
+
 </section>
+
 
 <!-- <div class="cart-sidebar" [class.show]="cartVisible">
   <div class="cart-header">

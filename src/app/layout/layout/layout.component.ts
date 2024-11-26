@@ -7,13 +7,14 @@ import { CartService } from '../../services/cart.service';
 import { Router } from '@angular/router';
 import { OverlayService } from '../../services/overlay.service';
 import { ProductService } from '../../services/productService'; // Import ProductService
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css']
 })
-export class LayoutComponent implements OnInit, AfterViewInit {
+export class LayoutComponent implements OnInit {
   cartVisible = false;
   cartItems: any[] = [];
   products: Product[] = [];
@@ -21,21 +22,31 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   pageSize = 4;
   pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
   pageEvent!: PageEvent;
+  filteredProducts = [...this.products];
 
   constructor(
     private dialog: MatDialog,
     private cartService: CartService,
     private router: Router,
     private overlayService: OverlayService,
-    private productService: ProductService  // Inject ProductService
+    private productService: ProductService,  // Inject ProductService
+    private searchService : SearchService
   ) {}
 
   ngOnInit() {
     this.fetchProducts(); // Fetch products from the backend
     this.subscribeToCartUpdates();
+
+    this.searchService.searchQuery$.subscribe((query) => {
+      this.filterProducts(query);
+  });
   }
 
-  ngAfterViewInit(): void {}
+  filterProducts(query: string) {
+    this.filteredProducts = this.products.filter((product) =>
+        product.product_name.toLowerCase().includes(query.toLowerCase())
+    );
+}
 
   // Fetch products from backend
   fetchProducts(): void {
@@ -43,6 +54,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
       next: (response: any) => {
         const products = response.data;
         this.products = products;
+        this.filteredProducts = [...this.products];
         console.log(products);
       },
       error: (err) => {

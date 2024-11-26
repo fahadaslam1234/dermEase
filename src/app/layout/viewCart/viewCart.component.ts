@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ProductService } from '../../services/productService';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/productModel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-viewCart',
@@ -12,22 +12,17 @@ import { Product } from '../../models/productModel';
   styleUrls: ['./viewCart.component.css']
 })
 export class ViewCartComponent implements OnInit, AfterViewInit {
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
-  products: Product[] = [];
-  dataSource = new MatTableDataSource<Product>(this.products);
+  cartItems: Product[] = []; // Updated to reflect cart items only
+  dataSource = new MatTableDataSource<Product>(this.cartItems);
   displayedColumns: string[] = ['product', 'price', 'quantity', 'subtotal'];
 
-  constructor(
-    private productService: ProductService, // Inject ProductService
-    private cartService: CartService
-  ) { }
+  constructor(private cartService: CartService, private router : Router) {}
 
   ngOnInit(): void {
-    this.fetchProducts();
-    this.subscribeToCartUpdates();
+    this.subscribeToCartUpdates(); // Subscribe to cart updates on initialization
   }
 
   ngAfterViewInit(): void {
@@ -35,43 +30,48 @@ export class ViewCartComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  // Fetch products from the backend using ProductService
-  fetchProducts(): void {
-    this.productService.getAllProducts().subscribe({
-      next: (products) => {
-        this.products = products;
-        this.dataSource.data = products; // Update table data source
-      },
-      error: (err) => {
-        console.error('Error fetching products:', err);
-      }
+  // Subscribe to cart updates and update the data source
+  subscribeToCartUpdates(): void {
+    this.cartService.getItems().subscribe(cartItems => {
+      this.cartItems = cartItems;
+      this.dataSource.data = this.cartItems; // Update the table with cart items
     });
   }
 
-  // Subscribe to cart updates and update the table
-  subscribeToCartUpdates() {
-    this.cartService.getItems().subscribe(products => {
-      this.products = products;
-      this.dataSource.data = products; // Update the table when cart changes
-    });
-  }
-
-  addToCart(product: Product) {
+  // Add item to cart and refresh the table
+  addToCart(product: Product): void {
     this.cartService.addToCart(product);
-    this.subscribeToCartUpdates(); // Re-subscribe to update changes
+    this.refreshCartData();
   }
 
-  removeFromCart(product: Product) {
+  // Remove one quantity of an item from the cart and refresh the table
+  removeFromCart(product: Product): void {
     this.cartService.removeFromCart(product);
-    this.subscribeToCartUpdates(); // Re-subscribe to update changes
+    this.refreshCartData();
   }
 
+  // Remove an item completely from the cart and refresh the table
+  removeItemCompletely(product: Product): void {
+    this.cartService.removeItemCompletely(product);
+    this.refreshCartData();
+  }
+
+  // Calculate the subtotal for an item
+  calculateItemSubtotal(product: Product): number {
+    return product.price * (product.quantity || 1);
+  }
+
+  // Calculate the total subtotal of the cart
   calculateSubtotal(): number {
-    return this.products.reduce((acc, product) => acc + product.price * (product.quantity || 1), 0);
+    return this.cartItems.reduce((acc, item) => acc + this.calculateItemSubtotal(item), 0);
   }
 
-  calculateTotal(): number {
-    // You can add extra calculations like shipping or taxes
-    return this.calculateSubtotal();
+  // Refresh the cart data source
+  private refreshCartData(): void {
+    this.subscribeToCartUpdates();
+  }
+
+  checkout(): void {
+    this.router.navigate(['/checkOut']);
   }
 }

@@ -33,7 +33,7 @@ export class SolutionFinderComponent implements OnInit {
   concerns: string[] = [
     "Skin Texture/Dullness",
     "Wrinkles & Fine Lines",
-    "Active Acne Breakout",
+    "Acne Prone Skin",
     "Dark Spots",
     "Dark Circles & Puffiness Around Eyes",
     "Cracked, Chafed Skin",

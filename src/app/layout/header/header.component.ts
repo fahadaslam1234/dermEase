@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/productModel';
 import { OverlayService } from '../../services/overlay.service';
-import { AuthService } from '../../services/auth.service'; // Import AuthService
+import { AuthService } from '../../services/auth.service';
+import { SearchService } from '../../services/search.service'; // Import SearchService
 
 @Component({
   selector: 'app-header',
@@ -15,16 +16,18 @@ export class HeaderComponent implements OnInit {
   menuOpen = false;
   cartVisible = false;
   cartItems: any[] = [];
-  user: any = null;  // User object to store the logged-in user
-  isAdmin: boolean = false;  // To store whether the user is an admin or not
-  isVendor: boolean = false;  // To store whether the user is an admin or not
+  user: any = null; // User object to store the logged-in user
+  isAdmin: boolean = false; // To store whether the user is an admin or not
+  isVendor: boolean = false; // To store whether the user is an admin or not
   isSearchBarVisible: boolean = false;
+  searchQuery: string = ''; // Search query property
 
   constructor(
     private router: Router,
     private cartService: CartService,
     private overlayService: OverlayService,
-    private authService: AuthService  // Inject AuthService
+    private authService: AuthService,
+    private searchService: SearchService // Inject SearchService
   ) {}
 
   ngOnInit(): void {
@@ -35,8 +38,8 @@ export class HeaderComponent implements OnInit {
     // Get logged-in user details and check if the user is an admin
     this.user = this.authService.getLoggedInUser();
     if (this.user) {
-      this.isAdmin = this.user.role === 'admin';  // Assuming 'role' field in user object
-      this.isVendor = this.user.role === 'vendor';  // Assuming 'role' field in user object
+      this.isAdmin = this.user.role === 'admin'; // Assuming 'role' field in user object
+      this.isVendor = this.user.role === 'vendor'; // Assuming 'role' field in user object
     }
     console.log(this.user);
   }
@@ -44,6 +47,15 @@ export class HeaderComponent implements OnInit {
   toggleSearch() {
     this.isSearchBarVisible = !this.isSearchBarVisible;
   }
+
+  onSearch() {
+    this.searchService.updateSearchQuery(this.searchQuery); // Update the search query in the service
+  }
+
+    // Update the search query as the user types
+    onInputChange(): void {
+      this.searchService.updateSearchQuery(this.searchQuery); // Real-time search
+    }
 
   toggleMenu() {
     const menu = document.getElementById('dropdownMenu') as HTMLElement;
@@ -67,7 +79,7 @@ export class HeaderComponent implements OnInit {
     this.cartVisible = !this.cartVisible;
   }
 
-  addToCart(product : any){
+  addToCart(product: any) {
     this.cartService.addToCart(product);
     this.cartVisible = true; // Show the cart sidebar when an item is added
   }
@@ -105,7 +117,7 @@ export class HeaderComponent implements OnInit {
   // Logout method
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);  // Redirect to login after logout
+    this.router.navigate(['/login']); // Redirect to login after logout
   }
 
   // Check if the user is logged in

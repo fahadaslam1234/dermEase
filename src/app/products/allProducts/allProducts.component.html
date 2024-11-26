@@ -14,8 +14,8 @@
   </mat-paginator>
   <div class="product-grid">
     <div class="product-card" *ngFor="let product of paginatedProducts">
-      <img [src]="product.image" [alt]="product.name">
-      <h3>{{ product.name }}</h3>
+      <img [src]="product.product_image" [alt]="product.product_name">
+      <h3>{{ product.product_name }}</h3>
       <div class="price">
         <span *ngIf="product.oldPrice" class="old-price">Rs {{ product.oldPrice }}</span>
         <span>Rs {{ product.price }}</span>
@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
- 
+
 </section>
 
 

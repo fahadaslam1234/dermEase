@@ -18,8 +18,8 @@
               <th mat-header-cell *matHeaderCellDef class="product-column"> Product </th>
               <td mat-cell *matCellDef="let element" class="product-column">
                 <div class="d-flex align-items-center">
-                  <img [src]="element.image" alt="" class="product-image mr-2">
-                  {{element.name}}
+                  <img [src]="element.product_image" alt="" class="product-image mr-2">
+                  {{element.product_name}}
                 </div>
               </td>
             </ng-container>
@@ -49,7 +49,7 @@
             <!-- Subtotal Column -->
             <ng-container matColumnDef="subtotal">
               <th mat-header-cell *matHeaderCellDef class="subtotal-column"> Subtotal </th>
-              <td mat-cell *matCellDef="let element" class="subtotal-column"> {{element.price * element.quantity | currency:'Rs'}} </td>
+              <td mat-cell *matCellDef="let element" class="subtotal-column"> {{element.price * element.quantity | currency:'Rs '}} </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -62,25 +62,23 @@
     <div class="col-lg-4 col-md-12 bg-white shadow-md mb-8 rounded p-4 order-summary">
       <h2 class="text-xl font-bold mb-4">Cart Totals</h2>
       <mat-card-content>
-        <div class="flex justify-between mb-2">
-          <span>SUBTOTAL</span>
-          <span>{{ calculateSubtotal() | currency:'Rs' }}</span>
+        <div class="total_details mb-2">
+          <span class="left-side">SUBTOTAL</span>
+          <span class="right-side">{{ calculateSubtotal() | currency:'Rs ' }}</span>
         </div>
-        <hr class="my-2">
-        <div class="flex justify-between mb-2">
-          <span>ESTIMATED DELIVERY</span>
-          <span>4 days</span>
+        <div class="total_details mb-2">
+          <span class="left-side">ESTIMATED DELIVERY</span>
+          <span class="right-side">4 days</span>
         </div>
-        <hr class="my-2">
         <div class="text-center mb-4">
           <p>Taxes and Shipping are calculated at Checkout.</p>
         </div>
         <hr class="center-diamond">
-        <div class="flex justify-between mb-2">
-          <span>Total</span>
-          <span>{{ calculateTotal() | currency:'Rs' }}</span>
+        <div class="total_details mb-2">
+          <span class="left-side">Total</span>
+          <span class="right-side">{{ calculateSubtotal () | currency:'Rs ' }}</span>
         </div>
-        <button mat-raised-button class="w-full primary-button">PROCEED TO CHECKOUT</button>
+        <button mat-raised-button class="w-full primary-button" (click)="checkout()">PROCEED TO CHECKOUT</button>
       </mat-card-content>
     </div>
   </div>

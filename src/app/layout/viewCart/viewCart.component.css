@@ -3,7 +3,7 @@ body, html {
   margin: 0;
 }
 
-.cart-container {
+.container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -26,6 +26,7 @@ body, html {
   color: white;
   text-align: center;
   font-size: 16px;
+  margin-top: 6px;
 }
 
 .primary-button:hover {
@@ -49,7 +50,7 @@ body, html {
 }
 
 @media (max-width: 768px) {
-  .shopping-cart-container {
+  .container {
     flex-direction: column;
   }
 
@@ -115,7 +116,7 @@ mat-card {
 }
 
 @media (max-width: 768px) {
-  .cart-container {
+  .container {
     flex-direction: column;
   }
 }
@@ -197,8 +198,8 @@ td {
 }
 
 .col-lg-4 {
-  flex: 0 0 33.33333%;
-  max-width: 33.33333%;
+  flex: 0 0 29.33333%;
+  max-width: 29.33333%;
 }
 
 .mb-4 {
@@ -273,4 +274,53 @@ td {
 .mat-icon {
   height: unset;
   width: unset;
+}
+
+.mat-mdc-card-content{
+  padding: unset !important;
+}
+.total_details{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.right-side{
+  margin-right: 20px;
+}
+.left-side{
+  font-weight: 600;
+}
+/* Adjust product image size and alignment for mobile screens */
+.product-image {
+  max-width: 50px;
+  height: auto;
+}
+
+/* For mobile view, stack the cart totals below the shopping bag */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column !important; /* Stack the rows vertically */
+  }
+
+  .product-column,
+  .price-column,
+  .quantity-column,
+  .subtotal-column {
+    text-align: center; /* Center-align text in mobile view */
+  }
+
+  .order-summary {
+    margin-top: 20px; /* Add spacing between sections */
+  }
+
+  .total_details {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+
+  .w-full {
+    width: 100%;
+  }
 }

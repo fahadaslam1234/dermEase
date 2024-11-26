@@ -7,72 +7,86 @@
     margin: 0 auto;
     padding: 20px;
   }
-  
+
   .left-section, .right-section {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 48%;
   }
-  
+
   @media (max-width: 768px) {
     .left-section, .right-section {
       width: 100%;
     }
   }
-  
+
   mat-card {
     padding: 20px;
   }
-  
+
   .full-width {
     width: 100%;
   }
-  
+
   .half-width {
     width: 48%;
   }
-  
+
   .row {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
   }
-  
+
   table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
   }
-  
+
   th, td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
   }
-  
+
   .summary-details {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-top: 20px;
   }
-  
+
   .summary-item {
     display: flex;
     justify-content: space-between;
   }
-  
+
   .summary-item.total {
     font-weight: bold;
   }
-  
+
   mat-radio-group {
     display: flex;
     flex-direction: column;
   }
-  
+
   mat-radio-button {
     margin-bottom: 10px;
   }
-  
+  .primary-button {
+    padding: 15px;
+    width: 100%;
+    background: linear-gradient(to right, #8b5e3c, #cda079);
+    border: none;
+    cursor: pointer;
+    color: white !important;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .primary-button:hover {
+    background: linear-gradient(to right, #8b5e3c, #cda079);
+  }
