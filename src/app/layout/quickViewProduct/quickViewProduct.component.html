@@ -2,11 +2,11 @@
 <div class="dialog-content">
 
   <div class="image-section">
-    <img [src]="data.image" alt="{{ data.name }}" height="450" width="450">
+    <img [src]="data.product_image" alt="{{ data.name }}" height="450" width="450">
   </div>
   <div class="details-section">
 
-    <h1>{{ data.name }}</h1>
+    <h1>{{ data.product_name }}</h1>
     <p *ngIf="data.oldPrice" class="old-price">Rs {{ data.oldPrice }}</p>
     <p class="price">Rs {{ data.price }}</p>
     <div class="quantity-selector">
@@ -16,14 +16,13 @@
       </div>
 
 
-      <button class="primary-button btn">Add to Cart</button>
+      <button class="primary-button btn" (click)="addToCart(data)">Add to Cart</button>
     </div>
 
     <div class="specifications">
       <h5>SPECIFICATIONS</h5>
       <p>
-        Healthiest, smoothest, clearest, and most luminous yet glass skin is achieved when it is well hydrated. A cocktail of Chamomile extract,
-         Hyaluronic Acid & Niacinamide helps to visibly plump, hydrate, calm, brighten, and firm skin.
+        {{data.product_description}}
       </p>
 
       <div class="social-icons">

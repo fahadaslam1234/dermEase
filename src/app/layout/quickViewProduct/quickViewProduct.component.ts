@@ -1,6 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LayoutComponent } from '../layout/layout.component';
+import { Product } from 'src/app/models/productModel';
+import { CartService } from 'src/app/services/cart.service';
+import { OverlayService } from 'src/app/services/overlay.service';
 
 @Component({
   selector: 'app-quickViewProduct',
@@ -8,22 +11,35 @@ import { LayoutComponent } from '../layout/layout.component';
   styleUrls: ['./quickViewProduct.component.css']
 })
 export class QuickViewProductComponent implements OnInit {
-
+  cartVisible = false;
+  cartItems: any[] = [];
+  products: Product[] = [];
   constructor(
     public dialogRef: MatDialogRef<LayoutComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private cartService: CartService,
+    private overlayService: OverlayService,
   ) {}
 
   ngOnInit() {
   }
 
-  addToCart(product: any) {
-    // Handle add to cart
-    console.log('Add to Cart:', product);
+  addToCart(product: Product) {
+    this.cartService.addToCart(product);
+    this.cartVisible = true; // Show the cart sidebar when an item is added
+    this.subscribeToCartUpdates();
+    this.overlayService.openCart();
+    this.closeDialog();
   }
-
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  subscribeToCartUpdates() {
+    this.cartService.getItems().subscribe(items => {
+      this.cartItems = items;
+      this.cartVisible = items.length > 0; // Automatically show cart when items are added
+    });
   }
 
   validateQuantity(event: Event): void {

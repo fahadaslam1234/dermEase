@@ -13,7 +13,10 @@ export class OverlayService {
 
   constructor(private overlay: Overlay) {}
 
+
   public openCart(): void {
+
+   setTimeout(() => {
     const positionStrategy = this.overlay.position().global().right().top();
     this.overlayRef = this.overlay.create({
       positionStrategy,
@@ -25,6 +28,9 @@ export class OverlayService {
     this.overlayRef.attach(cartPortal);
 
     this.overlayRef.backdropClick().subscribe(() => this.closeCart());
+   }, 100);
+
+
   }
 
   public closeCart(): void {
