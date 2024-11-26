@@ -33,6 +33,9 @@ export class AllProductsComponent implements OnInit {
   ngOnInit() {
     this.fetchAllProducts(); // Fetch all products when the component is initialized
     this.subscribeToCartUpdates();
+    setTimeout(() => {
+      this.cartService.syncCartWithProducts(this.products);
+    }, 2000);
   }
 
   // Fetch all products from the backend using ProductService

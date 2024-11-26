@@ -37,6 +37,11 @@ export class LayoutComponent implements OnInit {
     this.fetchProducts(); // Fetch products from the backend
     this.subscribeToCartUpdates();
 
+    setTimeout(() => {
+      this.cartService.syncCartWithProducts(this.products);
+    }, 2000);
+
+
     this.searchService.searchQuery$.subscribe((query) => {
       this.filterProducts(query);
   });

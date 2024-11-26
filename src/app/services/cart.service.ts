@@ -20,10 +20,9 @@ export class CartService {
   public addToCart(item: Product) {
     let existingItem = this.itemsInCart.find(product => product.product_name === item.product_name);
     if (existingItem) {
-      // Ensure quantity is initialized before incrementing
-      existingItem.quantity = (existingItem.quantity ?? 0) + 1; // Use nullish coalescing to default to 0 if undefined
+      existingItem.quantity = (existingItem.quantity ?? 0) + 1;
     } else {
-      item.quantity = 1; // Initialize quantity for new items
+      item.quantity = 1;
       this.itemsInCart.push(item);
     }
     this.itemsInCartSubject.next(this.itemsInCart);
@@ -32,7 +31,6 @@ export class CartService {
   public removeFromCart(item: Product) {
     const index = this.itemsInCart.findIndex(product => product.product_name === item.product_name);
     if (index !== -1) {
-      // Decrement the quantity or remove the item if quantity falls below 1
       const product = this.itemsInCart[index];
       if (product.quantity && product.quantity > 1) {
         product.quantity -= 1;
@@ -43,23 +41,19 @@ export class CartService {
     }
   }
 
-
-    // New method to remove the entire item
-    public removeItemCompletely(item: Product) {
-      const index = this.itemsInCart.findIndex(product => product.product_name === item.product_name);
-      if (index !== -1) {
-        this.itemsInCart.splice(index, 1);
-        this.itemsInCartSubject.next(this.itemsInCart);
-      }
+  public removeItemCompletely(item: Product) {
+    const index = this.itemsInCart.findIndex(product => product.product_name === item.product_name);
+    if (index !== -1) {
+      this.itemsInCart.splice(index, 1);
+      this.itemsInCartSubject.next(this.itemsInCart);
     }
-
+  }
 
   public getItems(): Observable<Product[]> {
     return this.itemsInCartSubject.asObservable();
   }
 
   public getCartCount(): number {
-    // Sum up all quantities in the cart to get the total count
     return this.itemsInCart.reduce((total, item) => total + (item.quantity ?? 0), 0);
   }
 
@@ -78,5 +72,14 @@ export class CartService {
       this.itemsInCart = [];
       this.itemsInCartSubject.next(this.itemsInCart);
     }
+  }
+
+  // New method to sync cart with available products
+  public syncCartWithProducts(productArray: Product[]): void {
+    this.itemsInCart = this.itemsInCart.filter(cartItem =>
+      productArray.some(product => product.product_name === cartItem.product_name)
+    );
+    this.itemsInCartSubject.next(this.itemsInCart);
+    this.saveCart(); // Save updated cart to localStorage
   }
 }
