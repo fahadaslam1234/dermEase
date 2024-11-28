@@ -341,3 +341,45 @@ td {
   }
 }
 
+
+
+/* not logged in */
+
+.dermconnect-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  background: linear-gradient(to bottom, #f5fafd, #e0f7fa);
+}
+
+.dermconnect-card {
+  max-width: 500px;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #00796b;
+}
+
+mat-card-subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  color: #004d40;
+}
+
+.link {
+  color: #00796b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

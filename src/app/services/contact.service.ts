@@ -11,6 +11,6 @@ export class ContactService {
   constructor(private http: HttpClient, private service: CommonService) { }
 
   sendContactForm(data: any): Observable<any> {
-    return this.http.post<any>(this.service.API_URL + '/contactUs', data);
+    return this.http.post<any>(this.service.API_URL + 'contactUs', data);
   }
 }

@@ -14,8 +14,9 @@ import { CommonService } from 'src/app/services/common.service';
 })
 export class ApprovalsComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'user_name', 'email', 'attachment', 'actions'];
+  displayedColumns: string[] = ['user_name', 'email', 'attachment', 'actions'];
   dataSource = new MatTableDataSource<User>([]);
+  searchText: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -35,6 +36,9 @@ export class ApprovalsComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  filterTable(){
+    this.dataSource.filter = this.searchText.trim().toLowerCase();
+  }
   /**
    * Fetch all pending approvals and set them to the data source
    */

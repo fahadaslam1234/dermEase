@@ -178,7 +178,7 @@ hr{
 .component-header {
   color: white;
   background: linear-gradient(to right, #cda079, #8b5e3c);
-  padding: 10px;
+  padding: 3px;
   border-radius: 10px 10px 0px 0px;
   display: flex;
   align-items: center;
@@ -192,6 +192,20 @@ hr{
     inset 0 5px 5px rgba(243, 245, 243, 0.3),
     0 0 0 1px rgb(243, 241, 241),
     5px 5px 5px rgba(153, 127, 127, 0.6);
+}
+
+/* Search Input */
+.search-bar input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  width: 200px; /* Width of the input field */
+}
+
+.search-bar input:focus {
+  outline: none;
+  border: 1px solid var(--primary-color3);
 }
 
 

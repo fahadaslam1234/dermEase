@@ -13,7 +13,7 @@ import { ToastService } from 'src/app/services/toastService';
 })
 export class UsersComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'user_name', 'email', 'actions'];
+  displayedColumns: string[] = ['user_name', 'email', 'actions'];
   dataSource = new MatTableDataSource<User>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

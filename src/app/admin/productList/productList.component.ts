@@ -15,8 +15,9 @@ import { EditProductDialogComponent } from '../EditProductDialogComponent/EditPr
   styleUrls: ['./productList.component.css']
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['id', 'product_name', 'product_description', 'product_image', 'price', 'actions'];
+  displayedColumns: string[] = ['product_name', 'product_description', 'product_image', 'price', 'actions'];
   dataSource = new MatTableDataSource<Product>([]);
+  searchText: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -32,13 +33,17 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   fetchProducts(): void {
     this.productService.getAllProducts().subscribe({
       next: (response: any) => {
-        const products = response.data;
+        var products = response.data;
         this.dataSource.data = products;
       },
       error: (err) => {
         console.error('Error fetching products:', err);
       }
     });
+  }
+
+  filterTable(){
+    this.dataSource.filter = this.searchText.trim().toLowerCase();
   }
 
   getFullImageUrl(imagePath: string): string {

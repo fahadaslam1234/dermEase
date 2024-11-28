@@ -13,6 +13,6 @@ export class RecommendationService {
     }
 
     getRecommendation(data: any): Observable<any> {
-      return this.http.post<any>(this.service.API_URL + '/recommendation', data);
+      return this.http.post<any>(this.service.API_URL + 'recommendation', data);
     }
 }

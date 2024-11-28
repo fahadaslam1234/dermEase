@@ -10,7 +10,7 @@ import { Product } from 'src/app/models/productModel';
   styleUrls: ['./EditProductDialogComponent.component.css']
 })
 export class EditProductDialogComponent implements OnInit {
-
+  imagePreview: string | ArrayBuffer | null = null;
   editForm: FormGroup;
   selectedFile: File | null = null;
 

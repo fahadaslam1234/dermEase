@@ -1,152 +1,172 @@
-<div style="margin: 20px;">
-  <button (click)="toggleUserType()" class="primary-button">
-    Switch to {{ isDoctor ? 'Patient' : 'Doctor' }} View
-  </button>
+
+<div *ngIf="!isLoggedIn()" class="dermconnect-container">
+  <mat-card class="dermconnect-card">
+    <mat-card-header>
+      <mat-card-title>Welcome to DermConnect</mat-card-title>
+      <mat-card-subtitle>Your personalized dermatology portal</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        To start booking appointments and accessing features, please
+        <a routerLink="/signup" class="link">Sign Up</a>
+        and
+        <a routerLink="/login" class="link">Log In</a>.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" routerLink="/signup">Sign Up</button>
+      <button mat-raised-button color="accent" routerLink="/login">Log In</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
 
-<div class="container" *ngIf="!isDoctor">
-  <div class="appointment-container">
-    <div class="image-container">
-      <img src="../../../assets/images/vision.jpg" alt="Doctor" />
+<div *ngIf="isLoggedIn()">
+  <div class="container" *ngIf="!isDermatologist">
+    <div class="appointment-container">
+      <div class="image-container">
+        <img src="../../../assets/images/vision.jpg" alt="Doctor" />
+      </div>
+
+      <div class="appointment-form">
+        <h2>Book Appointment</h2>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum quo
+          itaque, officiis voluptatem provident inventore nobis voluptas impedit
+          eligendi, officia asperiores ad autem ratione quam.
+        </p>
+        <form>
+
+          <div class="form-fields">
+            <mat-form-field appearance="fill" style="min-width:400px">
+              <mat-label>Patient Name</mat-label>
+              <input matInput placeholder="Patient Name" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" placeholder="Email" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Phone</mat-label>
+              <input matInput type="tel" placeholder="Phone" required />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Select Department</mat-label>
+              <mat-select required>
+                <mat-option *ngFor="let department of departments" [value]="department">
+                  {{ department }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Select Doctor</mat-label>
+              <mat-select required>
+                <mat-option *ngFor="let doctor of doctors" [value]="doctor">
+                  {{ doctor }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Select Time</mat-label>
+              <mat-select required>
+                <mat-option *ngFor="let time of times" [value]="time">
+                  {{ time }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Message</mat-label>
+              <textarea matInput placeholder="Message"></textarea>
+            </mat-form-field>
+          </div>
+
+
+          <button  class="primary-button submit-btn">
+            Book Appointment
+          </button>
+        </form>
+      </div>
+
     </div>
 
-    <div class="appointment-form">
-      <h2>Book Appointment</h2>
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum quo
-        itaque, officiis voluptatem provident inventore nobis voluptas impedit
-        eligendi, officia asperiores ad autem ratione quam.
-      </p>
-      <form>
-
-        <div class="form-fields">
-          <mat-form-field appearance="fill" style="min-width:400px">
-            <mat-label>Patient Name</mat-label>
-            <input matInput placeholder="Patient Name" required />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
-            <input matInput type="email" placeholder="Email" required />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Phone</mat-label>
-            <input matInput type="tel" placeholder="Phone" required />
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Select Department</mat-label>
-            <mat-select required>
-              <mat-option *ngFor="let department of departments" [value]="department">
-                {{ department }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Select Doctor</mat-label>
-            <mat-select required>
-              <mat-option *ngFor="let doctor of doctors" [value]="doctor">
-                {{ doctor }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Date</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" />
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Select Time</mat-label>
-            <mat-select required>
-              <mat-option *ngFor="let time of times" [value]="time">
-                {{ time }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field appearance="fill">
-            <mat-label>Message</mat-label>
-            <textarea matInput placeholder="Message"></textarea>
-          </mat-form-field>
+    <div class="doctor-card-container">
+      <div class="doctor-card" *ngFor="let doctor of doctorsDetails" (click)="viewDoctorDetails(doctor)">
+        <img [src]="doctor.image" alt="{{ doctor.name }}" class="doctor-image"/>
+        <div class="doctor-info">
+          <h3>{{ doctor.name }}</h3>
+          <p>{{ doctor.specialty }}</p>
+          <p>{{ doctor.availability }}</p>
+          <p>{{ doctor.bio }}</p>
         </div>
-
-
-        <button  class="primary-button submit-btn">
-          Book Appointment
-        </button>
-      </form>
-    </div>
-
-  </div>
-
-  <div class="doctor-card-container">
-    <div class="doctor-card" *ngFor="let doctor of doctorsDetails" (click)="viewDoctorDetails(doctor)">
-      <img [src]="doctor.image" alt="{{ doctor.name }}" class="doctor-image"/>
-      <div class="doctor-info">
-        <h3>{{ doctor.name }}</h3>
-        <p>{{ doctor.specialty }}</p>
-        <p>{{ doctor.availability }}</p>
-        <p>{{ doctor.bio }}</p>
       </div>
     </div>
   </div>
-</div>
 
 
 
-<div class="doctor-dashboard-container" *ngIf="isDoctor">
-  <h2>Doctor Dashboard</h2>
+  <div class="doctor-dashboard-container" *ngIf="isDermatologist">
+    <h2>Doctor Dashboard</h2>
 
-  <!-- Appointments Section -->
-  <div class="section">
-    <h3>Upcoming Appointments</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Patient Name</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let appointment of appointments">
-          <td>{{ appointment.patientName }}</td>
-          <td>{{ appointment.date | date }}</td>
-          <td>{{ appointment.time }}</td>
-          <td class="action-buttons">
-            <button class="primary-button" (click)="initiateVideoCall(appointment)">  <mat-icon>videocam</mat-icon>  <span>Start Video Call</span> </button>
-            <button class="primary-button" (click)="initiateChat(appointment)"> <mat-icon class="mat-18">chat</mat-icon> <span>Start Chat</span> </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Incoming Call Section -->
-  <div class="section" *ngIf="incomingCall">
-    <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
-    <div class="action-buttons">
-      <button class="primary-button"   (click)="acceptVideoCall()">Accept</button>
-      <button class="primary-button"  (click)="rejectVideoCall()">Reject</button>
+    <!-- Appointments Section -->
+    <div class="section">
+      <h3>Upcoming Appointments</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let appointment of appointments">
+            <td>{{ appointment.patientName }}</td>
+            <td>{{ appointment.date | date }}</td>
+            <td>{{ appointment.time }}</td>
+            <td class="action-buttons">
+              <button class="primary-button" (click)="initiateVideoCall(appointment)">  <mat-icon>videocam</mat-icon>  <span>Start Video Call</span> </button>
+              <button class="primary-button" (click)="initiateChat(appointment)"> <mat-icon class="mat-18">chat</mat-icon> <span>Start Chat</span> </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
+    <!-- Incoming Call Section -->
+    <div class="section" *ngIf="incomingCall">
+      <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
+      <div class="action-buttons">
+        <button class="primary-button"   (click)="acceptVideoCall()">Accept</button>
+        <button class="primary-button"  (click)="rejectVideoCall()">Reject</button>
+      </div>
+
+    </div>
+
+    <!-- Notifications Section -->
+    <div class="section">
+      <h3>Notifications</h3>
+      <div *ngFor="let notification of notifications">
+        <p>{{ notification.message }}</p>
+      </div>
+      <p *ngIf="notifications.length === 0">No notifications at the moment.</p>
+    </div>
   </div>
 
-  <!-- Notifications Section -->
-  <div class="section">
-    <h3>Notifications</h3>
-    <div *ngFor="let notification of notifications">
-      <p>{{ notification.message }}</p>
-    </div>
-    <p *ngIf="notifications.length === 0">No notifications at the moment.</p>
-  </div>
 </div>
+
 
 
 

@@ -39,7 +39,7 @@ mat-sidenav {
       display: flex;
       align-items: center;
       gap: 1rem;
-      padding:16px;
+      padding:10px;
       cursor: pointer;
       margin-top: 20px;
   }

@@ -3,23 +3,23 @@
     text-align: center;
     padding: 40px 20px;
   }
-  
+
   .featured-products h2 {
     font-size: 24px;
     margin-bottom: 10px;
   }
-  
+
   .featured-products h2 span {
     color: black;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
-  
+
   .featured-products p {
     font-size: 16px;
     color: #666;
     margin-bottom: 30px;
   }
-  
+
   .product-grid {
     display: flex;
     flex-wrap: wrap;
@@ -27,7 +27,7 @@
     padding-inline: 94px;
     margin-top: 20px;
   }
-  
+
   .product-card {
     margin-bottom: 40px;
     margin-right: 14px;
@@ -36,31 +36,33 @@
     box-sizing: border-box;
     text-align: center;
   }
-  
+
   .product-card img {
     width: 100%;
     height: auto;
     margin-bottom: 4px;
   }
-  
+
   .product-card h3 {
     font-size: 16px;
+    height: 45px;
+
   }
-  
-  
+
+
   .product-card .old-price {
     text-decoration: line-through;
     color: #999;
     margin-right: 10px;
   }
-  
+
   .product-card .actions {
     display: flex;
     align-items: center;
     justify-content: space-around;
-  
+
   }
-  
+
   .product-card .actions span {
     margin: 5px 0;
     padding: 10px;
@@ -68,13 +70,13 @@
     cursor: pointer;
     border-bottom: 2px solid var(--primary-color);
   }
-  
+
   .product-card .actions span:hover {
     background: var(--primary-color);
     border-radius: 8px;
     transition: 0.5s ease-in-out;
   }
-  
+
   /* Responsive Design */
   @media (max-width: 1200px) {
     .featured-products .product-grid .product-card {
@@ -85,7 +87,7 @@
       display: none; /* Hide navigation buttons on small screens */
     }
   }
-  
+
   @media (max-width: 768px) {
     .featured-products .product-grid .product-card {
       width: calc(50% - 40px);
@@ -98,7 +100,7 @@
       display: none;
     }
   }
-  
+
   @media (max-width: 480px) {
     .featured-products .product-grid .product-card {
       width: calc(100% + 40px);
@@ -106,14 +108,14 @@
     .featured-products .product-grid .product-card .actions{
       display: none;
     }
-  
+
   }
   .mat-h3, .mat-subtitle-1, .mat-typography .mat-h3, .mat-typography .mat-subtitle-1, .mat-typography h3 {
     font: 400 16px / 28px Roboto, sans-serif;
     letter-spacing: .009375em;
     margin: 0 0 8px !important;
   }
-  
+
 
   .shop-banner {
     display: flex;
@@ -129,22 +131,22 @@
     position: relative;
     overflow: hidden;
   }
-  
+
   .shop-content {
     text-align: center;
     color: #fff;
   }
-  
+
   .shop-content p {
     font-size: 1rem;
     margin: 0;
   }
-  
+
   .shop-content h1 {
     font-size: 3rem;
     margin: 10px 0 0;
   }
-  
+
   .shop-banner::before {
     content: '';
     position: absolute;
@@ -155,17 +157,17 @@
     background-size: cover;
     opacity: 0.9;
   }
-  
+
   @media (max-width: 768px) {
     .shop-banner {
       height: 200px;
     }
-  
+
     .shop-content h1 {
       font-size: 2rem;
     }
   }
-  
+
 
 /* FOR CART CSS */
 
@@ -270,8 +272,8 @@
   border-radius: 6px;
 }
 .mat-icon {
-    height: unset; 
-   width: unset; 
+    height: unset;
+   width: unset;
 }
 .shop-count{
   font-size: 10px;
@@ -312,17 +314,17 @@
 
 /* FOR HR TAG */
 hr{
-  
+
   border: 0;
   height: 1px;
   width: 80%;
   position: relative;
   margin: 30px auto;
-  
-  
+
+
   &.center-ball{
     background: linear-gradient(to right, #cda079, #8b5e3c);
-    
+
     &:before{
       content: "";
       width: 80%;
@@ -337,10 +339,10 @@ hr{
       margin: 0 0 0 -3px;
     }
   }
-  
+
   &.center-diamond{
     background: linear-gradient(to right, #cda079, #8b5e3c);
-    
+
     &:before{
       content: "";
       width: 80%;
@@ -357,10 +359,10 @@ hr{
       -webkit-transform:rotate(45deg); /* Opera, Chrome, and Safari */
     }
   }
-  
+
   &.center-square{
     background: linear-gradient(to right, #cda079, #8b5e3c);
-    
+
     &:before{
       content: "";
       width: 80%;
@@ -374,10 +376,10 @@ hr{
       margin: 0 0 0 -3px;
     }
   }
-  
+
   &.center-star{
     background: linear-gradient(to right, #cda079, #8b5e3c);
-    
+
     &:before{
       content: "★";
       color: linear-gradient(to right, #cda079, #8b5e3c);;

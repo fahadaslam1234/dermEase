@@ -3,13 +3,13 @@
     width: 100%;
     overflow-x: auto;
   }
-  
+
   table {
     width: 100%;
     border-spacing: 0;
     border: 1px solid #e0e0e0;
   }
-  
+
   th, td {
     white-space: nowrap;
     padding: 8px;
@@ -20,28 +20,37 @@
     max-width: 50px;
     height: auto;
   }
-  
+
   @media only screen and (max-width: 600px) {
     .mat-table-responsive {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
     }
-  
+
     table {
       display: table;
       width: 100%;
     }
-  
+
     th, td {
       white-space: nowrap;
       padding: 8px;
       text-align: left;
       font-size: 14px;
     }
-  
+
     .mat-paginator {
       text-align: center;
       font-size: 12px;
     }
   }
-  
+
+/* input[type="text"]{
+  width: 200px;
+  height: 24px;
+  padding: 2px;
+} */
+
+
+
+

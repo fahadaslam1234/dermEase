@@ -126,10 +126,10 @@ export class AdminLayoutComponent implements OnInit {
         var Approvals = new NavModule();
         Approvals.name = 'Approvals';
         Approvals.tiles = [];
-        Approvals.icon = 'person';
+        Approvals.icon = 'done_all';
         Approvals.tiles.push({
           title: 'Approvals',
-          icon: 'list',
+          icon: 'done_all',
           component: ApprovalsComponent,
           permission: '',
           modulename: Approvals.name,
@@ -145,7 +145,7 @@ export class AdminLayoutComponent implements OnInit {
     group.icon = 'supervisor_account';
     group.tiles.push({
       title: 'Add Products',
-      icon: 'add_circle',
+      icon: 'add_circle_outline',
       component: AddProductComponent,
       permission: '',
       modulename: group.name,
@@ -153,7 +153,7 @@ export class AdminLayoutComponent implements OnInit {
     });
     group.tiles.push({
       title: 'All Products',
-      icon: 'group_add',
+      icon: 'view_list',
       component: ProductListComponent,
       permission: '',
       modulename: group.name,

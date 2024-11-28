@@ -1,16 +1,21 @@
 <div class="component-container">
   <div class="component-header">
-    <h2>View Products</h2>
+    <h4>View Products</h4>
+    <div class="search-bar">
+      <input  type="text" placeholder="Search" [(ngModel)]="searchText" (keyup)="filterTable()"/>
+    </div>
+
+
   </div>
 
   <div class="mat-elevation-z8 mat-table-responsive">
     <table mat-table [dataSource]="dataSource" matSort>
 
       <!-- Product ID Column -->
-      <ng-container matColumnDef="id">
+      <!-- <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
         <td mat-cell *matCellDef="let product" data-header="ID"> {{ product._id }} </td>
-      </ng-container>
+      </ng-container> -->
 
       <!-- Name Column -->
       <ng-container matColumnDef="product_name">
@@ -43,7 +48,7 @@
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let product">
           <!-- Delete Icon -->
-          <button mat-icon-button (click)="deleteProduct(product._id)">
+          <button (click)="deleteProduct(product._id)" >
             <mat-icon>delete</mat-icon>
           </button>
           <!-- Edit Icon -->

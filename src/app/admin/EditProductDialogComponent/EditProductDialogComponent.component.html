@@ -1,24 +1,32 @@
-<h2 mat-dialog-title>Edit Product</h2>
-<form [formGroup]="editForm">
-  <mat-form-field appearance="fill">
-    <mat-label>Product Name</mat-label>
-    <input matInput formControlName="product_name">
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Product Description</mat-label>
-    <textarea matInput formControlName="product_description"></textarea>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Price</mat-label>
-    <input matInput type="number" formControlName="price">
-  </mat-form-field>
-
-  <input type="file" (change)="onFileSelected($event)">
-
-  <div mat-dialog-actions>
-    <button mat-button (click)="close()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="save()">Save</button>
+<div class="component-container">
+  <div class="component-header">
+    <h2>Edit Product</h2>
   </div>
-</form>
+  <div class="container">
+    <mat-card>
+      <form #f="ngForm" (ngSubmit)="save()">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Product Name</mat-label>
+          <input matInput type="text" id="productName" name="productName" ngModel required />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Product Description</mat-label>
+          <textarea matInput id="productDescription" name="productDescription" ngModel required></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Product Price</mat-label>
+          <input matInput type="number" id="productPrice" name="productPrice" ngModel required />
+        </mat-form-field>
+
+        <div class="image-upload">
+          <input type="file" (change)="onFileSelected($event)" />
+          <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" class="image-preview" />
+        </div>
+
+        <button class="primary-button submit-btn" type="submit">Submit</button>
+      </form>
+    </mat-card>
+  </div>
+</div>

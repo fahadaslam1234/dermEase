@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { VideoCallComponent } from '../videoCall/videoCall.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatComponent } from '../chat/chat.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-dermConnect',
@@ -57,13 +58,16 @@ export class DermConnectComponent implements OnInit {
   incomingCall: any = null; // Store details of an incoming call
   currentVideoCall: any = null;
   notifications: { message: string }[] = []; // Notifications array
+  user: any = null;
+  isDermatologist: boolean = false;
 
   appointmentForm: FormGroup;
   departments: string[] = ['Cardiology', 'Neurology', 'Pediatrics', 'Orthopedics'];
   doctors: string[] = ['Dr. John Doe', 'Dr. Jane Smith', 'Dr. William Johnson'];
   times: string[] = ['3:00 PM - 5:00 PM', '5:00 PM - 7:00 PM', '7:00 PM - 9:00 PM'];
 
-  constructor(private fb: FormBuilder, private router: Router, private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private router: Router,
+    private authService: AuthService,private dialog: MatDialog) {
     this.appointmentForm = this.fb.group({
       patientName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -77,6 +81,11 @@ export class DermConnectComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.user = this.authService.getLoggedInUser();
+    if (this.user) {
+      this.isDermatologist = this.user.role === 'dermatologist';  // Assuming 'role' field in user object
+    }
     // Example: Simulate an incoming call after 5 seconds (for testing)
     setTimeout(() => this.simulateIncomingCall(), 5000);
   }
@@ -152,5 +161,10 @@ export class DermConnectComponent implements OnInit {
 
   receiveChatNotification(message: string) {
     this.notifications.push({ message });
+  }
+
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 }
