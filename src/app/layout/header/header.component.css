@@ -42,7 +42,7 @@
 
 .search-bar input:focus {
   outline: none;
-  border: 1px solid var(--primary-color3); /* Blue border on focus */
+  border: 1px solid var(--primary-color3); /*  border on focus */
 }
 
 /* Animation for the search bar */
@@ -247,7 +247,6 @@ nav {
   color: #000;
   text-decoration: none;
 }
-
 /* Side navigation */
 .sidenav {
   height: 100%;
@@ -263,7 +262,6 @@ nav {
 }
 
 .sidenav span {
-
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 26px;
@@ -354,6 +352,8 @@ nav {
   .icons span {
     margin: 0 5px;
   }
+
+
 }
 ul {
   display: flex;

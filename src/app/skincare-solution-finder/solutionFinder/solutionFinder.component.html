@@ -59,14 +59,16 @@
           </div>
           <div class="button-layout">
             <button matStepperPrevious class="primary-button">Back</button>
-            <button (click)="showResults()" class="primary-button">Show Results</button>
+            <button (click)="showResults()" [disabled]="!selectedBodyConcern" class="primary-button">Show Results</button>
           </div>
         </form>
       </mat-step>
     </mat-horizontal-stepper>
   </div>
-  <div *ngIf="recommendation?.data?.matchingProducts?.length > 0" class="recommendation">
-    <h2>Recommended Product</h2>
+  <div *ngIf="recommendation?.data?.matchingProducts?.length > 0" class="recommendation product-grid">
+    <h2>Hi!</h2>
+    <span>Here is your Recommended Product.</span> <br>
+    <span> Note: Check with your dermatologist for further diagnoses or treatment.</span>
     <div class="product-card">
       <img [src]="recommendation.data.matchingProducts[0]?.product_image" alt="{{ recommendation.data.matchingProducts[0]?.product_name }}">
       <h3>{{ recommendation.data.matchingProducts[0]?.product_name }}</h3>

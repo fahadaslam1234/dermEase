@@ -75,7 +75,7 @@ export class LoginSignupComponent implements OnInit {
       // Call signup service
       this.authService.signup(this.username, this.email, this.password, this.isDermatologist, this.isVendor,this.selectedFile).subscribe({
         next: (response: any) => {
-          if (response) {
+          if (response.status == true) {
             console.log(response);
             // console.log('Signup successful:', response);
             // Show success toast notification
@@ -83,9 +83,7 @@ export class LoginSignupComponent implements OnInit {
             // After successful signup, switch to login mode
             this.isLoginMode = true;
           } else {
-            // Handle failed signup by showing message from the backend
-            // this.errorMessage = response.message || 'Signup failed. Please try again.';
-            this.toastService.showToast(this.errorMessage, 'error');
+          this.toastService.showToast(response.message, 'error');
           }
         }
       });

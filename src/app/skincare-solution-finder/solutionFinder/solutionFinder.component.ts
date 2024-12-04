@@ -117,11 +117,12 @@ export class SolutionFinderComponent implements OnInit {
       response => {
         this.spinner.hide();
         const baseUrl = this.commonService.imageUrl;
-    if (response?.data?.matchingProducts?.length > 0) {
-      response.data.matchingProducts.forEach(product => {
-        product.product_image = baseUrl + product.product_image;
-      });
-    }
+        if (response?.data?.matchingProducts?.length > 0) {
+          response.data.matchingProducts.forEach(product => {
+            // Prepend the base URL and replace '\\' with '/'
+            product.product_image = (baseUrl + product.product_image).replace(/\\/g, '/');
+          });
+        }
         this.recommendation = response;
         console.log(this.recommendation);
         this.showStepper = false;
