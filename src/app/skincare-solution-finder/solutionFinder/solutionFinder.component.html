@@ -65,21 +65,27 @@
       </mat-step>
     </mat-horizontal-stepper>
   </div>
-  <div *ngIf="recommendation" class="recommendation">
+  <div *ngIf="recommendation?.data?.matchingProducts?.length > 0" class="recommendation">
     <h2>Recommended Product</h2>
     <div class="product-card">
-      <img [src]="recommendation.product_image_url" alt="{{ recommendation.product_name }}">
-      <h3>{{ recommendation.data.recommendedProduct }}</h3>
+      <img [src]="recommendation.data.matchingProducts[0]?.product_image" alt="{{ recommendation.data.matchingProducts[0]?.product_name }}">
+      <h3>{{ recommendation.data.matchingProducts[0]?.product_name }}</h3>
+      <!-- <p>{{ recommendation.data.matchingProducts[0]?.product_description }}</p> -->
       <div class="price">
-        <span *ngIf="recommendation.old_price" class="old-price">Rs {{ recommendation.old_price }}</span>
-        <span>Rs &nbsp; {{ recommendation.product_price }}</span>
+        <span *ngIf="recommendation.data.matchingProducts[0]?.old_price" class="old-price">Rs {{ recommendation.data.matchingProducts[0]?.old_price }}</span>
+        <span>Rs &nbsp; {{ recommendation.data.matchingProducts[0]?.price }}</span>
       </div>
       <div class="actions">
-        <span (click)="addToCart(recommendation)">Add to Cart</span>
-        <span (click)="quickView(recommendation)">Quickview</span>
+        <span (click)="addToCart(recommendation.data.matchingProducts[0])">Add to Cart</span>
+        <span (click)="quickView(recommendation.data.matchingProducts[0])">Quickview</span>
       </div>
     </div>
-    <!-- <p>{{ recommendation.data.recommendedProduct }}</p> -->
+  </div>
+
+
+  <div *ngIf="recommendation?.data?.matchingProducts?.length === 0" class="no-products">
+    <h2>No Products Found</h2>
+    <p>{{ recommendation?.data?.message }}</p>
   </div>
   <div class="stepper-instructions">
     <h3>Looking for a dermatologist-recommended skincare routine?</h3>

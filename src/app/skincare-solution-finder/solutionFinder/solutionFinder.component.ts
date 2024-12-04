@@ -6,6 +6,9 @@ import { Product } from '../../models/productModel';
 import { QuickViewProductComponent } from '../../layout/quickViewProduct/quickViewProduct.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastService } from 'src/app/services/toastService';
+import { CommonService } from 'src/app/services/common.service';
+import { OverlayService } from 'src/app/services/overlay.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-solutionFinder',
@@ -13,6 +16,12 @@ import { ToastService } from 'src/app/services/toastService';
   styleUrls: ['./solutionFinder.component.css']
 })
 export class SolutionFinderComponent implements OnInit {
+
+
+  cartVisible = false;
+  cartItems: any[] = [];
+  products: Product[] = [];
+  filteredProducts = [...this.products];
 
   isIntro = true;
   showStepper = true;
@@ -31,18 +40,17 @@ export class SolutionFinderComponent implements OnInit {
   recommendation: any;
 
   concerns: string[] = [
-    "Skin Texture/Dullness",
+    "Textured Skin",
     "Wrinkles & Fine Lines",
     "Acne Prone Skin",
     "Dark Spots",
-    "Dark Circles & Puffiness Around Eyes",
-    "Cracked, Chafed Skin",
     "Itchy Skin",
     "Psoriasis",
     "Sun Damage",
     "Enlarged Pores",
     "Rough & Bumpy Skin",
-    "Body Acne"
+    "Body Acne",
+    "Dullness"
   ];
 
   skinFeels: string[] = ['Dry', 'Oily', 'Combination'];
@@ -55,9 +63,17 @@ export class SolutionFinderComponent implements OnInit {
   ];
 
   constructor(private _formBuilder: FormBuilder,private service : RecommendationService,
-    private spinner: NgxSpinnerService,private dialog : MatDialog, private toastService : ToastService) {}
+    private spinner: NgxSpinnerService,private dialog : MatDialog, private toastService : ToastService,
+  private commonService: CommonService,private overlayService: OverlayService,private cartService: CartService) {}
 
   ngOnInit() {
+    this.subscribeToCartUpdates();
+
+    setTimeout(() => {
+      this.cartService.syncCartWithProducts(this.products);
+    }, 2000);
+
+
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
     });
@@ -100,7 +116,14 @@ export class SolutionFinderComponent implements OnInit {
     this.service.getRecommendation(data).subscribe(
       response => {
         this.spinner.hide();
+        const baseUrl = this.commonService.imageUrl;
+    if (response?.data?.matchingProducts?.length > 0) {
+      response.data.matchingProducts.forEach(product => {
+        product.product_image = baseUrl + product.product_image;
+      });
+    }
         this.recommendation = response;
+        console.log(this.recommendation);
         this.showStepper = false;
         this.toastService.showToast("Here's your recommended product.", 'success');
       },
@@ -124,6 +147,16 @@ export class SolutionFinderComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    console.log('Add to Cart:', product);
+    this.cartService.addToCart(product);
+    this.cartVisible = true; // Show the cart sidebar when an item is added
+    this.subscribeToCartUpdates();
+    this.overlayService.openCart();
+  }
+
+  subscribeToCartUpdates() {
+    this.cartService.getItems().subscribe(items => {
+      this.cartItems = items;
+      this.cartVisible = items.length > 0; // Automatically show cart when items are added
+    });
   }
 }
