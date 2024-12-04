@@ -12,7 +12,15 @@
     <div class="quantity-selector">
       <div class="quantity-section">
         <label for="quantity" class="qty-label">QTY</label>&nbsp;&nbsp;
-        <input type="number" id="quantity" name="quantity" min="1" value="1" max="20" (input)="validateQuantity($event)">
+        <input
+        type="number"
+        [(ngModel)]="quantity"
+        (change)="validateQuantity($event)"
+        min="1"
+        max="20"
+        placeholder="Quantity"
+      />
+
       </div>
 
 

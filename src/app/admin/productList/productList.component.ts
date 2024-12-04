@@ -26,8 +26,10 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   imageUrl = this.commonService.imageUrl;
 
+
   ngOnInit() {
     this.fetchProducts();
+    console.log(this.imageUrl);
   }
 
   fetchProducts(): void {
@@ -46,9 +48,14 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = this.searchText.trim().toLowerCase();
   }
 
-  getFullImageUrl(imagePath: string): string {
-    return `${this.imageUrl}${imagePath}`;
-  }
+getFullImageUrl(imagePath: string): string {
+  // Replace backslashes with forward slashes
+  const normalizedPath = imagePath.replace(/\\/g, '/'); // Global replacement of '\'
+  const fullImageUrl = `${normalizedPath}`;
+  console.log("Full Image URL:", fullImageUrl); // Logs the corrected full URL
+  return fullImageUrl;
+}
+
 
   deleteProduct(productId: string): void {
     if (confirm('Are you sure you want to delete this product?')) {

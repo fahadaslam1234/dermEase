@@ -10,7 +10,7 @@
     <div class="item-info">
       <img [src]="item.product_image" alt="product image" />
       <div>
-        <div class="itemName">{{ item.product_name }}</div>
+        <div class="itemName"> <span>{{ item.product_name }}</span> </div>
         <div class="quantityAdd">
           <div class="quantityIcons">
             <mat-icon (click)="removeFromCart(item)" class="removeIcon">remove</mat-icon>

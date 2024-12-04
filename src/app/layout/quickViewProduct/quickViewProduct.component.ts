@@ -14,6 +14,8 @@ export class QuickViewProductComponent implements OnInit {
   cartVisible = false;
   cartItems: any[] = [];
   products: Product[] = [];
+  quantity: number = 1; // Default quantity
+
   constructor(
     public dialogRef: MatDialogRef<LayoutComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -25,7 +27,12 @@ export class QuickViewProductComponent implements OnInit {
   }
 
   addToCart(product: Product) {
-    this.cartService.addToCart(product);
+
+    const productWithQuantity = { ...product, quantity: this.quantity };
+    console.log(this.products, productWithQuantity);
+
+    // Call the cart service to add the product with quantity
+    this.cartService.addToCart(productWithQuantity);
     this.cartVisible = true; // Show the cart sidebar when an item is added
     this.subscribeToCartUpdates();
     this.overlayService.openCart();

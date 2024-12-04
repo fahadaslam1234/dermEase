@@ -18,13 +18,19 @@ export class CartService {
   }
 
   public addToCart(item: Product) {
+    // Check if the product already exists in the cart
     let existingItem = this.itemsInCart.find(product => product.product_name === item.product_name);
+
     if (existingItem) {
-      existingItem.quantity = (existingItem.quantity ?? 0) + 1;
+      // Update the quantity of the existing product
+      existingItem.quantity = (existingItem.quantity ?? 0) + (item.quantity ?? 1);
     } else {
-      item.quantity = 1;
+      // Add the product with the specified quantity (default to 1 if not provided)
+      item.quantity = item.quantity ?? 1;
       this.itemsInCart.push(item);
     }
+
+    // Notify subscribers about the updated cart
     this.itemsInCartSubject.next(this.itemsInCart);
   }
 
