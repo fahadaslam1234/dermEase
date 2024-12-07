@@ -19,8 +19,8 @@ export class LayoutComponent implements OnInit {
   cartItems: any[] = [];
   products: Product[] = [];
   paginatedProducts: Product[] = [];
-  pageSize = 4;
-  pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
+  pageSize = 24;
+  pageSizeOptions: number[] = [24, 50, 100]; // Custom page size options
   pageEvent!: PageEvent;
   filteredProducts = [...this.products];
 
@@ -51,6 +51,7 @@ export class LayoutComponent implements OnInit {
     this.filteredProducts = this.products.filter((product) =>
         product.product_name.toLowerCase().includes(query.toLowerCase())
     );
+    this.updatePaginatedProducts(0, this.pageSize);
 }
 
   // Fetch products from backend
@@ -60,6 +61,7 @@ export class LayoutComponent implements OnInit {
         const products = response.data;
         this.products = products;
         this.filteredProducts = [...this.products];
+        this.updatePaginatedProducts(0, this.pageSize);
         console.log(products);
       },
       error: (err) => {
@@ -72,7 +74,7 @@ export class LayoutComponent implements OnInit {
   updatePaginatedProducts(pageIndex: number, pageSize: number) {
     const startIndex = pageIndex * pageSize;
     const endIndex = startIndex + pageSize;
-    this.paginatedProducts = this.products.slice(startIndex, endIndex);
+    this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
   }
 
   handlePageEvent(event: PageEvent) {

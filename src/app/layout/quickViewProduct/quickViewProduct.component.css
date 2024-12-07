@@ -21,7 +21,6 @@
 .details-section {
   width: 100%;
   padding: 30px;
-  overflow-y: auto;
   max-height: 450px;
   height: fit-content;
 }
@@ -30,7 +29,10 @@
   font-size: 24px; /* Adjust the font size as needed */
   color: #000; /* Title color */
 }
-
+.description{
+  overflow-y: auto;
+  height: 130px;
+}
 .price {
   font-size: 20px; /* Adjust the price font size as needed */
   color: #5c2d17; /* Price color */
@@ -127,4 +129,70 @@ p {
   font-size: 20px;
   cursor: pointer;
   color: #8b5e3c;
+}
+
+
+/* For Webkit Browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+  height: 12px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Thumb color on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Sets the width of the scrollbar */
+  scrollbar-color: #888 #f1f1f1; /* thumb color, track color */
+}
+
+/* Styling Scrollbars for Specific Elements */
+.scrollable-div {
+  overflow-y: auto; /* Enable vertical scrolling */
+  scrollbar-width: auto; /* Makes the scrollbar size automatic */
+}
+
+.scrollable-div::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 8px;
+  border: 2px solid #f1f1f1; /* Optional: adds padding to the thumb */
+}
+
+
+/* For input number */
+/* Remove the default arrow buttons for number input fields */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  margin: 0; /* Removes extra margin */
+}
+
+/* Customize the number input field */
+input[type="number"] {
+  width: 60px; /* Adjust width */
+  padding: 5px; /* Padding inside the input box */
+  border: 1px solid #ccc; /* Border styling */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  text-align: center; /* Align text to the center */
+}
+
+/* Add custom arrow buttons */
+input[type="number"] {
+  position: relative;
 }

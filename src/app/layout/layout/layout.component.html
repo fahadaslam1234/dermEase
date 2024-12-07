@@ -9,8 +9,11 @@
   <p>
       Our skin care & hair care brand revolves around sustainability. As our products do not contain any harmful chemicals like parabens, phthalates, and sulphates.
   </p>
+
+  <mat-paginator [length]="filteredProducts.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="handlePageEvent($event)">
+  </mat-paginator>
   <div class="product-grid">
-    <div class="product-card" *ngFor="let product of filteredProducts">
+    <div class="product-card" *ngFor="let product of paginatedProducts">
       <img [src]="product.product_image" [alt]="product.product_name">
       <h4>{{ product.product_name }}</h4>
       <div class="price">

@@ -343,9 +343,11 @@ nav {
   margin-left: 10px;
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: column-reverse;
   animation: fadeIn 0.3s ease-in-out; /* Smoothly reveal the input */
 }
+
+
 }
 
 @media (max-width: 480px) {
@@ -405,6 +407,7 @@ ul {
     &:hover .dropdown-content {
       display: block;
       transition: 0.7s ease-in-out;
+      margin-left: -75px;
     }
   }
 }

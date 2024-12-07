@@ -51,7 +51,7 @@ export class QuickViewProductComponent implements OnInit {
 
   validateQuantity(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
-    const maxQuantity = 20;
+    const maxQuantity = 5;
 
     if (+inputElement.value > maxQuantity) {
       inputElement.value = maxQuantity.toString();

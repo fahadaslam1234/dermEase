@@ -5,33 +5,42 @@
     </mat-card-header>
     <mat-card-content>
       <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" enctype="multipart/form-data">
+        <!-- Username Field -->
         <mat-form-field appearance="fill" class="full-width">
           <input matInput id="username" type="text" placeholder="Username" required [(ngModel)]="username" name="username">
         </mat-form-field>
+        <div *ngIf="usernameError" class="error-message">{{ usernameError }}</div>
 
+        <!-- Email Field (Only for Sign Up) -->
         <mat-form-field appearance="fill" class="full-width" *ngIf="!isLoginMode">
           <input matInput id="email" type="email" placeholder="Email" required [(ngModel)]="email" name="email">
         </mat-form-field>
+        <div *ngIf="emailError" class="error-message">{{ emailError }}</div>
 
+        <!-- Password Field -->
         <mat-form-field appearance="fill" class="full-width">
           <input matInput id="password" type="password" placeholder="Password" required [(ngModel)]="password" name="password">
         </mat-form-field>
+        <div *ngIf="passwordError" class="error-message">{{ passwordError }}</div>
 
+        <!-- Checkbox for Dermatologist -->
         <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isDermatologist" name="isDermatologist" (change)="onCheckboxChange('isDermatologist')">
           Is Dermatologist
         </mat-checkbox>
 
+        <!-- Checkbox for Vendor -->
         <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isVendor" name="isVendor" (change)="onCheckboxChange('isVendor')">
           Is Vendor
         </mat-checkbox>
 
-
-        <!-- Show file attachment input if Is Dermatologist is checked -->
+        <!-- File Upload for Certification -->
         <div *ngIf="!isLoginMode && (isDermatologist || isVendor)">
           <label for="certification">Upload Certification</label>
           <input type="file" id="certification" (change)="onFileSelected($event)">
+          <div *ngIf="fileError" class="error-message">{{ fileError }}</div>
         </div>
 
+        <!-- Submit Button -->
         <div class="signIn">
           <button class="primary-button" type="submit">
             {{ isLoginMode ? 'Sign In' : 'Sign Up' }}
@@ -39,8 +48,10 @@
         </div>
       </form>
     </mat-card-content>
+
+    <!-- Switch Mode Section -->
     <mat-card-actions class="text-center">
-      <span>Already have an account?</span>
+      <span>{{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}</span>
       <div (click)="onSwitchMode()" class="textSign">
         {{ isLoginMode ? 'Sign Up Here' : 'Sign In Here' }}
       </div>

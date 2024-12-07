@@ -18,73 +18,123 @@ export class LoginSignupComponent implements OnInit {
   isDermatologist = false;
   isVendor = false;
   selectedFile: File | null = null;
-  errorMessage: string = '';  // Store error message
+
+  // Validation Errors
+  errorMessage: string = ''; // Store error message
+  emailError: string = '';
+  passwordError: string = '';
+  usernameError: string = '';
+  fileError: string = '';
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toastService: ToastService  // Inject ToastService
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {}
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
+    this.clearErrors(); // Clear errors when switching modes
+    this.email = '';
+    this.password = '';
+    this.username = '';
+    this.isDermatologist = false;
+    this.isVendor = false;
+    this.selectedFile = null;
   }
 
   onCheckboxChange(checkboxType: string): void {
     if (checkboxType === 'isDermatologist') {
-      this.isVendor = false; // Uncheck the other checkbox
+      this.isVendor = false; // Uncheck Vendor checkbox
     } else if (checkboxType === 'isVendor') {
-      this.isDermatologist = false; // Uncheck the other checkbox
+      this.isDermatologist = false; // Uncheck Dermatologist checkbox
     }
   }
-
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
     console.log('Selected file:', this.selectedFile);
   }
 
-  onSubmit(form: NgForm) {
-    if (form.invalid) {
-      return;
+  validateForm(): boolean {
+    this.clearErrors(); // Reset all error messages
+
+    let isValid = true; // Track overall validation status
+
+    // Email validation
+    if (!this.isLoginMode) {
+    if (!this.email || !this.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      this.emailError = 'Please enter a valid email address.';
+      isValid = false;
+    }
+  }
+
+    // Password validation
+    if (!this.password || this.password.length < 6) {
+      this.passwordError = 'Password must be at least 6 characters long.';
+      isValid = false;
     }
 
-    this.errorMessage = '';  // Clear any previous error messages
+    if (!this.isLoginMode) {
+      // Username validation for signup
+      if (!this.username) {
+        this.usernameError = 'Username is required.';
+        isValid = false;
+      }
+    }
+
+    return isValid; // Return overall validation status
+  }
+
+  clearErrors(): void {
+    this.emailError = '';
+    this.passwordError = '';
+    this.usernameError = '';
+    this.errorMessage = '';
+  }
+
+  onSubmit(form: NgForm) {
+    if (form.invalid || !this.validateForm()) {
+      this.toastService.showToast('Please correct the errors in the form.', 'danger');
+      return; // Stop submission if form is invalid
+    }
+
+    this.errorMessage = ''; // Clear any previous errors
 
     if (this.isLoginMode) {
-      // Call login service
+      // Handle login
       this.authService.login(this.username, this.password).subscribe({
         next: (response: any) => {
           if (response.status) {
-            console.log('Login successful:', response);
-            // Show success toast notification
             this.toastService.showToast('Login successful!', 'success');
-            // Navigate to home page upon successful login
-            this.router.navigate(['/']);
-            window.location.reload();
+            // window.location.reload();
+              this.router.navigate(['']);
+
+
           } else {
-            // Handle failed login by showing message from the backend
             this.errorMessage = response.message || 'Login failed. Please try again.';
-            this.toastService.showToast(this.errorMessage, 'error');
+            this.toastService.showToast(this.errorMessage, 'danger');
           }
+        },
+        error: () => {
+          this.toastService.showToast('An error occurred during login. Please try again.', 'danger');
         }
       });
     } else {
-      // Call signup service
-      this.authService.signup(this.username, this.email, this.password, this.isDermatologist, this.isVendor,this.selectedFile).subscribe({
+      // Handle signup
+      this.authService.signup(this.username, this.email, this.password, this.isDermatologist, this.isVendor, this.selectedFile).subscribe({
         next: (response: any) => {
-          if (response.status == true) {
-            console.log(response);
-            // console.log('Signup successful:', response);
-            // Show success toast notification
-            this.toastService.showToast('Signup successful! Please log in.', 'success');
-            // After successful signup, switch to login mode
-            this.isLoginMode = true;
+          if (response.status) {
+            this.toastService.showToast('Signup Successful! Please log in.', 'success');
+            this.isLoginMode = true; // Switch to login mode
           } else {
-          this.toastService.showToast(response.message, 'error');
+            this.toastService.showToast(response.message || 'Signup failed. Please try again.', 'danger');
           }
+        },
+        error: () => {
+          this.toastService.showToast('An error occurred during signup. Please try again.', 'danger');
         }
       });
     }

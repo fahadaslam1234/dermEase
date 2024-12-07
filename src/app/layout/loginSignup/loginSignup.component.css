@@ -51,3 +51,9 @@ label[for="certification"] {
   margin-bottom: 5px;
   font-weight: bold;
 }
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
