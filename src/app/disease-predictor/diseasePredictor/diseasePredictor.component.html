@@ -1,17 +1,9 @@
-<div class="skin-analysis-section">
-  <p class="intro-text">Our skin analyzer tool uses AI to accurately identify 14 skin concerns and help customers find the skincare routine that fits their unique skin type. Integrate the skin analysis & tester service on your brand website or app.</p>
-
-  <div class="skin-analysis-section">
-    <div class="container">
-      <h2>Upload Skin Image</h2>
-      <input type="file" (change)="onFileSelected($event)" />
-      <button (click)="onUpload()">Submit</button>
-
-      <div *ngIf="disease">
-        <h3>Detected Skin Disease: {{ disease }}</h3>
-      </div>
+<div class="container">
+  <div class="overlay">
+    <div class="content">
+      <p>👩‍⚕️ Check yourself first !!</p>
+      <button (click)="identifyDisease()">Identify your Skin disease</button>
     </div>
   </div>
-
-
 </div>
+
