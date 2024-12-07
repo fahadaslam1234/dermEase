@@ -167,4 +167,8 @@ export class DermConnectComponent implements OnInit {
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
+
+  toLogin(){
+    this.router.navigate(['login']);
+  }
 }

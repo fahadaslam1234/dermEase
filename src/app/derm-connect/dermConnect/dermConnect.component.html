@@ -1,24 +1,41 @@
-
-<div *ngIf="!isLoggedIn()" class="dermconnect-container">
-  <mat-card class="dermconnect-card">
-    <mat-card-header>
-      <mat-card-title>Welcome to DermConnect</mat-card-title>
-      <mat-card-subtitle>Your personalized dermatology portal</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-        To start booking appointments and accessing features, please
-        <a routerLink="/signup" class="link">Sign Up</a>
-        and
-        <a routerLink="/login" class="link">Log In</a>.
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" routerLink="/signup">Sign Up</button>
-      <button mat-raised-button color="accent" routerLink="/login">Log In</button>
-    </mat-card-actions>
-  </mat-card>
+<div *ngIf="!isLoggedIn()">
+  <div class="hero-section" >
+    <div class="hero-content">
+    <h2>Find a</h2>
+    <h1 class="title">DERMATOLOGIST</h1>
+  </div>
 </div>
+
+<div class="info-section">
+  <h2>Want to connect with a dermatologist?</h2>
+  <h3>You have to <span class="signIn" (click)="toLogin()">Sign-Up</span>  or
+    <span class="signIn" (click)="toLogin()">Sign-in</span> First !</h3>
+  <p>
+    CeraVe is designed for healthier skin – and part of that routine is having a
+    good dermatologist on your side. Talk to a professional today and get answers to your
+    most pressing skincare questions.
+  </p>
+</div>
+
+<div class="connect-section">
+  <div class="connect-item">
+    <img src="../../../assets/images/FindADerm.jpg" width="373" height="222"  alt="Virtual Connection" />
+    <h3>Connect Virtually</h3>
+    <p>
+      Connect with a board-certified dermatologist about your skincare concerns right from the
+      comfort of your home.
+    </p>
+  </div>
+  <div class="connect-item">
+    <img src="../../../assets/images/forchat.png" width="373" height="222" alt="In-Person Connection" />
+    <h3>Connect in Person</h3>
+    <p>
+      Make an in-person appointment for the most comprehensive assessment of your skin.
+    </p>
+  </div>
+</div>
+</div>
+
 
 <div *ngIf="isLoggedIn()">
   <div class="container" *ngIf="!isDermatologist">
