@@ -14,7 +14,9 @@ export class DiseasePredictorComponent implements OnInit {
   constructor(private service: SkinDiseaseService) { }
 
   ngOnInit(): void { }
-
+  identifyDisease(): void {
+    alert('Redirecting to disease identification page...');
+  }
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
