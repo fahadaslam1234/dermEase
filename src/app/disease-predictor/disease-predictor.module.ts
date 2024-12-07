@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { DiseasePredictorRoutingModule } from './disease-predictor-routing.module';
 import { DiseasePredictorComponent } from './diseasePredictor/diseasePredictor.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 @NgModule({
   declarations: [DiseasePredictorComponent],
   imports: [
     CommonModule,
-    DiseasePredictorRoutingModule
+    DiseasePredictorRoutingModule,MatStepperModule
   ]
 })
 export class DiseasePredictorModule { }

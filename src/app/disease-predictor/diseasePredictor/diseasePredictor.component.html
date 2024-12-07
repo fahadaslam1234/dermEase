@@ -1,9 +1,47 @@
 <div class="container">
-  <div class="overlay">
-    <div class="content">
-      <p>👩‍⚕️ Check yourself first !!</p>
-      <button (click)="identifyDisease()">Identify your Skin disease</button>
+  <div class="intro" *ngIf="isIntro">
+    <button class="intro-button primary-button" (click)="startStepper()">LET'S FIND YOUR SKIN DISEASE !</button>
+  </div>
+  <div *ngIf="!isIntro && showStepper && !isDisease">
+    <mat-horizontal-stepper [linear]="true" #stepper class="custom-stepper">
+      <mat-step>
+        <form [formGroup]="firstFormGroup">
+          <h2>Upload Your Skin Image</h2>
+          <p>Please attach an image for analysis.</p>
+          <div class="file-input-container">
+            <button class="primary-button" type="button"  (click)="fileInput.click()">Browse</button>
+            <input
+              type="file"
+              hidden
+              #fileInput
+              accept="image/*"
+              (change)="onFileSelected($event)" />
+          </div>
+          <div class="image-preview" *ngIf="imagePreview">
+            <img [src]="imagePreview" alt="Selected Image" />
+          </div>
+          <div>
+            <button class="primary-button" type="button"  [disabled]="!selectedFile" (click)="onUpload(selectedFile)">Show Result</button>
+          </div>
+        </form>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+  </div>
+
+  <div *ngIf="disease">
+    <h2>Analysis Result</h2>
+    <div class="image-preview" *ngIf="imagePreview">
+      <img [src]="imagePreview" alt="Selected Image" />
     </div>
+    <p >Identified Disease: {{ disease }}</p>
+  </div>
+
+  <div class="stepper-instructions">
+    <h3>Looking for a dermatologist-recommended skincare routine?</h3>
+    <h4>DermEase is here to help!</h4>
+    <p>This Solution Finder is provided for informational purposes only and is not intended to replace professional medical advice, diagnoses, or
+      treatments. Please consult your dermatologist or doctor if you have any skin issues or concerns.</p>
+    <p>By taking this quiz you agree to Our Terms of Use and acknowledge you read Our Privacy Policy.</p>
   </div>
 </div>
-
