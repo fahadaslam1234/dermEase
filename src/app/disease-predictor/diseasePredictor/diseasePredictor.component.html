@@ -9,7 +9,7 @@
           <h2>Upload Your Skin Image</h2>
           <p>Please attach an image for analysis.</p>
           <div class="file-input-container">
-            <button class="primary-button" type="button"  (click)="fileInput.click()">Browse</button>
+            <button class="primary-button" type="button"  (click)="fileInput.click()"> <mat-icon> attach_file</mat-icon> BROWSE</button>
             <input
               type="file"
               hidden
@@ -21,7 +21,7 @@
             <img [src]="imagePreview" alt="Selected Image" />
           </div>
           <div>
-            <button class="primary-button" type="button"  [disabled]="!selectedFile" (click)="onUpload(selectedFile)">Show Result</button>
+            <button class="primary-button" type="button"  [disabled]="!selectedFile" (click)="onUpload(selectedFile)">PREDIT DISEASE</button>
           </div>
         </form>
       </mat-step>
