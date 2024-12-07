@@ -66,6 +66,8 @@
       margin: 10px 0;
   }
 }
+
+
 ::ng-deep mat-step-header#cdk-step-label-0-0{
   display: none !important;
 }

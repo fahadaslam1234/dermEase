@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ContactService } from 'src/app/services/contact.service';
 import { ToastService } from 'src/app/services/toastService';
 
@@ -13,7 +14,8 @@ export class ContactUsComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private contactService: ContactService, private toastService : ToastService) {
+  constructor(private fb: FormBuilder, private contactService: ContactService, private toastService : ToastService,
+    private spinner: NgxSpinnerService) {
     // Initialize the form group with form controls
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -27,21 +29,12 @@ export class ContactUsComponent implements OnInit {
 
   // Handle form submission
   onSubmit(): void {
-    console.log('Form Submitted!');
-    console.log('Form Valid:', this.contactForm.valid);
-    console.log('Form Data:', this.contactForm.value);
-
-    // Check validation errors
-    console.log('Name Errors:', this.contactForm.get('name')?.errors);
-    console.log('Email Errors:', this.contactForm.get('email')?.errors);
-    console.log('Phone Errors:', this.contactForm.get('phone')?.errors);
-    console.log('Message Errors:', this.contactForm.get('message')?.errors);
+    this.spinner.show();
 
     if (this.contactForm.valid) {
-      console.log('form submitted');
       this.contactService.sendContactForm(this.contactForm.value).subscribe({
         next: (response: any) => {
-          console.log('response:', response);
+          this.spinner.hide();
           this.toastService.showToast('Your message has been sent successfully!', 'success');
           this.errorMessage = '';
           this.contactForm.reset();

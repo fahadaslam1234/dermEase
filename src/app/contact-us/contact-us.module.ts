@@ -5,6 +5,7 @@ import { ContactUsRoutingModule } from './contact-us-routing.module';
 import { ContactUsComponent } from './contactUs/contactUs.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ContactUsRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,NgxSpinnerModule
   ]
 })
 export class ContactUsModule { }
