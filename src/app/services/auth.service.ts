@@ -10,6 +10,21 @@ export class AuthService {
 
   constructor(private http: HttpClient, private service: CommonService) { }
 
+  // private apiUrl = 'https://pilot.thecbt.cyou/api/v1/authentication';
+
+  forgetPassword(email: string): Observable<any> {
+    return this.http.post(`${this.service.API_URL}authentication/forget-password`, { user_email: email });
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<any> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(
+      `${this.service.API_URL}authentication/reset-password`,
+      { new_password: newPassword },
+      { headers }
+    );
+  }
+
   // Public login method
   public login<ApiResponse>(username: string, password: string): Observable<ApiResponse> {
     const body = { 'user_name': username, 'password': password };

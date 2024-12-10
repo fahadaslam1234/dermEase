@@ -22,12 +22,15 @@ import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FAQsComponent } from './FAQs/FAQs.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ForgetPasswordComponent } from './forgetPassword/forgetPassword.component';
+import { ResetPasswordComponent } from './resetPassword/resetPassword.component';
 
 
 
 @NgModule({
   declarations: [
-    LayoutComponent,AddToCartComponent,LoginSignupComponent,QuickViewProductComponent,ViewCartComponent,FAQsComponent
+    LayoutComponent,AddToCartComponent,LoginSignupComponent,QuickViewProductComponent,ViewCartComponent,
+    FAQsComponent,ForgetPasswordComponent,ResetPasswordComponent
   ],
   imports: [
     CommonModule,

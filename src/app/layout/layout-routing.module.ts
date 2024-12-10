@@ -7,6 +7,8 @@ import { AddToCartComponent } from './addToCart/addToCart.component';
 import { FAQsComponent } from './FAQs/FAQs.component';
 import { PrivacyPolicyComponent } from './PrivacyPolicy/PrivacyPolicy.component';
 import { RefundPolicyComponent } from './RefundPolicy/RefundPolicy.component';
+import { ForgetPasswordComponent } from './forgetPassword/forgetPassword.component';
+import { ResetPasswordComponent } from './resetPassword/resetPassword.component';
 
 const routes: Routes = [
   {
@@ -43,6 +45,14 @@ const routes: Routes = [
   {
     path: 'RefundPolicy',
     component:RefundPolicyComponent
+  },
+  {
+    path: 'forgetPassword',
+    component:ForgetPasswordComponent
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent
   }
 
 ];

@@ -20,6 +20,15 @@
   padding: 16px;
   font-size: 16px;
 }
+.forgetPassword{
+  float: right;
+  margin-top: 8px;
+}
+.forgetPassword:hover{
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
 
 .text-center {
   text-align: center;

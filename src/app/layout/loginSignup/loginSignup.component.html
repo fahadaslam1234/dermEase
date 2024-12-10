@@ -23,6 +23,7 @@
         </mat-form-field>
         <div *ngIf="passwordError" class="error-message">{{ passwordError }}</div>
 
+
         <!-- Checkbox for Dermatologist -->
         <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isDermatologist" name="isDermatologist" (change)="onCheckboxChange('isDermatologist')">
           Is Dermatologist
@@ -46,6 +47,8 @@
             {{ isLoginMode ? 'Sign In' : 'Sign Up' }}
           </button>
         </div>
+
+        <span (click)="toFogetPassword()" class="forgetPassword" *ngIf="isLoginMode">Forget Password ?</span>
       </form>
     </mat-card-content>
 
