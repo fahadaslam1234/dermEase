@@ -24,6 +24,13 @@
         <td mat-cell *matCellDef="let user" data-header="Email"> {{ user.email }} </td>
       </ng-container>
 
+         <!-- Email Column -->
+         <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+          <td mat-cell *matCellDef="let user" data-header="Role"> {{ user.role }} </td>
+        </ng-container>
+
+
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>

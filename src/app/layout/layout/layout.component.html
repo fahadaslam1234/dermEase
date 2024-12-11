@@ -14,11 +14,13 @@
   </mat-paginator>
   <div class="product-grid">
     <div class="product-card" *ngFor="let product of paginatedProducts">
-      <img [src]="product.product_image" [alt]="product.product_name">
-      <h4>{{ product.product_name }}</h4>
-      <div class="price">
-        <span *ngIf="product.oldPrice" class="old-price">Rs {{ product.oldPrice }}</span>
-        <span>Rs {{ product.price }}</span>
+      <div  (click)="getProductDetails(product._id)" [routerLink]="['/product', product._id]">
+        <img [src]="product.product_image" [alt]="product.product_name">
+        <h4>{{ product.product_name }}</h4>
+        <div class="price">
+          <span *ngIf="product.oldPrice" class="old-price">Rs {{ product.oldPrice }}</span>
+          <span>Rs {{ product.price }}</span>
+        </div>
       </div>
       <div class="actions">
         <span (click)="addToCart(product)">Add to Cart</span>

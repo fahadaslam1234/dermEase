@@ -26,6 +26,15 @@ export class ProductService {
     );
   }
 
+  getProductDetails(productId: string): Observable<Product> {
+    console.log(productId);
+    return this.http
+      .get<Product>(`${this.service.API_URL}product/getSingleProduct`, {
+        params: { product_id: productId }, // Use query parameters for GET request
+      })
+      .pipe(catchError(this.handleError));
+  }
+
 
   // Delete a product by ID
   deleteProduct(product_id: string): Observable<any> {

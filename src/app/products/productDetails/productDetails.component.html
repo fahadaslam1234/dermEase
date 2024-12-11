@@ -1,0 +1,106 @@
+<div class="product-details-page">
+  <div class="product-details">
+    <div class="image-section">
+      <img [src]="product?.product_image" alt="{{ product?.product_name }}" />
+    </div>
+    <div class="details-section">
+      <h1>{{ product?.product_name }}</h1>
+      <p class="price">Rs {{ product?.price }}</p>
+      <!-- <p class="description">{{ product?.product_description }}</p> -->
+      <div class="quantity-selector">
+        <div class="quantity-section">
+          <label for="quantity" class="qty-label">QTY</label>&nbsp;&nbsp;
+          <input
+          type="number"
+          [(ngModel)]="quantity"
+          (change)="validateQuantity($event)"
+          min="1"
+          max="20"
+          placeholder="Type"
+        />
+        </div>
+        <button class="primary-button btn" (click)="addToCart(product)">Add to cart</button>
+      </div>
+
+      <div class="specifications">
+        <h3>SPECIFICATIONS</h3>
+        <p class="description">
+          {{product.product_description}}
+        </p>
+
+        <div class="social-icons">
+          <h3> SHARE</h3>
+          <div class="social-icons">
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-envelope-open"></i>
+            <i class="fa fa-pinterest"></i>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="reviews-section">
+    <h2 style="text-align: center;">Reviews</h2>
+    <!-- List of Reviews -->
+    <div class="reviews-list" *ngIf="reviews.length > 0; else noReviews">
+      <h3 style="text-align: center;">All Reviews</h3>
+      <div *ngFor="let review of reviews" class="review-item" style="text-align: center;">
+        <p><strong>{{ review.username }}</strong> ({{ review.email }})</p>
+        <p>{{ review.comments }}</p>
+        <hr />
+      </div>
+    </div>
+
+
+        <!-- Review Form -->
+        <div class="review-form">
+          <h2 style="text-align: center;">Write a Review</h2>
+          <form (ngSubmit)="submitReview()">
+            <div class="form-group">
+              <label for="username">Name</label>
+              <input
+                type="text"
+                id="username"
+                [(ngModel)]="reviewForm.username"
+                name="username"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                [(ngModel)]="reviewForm.email"
+                name="email"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="comments">Comments</label>
+              <textarea
+                id="comments"
+                rows="4"
+                [(ngModel)]="reviewForm.comments"
+                name="comments"
+                required
+              ></textarea>
+            </div>
+
+            <button type="submit" class="primary-button">Submit Review</button>
+          </form>
+        </div>
+
+
+    <ng-template #noReviews>
+      <p>No reviews yet. Be the first to review!</p>
+    </ng-template>
+  </div>
+</div>

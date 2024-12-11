@@ -21,6 +21,7 @@ export class AllProductsComponent implements OnInit {
   pageSize = 4;
   pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
   pageEvent!: PageEvent;
+  product!: Product;
 
   constructor(
     private dialog: MatDialog,
@@ -115,5 +116,13 @@ export class AllProductsComponent implements OnInit {
 
   onViewCart() {
     this.router.navigate(['/viewCart']);
+  }
+
+  getProductDetails(productId: string){
+    if (productId) {
+      this.productService.getProductDetails(productId).subscribe((data) => {
+        this.product = data;
+      });
+    }
   }
 }

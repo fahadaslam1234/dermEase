@@ -23,6 +23,7 @@ export class LayoutComponent implements OnInit {
   pageSizeOptions: number[] = [24, 50, 100]; // Custom page size options
   pageEvent!: PageEvent;
   filteredProducts = [...this.products];
+  product!: Product;
 
   constructor(
     private dialog: MatDialog,
@@ -130,4 +131,14 @@ export class LayoutComponent implements OnInit {
   getTotal() {
     return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
+
+  getProductDetails(productId: string){
+    if (productId) {
+      this.productService.getProductDetails(productId).subscribe((data) => {
+        this.product = data;
+      });
+    }
+  }
+
+
 }

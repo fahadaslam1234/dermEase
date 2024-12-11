@@ -9,11 +9,16 @@ import { PrivacyPolicyComponent } from './PrivacyPolicy/PrivacyPolicy.component'
 import { RefundPolicyComponent } from './RefundPolicy/RefundPolicy.component';
 import { ForgetPasswordComponent } from './forgetPassword/forgetPassword.component';
 import { ResetPasswordComponent } from './resetPassword/resetPassword.component';
+import { ProductDetailsComponent } from '../products/productDetails/productDetails.component';
 
 const routes: Routes = [
   {
     path:'shop/products',
     component: AllProductsComponent
+  },
+  {
+    path: 'product/:id', // Dynamic route with ID parameter
+    component: ProductDetailsComponent,
   },
   {
     path:'login',
