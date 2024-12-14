@@ -67,28 +67,45 @@
   </div>
   <div *ngIf="recommendation?.data?.matchingProducts?.length > 0" class="recommendation product-grid">
     <h2>Hi!</h2>
-    <span>Here is your Recommended Product.</span> <br>
-    <span> Note: Check with your dermatologist for further diagnoses or treatment.</span>
-    <div class="product-card">
-      <img [src]="recommendation.data.matchingProducts[0]?.product_image" alt="{{ recommendation.data.matchingProducts[0]?.product_name }}">
-      <h3>{{ recommendation.data.matchingProducts[0]?.product_name }}</h3>
-      <!-- <p>{{ recommendation.data.matchingProducts[0]?.product_description }}</p> -->
-      <div class="price">
-        <span *ngIf="recommendation.data.matchingProducts[0]?.old_price" class="old-price">Rs {{ recommendation.data.matchingProducts[0]?.old_price }}</span>
-        <span>Rs &nbsp; {{ recommendation.data.matchingProducts[0]?.price }}</span>
-      </div>
-      <div class="actions">
-        <span (click)="addToCart(recommendation.data.matchingProducts[0])">Add to Cart</span>
-        <span (click)="quickView(recommendation.data.matchingProducts[0])">Quickview</span>
+    <span>Here are your Recommended Products.</span> <br>
+    <span>Note: Check with your dermatologist for further diagnoses or treatment.</span>
+
+    <!-- Loop through all matching products and display them in a grid -->
+    <div class="product-list">
+      <div *ngFor="let product of recommendation.data.matchingProducts" class="product-card">
+        <img [src]="product?.product_image" alt="{{ product?.product_name }}">
+        <h3>{{ product?.product_name }}</h3>
+        <div class="price">
+          <span *ngIf="product?.old_price" class="old-price">Rs {{ product?.old_price }}</span>
+          <span>Rs &nbsp; {{ product?.price }}</span>
+        </div>
+        <div class="actions">
+          <span (click)="addToCart(product)">Add to Cart</span>
+          <span (click)="quickView(product)" class="quickView">Quickview</span>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- If no matching products are found -->
+  <div *ngIf="recommendation?.data?.matchingProducts?.length === 0" class="no-recommendation">
+    <h2>Sorry!</h2>
+    <span>We couldn't find any matching products in our store.</span>
+    <span>But you can check the following external sources for availability:</span>
 
-  <div *ngIf="recommendation?.data?.matchingProducts?.length === 0" class="no-products">
-    <h2>No Products Found</h2>
-    <p>{{ recommendation?.data?.message }}</p>
+    <!-- Display external links for recommendations -->
+    <ul *ngIf="recommendation?.data?.externalLinks?.length > 0">
+      <li *ngFor="let external of recommendation.data.externalLinks">
+        <h3>{{ external.name }}</h3>
+        <ul>
+          <li *ngFor="let link of external.links">
+            <a [href]="link.url" target="_blank">{{ link.name }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
+
   <div class="stepper-instructions">
     <h3>Looking for a dermatologist-recommended skincare routine?</h3>
     <h4>DermEase is here to help!</h4>

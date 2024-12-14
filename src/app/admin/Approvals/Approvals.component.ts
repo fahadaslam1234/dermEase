@@ -45,7 +45,7 @@ export class ApprovalsComponent implements OnInit, AfterViewInit {
   loadApprovals(): void {
     this.userService.getAllApprovals().subscribe({
       next: (response: any) => {
-        console.log(' approval' , response);
+        console.log('approval' , response);
         const users = response.data || [];
         this.dataSource.data = users; // Update the table data source
         this.toastService.showToast('Approvals loaded successfully!', 'success');

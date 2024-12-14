@@ -139,6 +139,9 @@ button:disabled {
   transition: 0.5s ease-in-out;
   color: white;
 }
+.product-list{
+      display: flex;
+}
 
 /* Media Queries for Responsiveness */
 
@@ -147,6 +150,16 @@ button:disabled {
   .product-card {
       width: calc(50% - 20px); /* Adjusts the width for tablet screens */
       margin: 20px auto;
+  }
+  .product-list{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .quickView{
+    display: none;
   }
 }
 

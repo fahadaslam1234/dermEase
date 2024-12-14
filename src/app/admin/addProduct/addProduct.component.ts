@@ -11,10 +11,35 @@ import { ToastService } from 'src/app/services/toastService';
 export class AddProductComponent implements OnInit {
   imagePreview: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
-
+  selectedSkinCondition: string = '';
+  selectedSkinFeel: string = '';
+  selectedIngredientPreference: string = '';
   constructor(private productService: ProductService, private toastService: ToastService) { }
 
   ngOnInit() {}
+
+  concerns: string[] = [
+    "Textured Skin",
+    "Wrinkles & Fine Lines",
+    "Acne Prone Skin",
+    "Dark Spots",
+    "Itchy Skin",
+    "Psoriasis",
+    "Sun Damage",
+    "Enlarged Pores",
+    "Rough & Bumpy Skin",
+    "Body Zits",
+    "Dullness"
+  ];
+
+  skinFeels: string[] = ['Dry', 'Oily', 'Combination'];
+  ingredientPreferences: string[] = [
+  "Natural",
+  "Organic",
+  "Hypoallergenic",
+  "Vegan",
+  "Fragrance Free"
+  ];
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files![0];
@@ -36,6 +61,9 @@ export class AddProductComponent implements OnInit {
     // Create FormData to send to backend
     const productData = new FormData();
     productData.append('product_name', form.value.productName);
+    productData.append('skin_conditions', form.value.skin_conditions);
+    productData.append('skin_feel', form.value.skin_feel);
+    productData.append('ingredient_preferences', form.value.ingredient_preferences);
     productData.append('product_description', form.value.productDescription);
     productData.append('price', form.value.productPrice);
     productData.append('image', this.selectedFile, this.selectedFile.name);

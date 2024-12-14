@@ -49,7 +49,7 @@ export class SolutionFinderComponent implements OnInit {
     "Sun Damage",
     "Enlarged Pores",
     "Rough & Bumpy Skin",
-    "Body Acne",
+    "Body Zits",
     "Dullness"
   ];
 

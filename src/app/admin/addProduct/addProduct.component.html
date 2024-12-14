@@ -11,6 +11,36 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Skin Conditions</mat-label>
+          <mat-select id="skin_conditions" name="skin_conditions" [(ngModel)]="selectedSkinCondition" required>
+            <mat-option *ngFor="let condition of concerns" [value]="condition">
+              {{ condition }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Skin Feel</mat-label>
+          <mat-select id="skin_feel" name="skin_feel" [(ngModel)]="selectedSkinFeel" required>
+            <mat-option *ngFor="let feel of skinFeels" [value]="feel">
+              {{ feel }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Ingredient Preferences</mat-label>
+          <mat-select id="ingredient_preferences" name="ingredient_preferences" [(ngModel)]="selectedIngredientPreference" required>
+            <mat-option *ngFor="let preference of ingredientPreferences" [value]="preference">
+              {{ preference }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+
+        <mat-form-field appearance="fill" class="full-width">
           <mat-label>Product Description</mat-label>
           <textarea matInput id="productDescription" name="productDescription" ngModel required></textarea>
         </mat-form-field>

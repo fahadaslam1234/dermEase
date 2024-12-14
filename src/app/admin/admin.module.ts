@@ -21,6 +21,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ProductListComponent } from './productList/productList.component';
 import { EditProductDialogComponent } from './EditProductDialogComponent/EditProductDialogComponent.component';
 import { ApprovalsComponent } from './Approvals/Approvals.component';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [AdminLayoutComponent,AddProductComponent,UsersComponent,ProductListComponent,EditProductDialogComponent,ApprovalsComponent],
@@ -30,7 +32,8 @@ import { ApprovalsComponent } from './Approvals/Approvals.component';
     MatSidenavModule,MatToolbarModule,MatButtonModule,
     MatListModule,MatExpansionModule,MatInputModule,MatInput,
     MatFormFieldModule,MatCardModule,MatCard,MatPaginator,MatPaginatorModule,
-    MatTableModule,BrowserModule,BrowserAnimationsModule,FormsModule,ReactiveFormsModule
+    MatTableModule,BrowserModule,BrowserAnimationsModule,FormsModule,ReactiveFormsModule,
+    MatOptionModule, MatSelectModule
   ]
 })
 export class AdminModule { }
