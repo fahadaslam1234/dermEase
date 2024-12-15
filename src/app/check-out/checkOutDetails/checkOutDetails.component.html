@@ -73,7 +73,7 @@
           <th>Total</th>
         </tr>
         <tr *ngFor="let product of products">
-          <td><img [src]="product.image" alt="{{product.name}}" width="50">{{ product.name }}</td>
+          <td><img [src]="product.product_image" alt="{{product.product_name}}" width="50">{{ product.product_name }}</td>
           <td>{{ calculateTotalOfItem(product) }}</td>
         </tr>
       </table>

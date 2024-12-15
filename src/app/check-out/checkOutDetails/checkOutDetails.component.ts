@@ -29,6 +29,7 @@ export class CheckOutDetailsComponent implements OnInit {
   fetchCartProducts(): void {
     this.cartService.getItems().subscribe(products => {
       this.products = products;
+      console.log(this.products);
     });
   }
 
@@ -37,6 +38,7 @@ export class CheckOutDetailsComponent implements OnInit {
     this.productService.getAllProducts().subscribe({
       next: (products) => {
         this.products = products;
+        console.log(this.products);
       },
       error: (err) => {
         console.error('Error fetching products:', err);
