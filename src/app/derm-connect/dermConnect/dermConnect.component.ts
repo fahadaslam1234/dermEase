@@ -16,7 +16,7 @@ export class DermConnectComponent implements OnInit {
   doctorsDetails = [
     {
       id: 1,
-      name: 'Dr. John Doe',
+      name: 'Dr. Muneeba',
       specialty: 'Dermatology',
       availability: 'Available Now',
       image: '../../../assets/images/doctor.jpg',
@@ -24,7 +24,7 @@ export class DermConnectComponent implements OnInit {
     },
     {
       id:2,
-      name: 'Dr. Jane Smith',
+      name: 'Dr. Sara',
       specialty: 'Cosmetic Dermatology',
       availability: 'Available Tomorrow',
       image: '../../../assets/images/doctor.jpg',
@@ -32,7 +32,7 @@ export class DermConnectComponent implements OnInit {
     },
     {
       id:3,
-      name: 'Dr. Emily Davis',
+      name: 'Dr. Alina',
       specialty: 'Pediatric Dermatology',
       availability: 'Available in 2 Days',
       image: '../../../assets/images/doctor.jpg',
@@ -40,7 +40,7 @@ export class DermConnectComponent implements OnInit {
     },
     {
       id:4,
-      name: 'Dr. Emily Davis',
+      name: 'Dr. Areeba',
       specialty: 'Pediatric Dermatology',
       availability: 'Available in 2 Days',
       image: '../../../assets/images/doctor.jpg',
@@ -49,7 +49,7 @@ export class DermConnectComponent implements OnInit {
   ];
 
   appointments = [
-    { patientName: 'John Doe', date: new Date(), time: '10:00 AM' },
+    { patientName: 'Alina', date: new Date(), time: '10:00 AM' },
     // Add more appointments here
   ];
 
@@ -63,7 +63,7 @@ export class DermConnectComponent implements OnInit {
 
   appointmentForm: FormGroup;
   departments: string[] = ['Cardiology', 'Neurology', 'Pediatrics', 'Orthopedics'];
-  doctors: string[] = ['Dr. John Doe', 'Dr. Jane Smith', 'Dr. William Johnson'];
+  doctors: string[] = ['Dr. Muneeba', 'Dr. Sara', 'Dr. Areeba'];
   times: string[] = ['3:00 PM - 5:00 PM', '5:00 PM - 7:00 PM', '7:00 PM - 9:00 PM'];
 
   constructor(private fb: FormBuilder, private router: Router,
@@ -112,7 +112,7 @@ export class DermConnectComponent implements OnInit {
 
   // Simulate an incoming video call (this would come from a signaling server in a real app)
   simulateIncomingCall() {
-    this.incomingCall = { patientName: 'Jane Doe', time: '11:00 AM' };
+    this.incomingCall = { patientName: 'Alina', time: '11:00 AM' };
   }
 
   acceptVideoCall() {
