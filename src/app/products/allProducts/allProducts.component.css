@@ -48,9 +48,9 @@
     scale: 1.01;
   }
 
-  .product-card h3 {
-    font-size: 16px;
-    height: 45px;
+  .product-card h4 {
+    font-size: 14px;
+    height: 50px;
     cursor: pointer;
   }
 

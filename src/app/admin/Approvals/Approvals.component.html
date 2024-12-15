@@ -42,10 +42,10 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let user" data-header="Actions">
-          <button mat-raised-button color="basic" (click)="handleAction(user, 'approve')">
+          <button mat-raised-button color="success" (click)="handleAction(user, 'approve')" style="margin-right: 10px;">
             Approve
           </button>
-          <button mat-raised-button color="warn" (click)="handleAction(user, 'reject')">
+          <button mat-raised-button color="warn" (click)="handleAction(user, 'reject')" >
             Reject
           </button>
         </td>

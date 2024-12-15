@@ -18,8 +18,8 @@ export class AllProductsComponent implements OnInit {
   cartVisible = false;
   cartItems: any[] = [];
   paginatedProducts: Product[] = [];
-  pageSize = 4;
-  pageSizeOptions: number[] = [4, 8, 12]; // Custom page size options
+  pageSize = 24;
+  pageSizeOptions: number[] = [4,12,24,48]; // Custom page size options
   pageEvent!: PageEvent;
   product!: Product;
 

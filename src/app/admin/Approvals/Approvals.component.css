@@ -16,6 +16,10 @@ th, td {
   text-align: left;
   font-size: 14px;
 }
+.action-buttons{
+  display: flex;
+  gap: 10px !important;
+}
 
 @media only screen and (max-width: 600px) {
   .mat-table-responsive {

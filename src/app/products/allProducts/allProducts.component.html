@@ -16,7 +16,7 @@
     <div class="product-card" *ngFor="let product of paginatedProducts">
       <div class="product-details" (click)="getProductDetails(product._id)" [routerLink]="['/product', product._id]">
         <img  [src]="product.product_image" [alt]="product.product_name">
-        <h3>{{ product.product_name }}</h3>
+        <h4>{{ product.product_name }}</h4>
         <div class="price">
           <span *ngIf="product.oldPrice" class="old-price">Rs {{ product.oldPrice }}</span>
           <span>Rs {{ product.price }}</span>
