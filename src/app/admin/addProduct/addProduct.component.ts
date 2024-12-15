@@ -14,11 +14,13 @@ export class AddProductComponent implements OnInit {
   selectedSkinCondition: string = '';
   selectedSkinFeel: string = '';
   selectedIngredientPreference: string = '';
+
   constructor(private productService: ProductService, private toastService: ToastService) { }
 
   ngOnInit() {}
 
   concerns: string[] = [
+    "None", // Added "None" option
     "Textured Skin",
     "Wrinkles & Fine Lines",
     "Acne Prone Skin",
@@ -32,13 +34,20 @@ export class AddProductComponent implements OnInit {
     "Dullness"
   ];
 
-  skinFeels: string[] = ['Dry', 'Oily', 'Combination'];
+  skinFeels: string[] = [
+    "None", // Added "None" option
+    "Dry",
+    "Oily",
+    "Combination"
+  ];
+
   ingredientPreferences: string[] = [
-  "Natural",
-  "Organic",
-  "Hypoallergenic",
-  "Vegan",
-  "Fragrance Free"
+    "None", // Added "None" option
+    "Natural",
+    "Organic",
+    "Hypoallergenic",
+    "Vegan",
+    "Fragrance Free"
   ];
 
   onFileSelected(event: Event): void {
