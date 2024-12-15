@@ -73,18 +73,18 @@
           <th>Total</th>
         </tr>
         <tr *ngFor="let product of products">
-          <td><img [src]="product.image" alt="{{product.name}}" width="50">{{ product.name }}</td>
+          <td><img [src]="product.product_image" alt="{{product.product_name}}" width="50">{{ product.product_name }}</td>
           <td>{{ calculateTotalOfItem(product) }}</td>
         </tr>
       </table>
       <div class="summary-details">
         <div class="summary-item">
           <span>Sub Total:</span>
-          <span>{{ calculateSubtotal() | currency }}</span>
+          <span>Rs {{ calculateSubtotal()}}</span>
         </div>
         <div class="summary-item">
           <span>Discount:</span>
-          <span>RS 1000</span>
+          <span>RS 200</span>
         </div>
         <div class="summary-item">
           <span>Shipping Charge:</span>
@@ -96,7 +96,7 @@
         </div>
         <div class="summary-item total">
           <span>Total:</span>
-          <span>{{ calculateTotal() | currency }}</span>
+          <span>Rs {{ calculateTotal()   }}</span>
         </div>
       </div>
       <button mat-raised-button class="w-full primary-button" >PLACE ORDER</button>

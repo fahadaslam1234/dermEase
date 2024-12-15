@@ -29,6 +29,7 @@ export class CheckOutDetailsComponent implements OnInit {
   fetchCartProducts(): void {
     this.cartService.getItems().subscribe(products => {
       this.products = products;
+      console.log(this.products);
     });
   }
 
@@ -37,6 +38,7 @@ export class CheckOutDetailsComponent implements OnInit {
     this.productService.getAllProducts().subscribe({
       next: (products) => {
         this.products = products;
+        console.log(this.products);
       },
       error: (err) => {
         console.error('Error fetching products:', err);
@@ -54,9 +56,9 @@ export class CheckOutDetailsComponent implements OnInit {
 
   calculateTotal(): number {
     // Example calculations for total (add taxes, shipping, and discounts)
-    const shippingCharge = 25; // Example shipping charge
-    const discount = 78; // Example discount
-    const estimatedTax = 18.20; // Example tax
+    const shippingCharge = 150; // Example shipping charge
+    const discount = 200; // Example discount
+    const estimatedTax = 100; // Example tax
     return this.calculateSubtotal() + shippingCharge - discount + estimatedTax;
   }
 }
