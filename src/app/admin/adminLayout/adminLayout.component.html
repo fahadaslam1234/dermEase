@@ -2,7 +2,8 @@
   <div class="admin-nav">
     <div class="heading">
       <mat-icon (click)="toggleMenu()" class="menuIcon">menu</mat-icon>
-      <h2>Admin Dashboard</h2>
+      <h2 *ngIf="isAdmin">Admin Dashboard</h2>
+      <h2 *ngIf="isVendor">Vendor Dashboard</h2>
     </div>
     <div >
       <mat-icon (click)="onHome()"  class="menuIcon">home</mat-icon>
