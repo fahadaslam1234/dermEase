@@ -13,15 +13,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
-import { SkincareSolutionFinderModule } from './skincare-solution-finder/skincare-solution-finder.module';
 import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AdminModule } from './admin/admin.module';
 import { isPlatformBrowser } from '@angular/common';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { DermConnectModule } from './derm-connect/derm-connect.module';
-import { DiseasePredictorModule } from './disease-predictor/disease-predictor.module';
 import { CheckOutModule } from './check-out/check-out.module';
 import { ToastComponentComponent } from './toastComponent/toastComponent.component';
 import { ContactUsModule } from './contact-us/contact-us.module';
@@ -47,12 +44,9 @@ import { ContactUsModule } from './contact-us/contact-us.module';
     MatListModule,
     MatStepperModule,
     MatIconModule,
-    SkincareSolutionFinderModule,
     MatCardModule,
     HttpClientModule,
     AdminModule,
-    DermConnectModule,
-    DiseasePredictorModule,
     ContactUsModule
   ],
   providers: [
