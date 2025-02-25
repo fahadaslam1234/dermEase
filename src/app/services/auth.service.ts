@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, throwError, map } from 'rxjs';
+import { catchError, Observable, throwError, map, BehaviorSubject } from 'rxjs';
 import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private userSubject = new BehaviorSubject<any>(this.getLoggedInUser());
+  public user$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient, private service: CommonService) { }
 
@@ -37,6 +39,7 @@ export class AuthService {
           if (response.status) {
             sessionStorage.setItem('user', JSON.stringify(response.data.user));
             sessionStorage.setItem('token', response.data.token);
+            this.userSubject.next(response.data.user);
           }
           return response;
         }),
@@ -70,6 +73,7 @@ export class AuthService {
     // Clear session storage on logout
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('token');
+    this.userSubject.next(null);
   }
 
   // Public method to check if the user is logged in

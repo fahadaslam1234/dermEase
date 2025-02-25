@@ -27,9 +27,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatIconModule,MatIcon,ContactUsModule,
     MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
     MatFormFieldModule,MatRadioModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
+    MatInputModule,MatSelectModule,MatButtonModule,
   ]
 })
 export class CheckOutModule { }

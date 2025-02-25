@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VideoCallComponent } from '../videoCall/videoCall.component';
 import { ChatComponent } from '../chat/chat.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DermConnectService } from 'src/app/services/dermConnect.service';
 
 @Component({
   selector: 'app-doctorDetails',
@@ -11,70 +12,25 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class DoctorDetailsComponent implements OnInit {
   doctor: any;
+  doctors:[];
 
-  doctors = [
-    {
-      id: 1,
-      name: 'Dr. John Doe',
-      specialty: 'Dermatology',
-      availability: 'Available Now',
-      image: '../../../assets/images/doctor.jpg',
-      bio: 'Experienced dermatologist with over 15 years of practice.',
-      education: 'MBBS (University of Wyoming). M.D. of Medicine (Netherland Medical College).',
-      contact: '+1 (700) 230-0035',
-      email: 'example@gmail.com',
-    },
-    {
-      id: 1,
-      name: 'Dr. John Doe',
-      specialty: 'Dermatology',
-      availability: 'Available Now',
-      image: '../../../assets/images/doctor.jpg',
-      bio: 'Experienced dermatologist with over 15 years of practice.',
-      education: 'MBBS (University of Wyoming). M.D. of Medicine (Netherland Medical College).',
-      contact: '+1 (700) 230-0035',
-      email: 'example@gmail.com',
-    },
-    {
-      id: 2,
-      name: 'Dr. John Doe',
-      specialty: 'Dermatology',
-      availability: 'Available Now',
-      image: '../../../assets/images/doctor.jpg',
-      bio: 'Experienced dermatologist with over 15 years of practice.',
-      education: 'MBBS (University of Wyoming). M.D. of Medicine (Netherland Medical College).',
-      contact: '+1 (700) 230-0035',
-      email: 'example@gmail.com',
-    },    {
-      id: 3,
-      name: 'Dr. John Doe',
-      specialty: 'Dermatology',
-      availability: 'Available Now',
-      image: '../../../assets/images/doctor.jpg',
-      bio: 'Experienced dermatologist with over 15 years of practice.',
-      education: 'MBBS (University of Wyoming). M.D. of Medicine (Netherland Medical College).',
-      contact: '+1 (700) 230-0035',
-      email: 'example@gmail.com',
-    },
-    {
-      id: 4,
-      name: 'Dr. John Doe',
-      specialty: 'Dermatology',
-      availability: 'Available Now',
-      image: '../../../assets/images/doctor.jpg',
-      bio: 'Experienced dermatologist with over 15 years of practice.',
-      education: 'MBBS (University of Wyoming). M.D. of Medicine (Netherland Medical College).',
-      contact: '+1 (700) 230-0035',
-      email: 'example@gmail.com',
-    },
-    // More doctor objects here
-  ];
+  constructor(private route: ActivatedRoute, private dialog : MatDialog,  private dcService : DermConnectService) {}
 
-  constructor(private route: ActivatedRoute, private dialog : MatDialog) {}
+  getAllDerms(){
+    this.dcService.getAllDerms().subscribe({
+       next:(response)=>{
+           this.doctors = response;
+           console.log("doctors",this.doctors)
+       },error:(error)=>{
+           console.log(error);
+       }
+    });
+   }
+
 
   ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id')!;
-    this.doctor = this.doctors.find(doctor => doctor.id === id);
+    const id = +this.route.snapshot.paramMap.get('_id')!;
+    // this.doctor = this.doctors.find(doctor => doctor._id === id);
   }
   startChat() {
     const dialogRef = this.dialog.open(ChatComponent, {

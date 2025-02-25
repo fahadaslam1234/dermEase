@@ -51,52 +51,42 @@
           itaque, officiis voluptatem provident inventore nobis voluptas impedit
           eligendi, officia asperiores ad autem ratione quam.
         </p>
-        <form>
-
+        <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
           <div class="form-fields">
             <mat-form-field appearance="fill" style="min-width:400px">
               <mat-label>Patient Name</mat-label>
-              <input matInput placeholder="Patient Name" required />
+              <input [(ngModel)]="username" formControlName="patientName" matInput placeholder="Patient Name" readonly />
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Email</mat-label>
-              <input matInput type="email" placeholder="Email" required />
+              <input formControlName="email" matInput type="email" placeholder="Email" readonly />
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Phone</mat-label>
-              <input matInput type="tel" placeholder="Phone" required />
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-              <mat-label>Select Department</mat-label>
-              <mat-select required>
-                <mat-option *ngFor="let department of departments" [value]="department">
-                  {{ department }}
-                </mat-option>
-              </mat-select>
+              <input formControlName="phone" matInput type="tel" placeholder="Phone" required />
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Select Doctor</mat-label>
-              <mat-select required>
+              <mat-select formControlName="doctor" required>
                 <mat-option *ngFor="let doctor of doctors" [value]="doctor">
-                  {{ doctor }}
+                  {{ doctor.user_name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Date</mat-label>
-              <input matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" />
+              <input formControlName="date" matInput [matDatepicker]="picker" placeholder="dd/mm/yyyy" />
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
               <mat-label>Select Time</mat-label>
-              <mat-select required>
+              <mat-select formControlName="time" required>
                 <mat-option *ngFor="let time of times" [value]="time">
                   {{ time }}
                 </mat-option>
@@ -105,24 +95,24 @@
 
             <mat-form-field appearance="fill">
               <mat-label>Message</mat-label>
-              <textarea matInput placeholder="Message"></textarea>
+              <textarea formControlName="message" matInput placeholder="Message"></textarea>
             </mat-form-field>
           </div>
 
-
-          <button  class="primary-button submit-btn">
+          <button class="primary-button submit-btn" type="submit">
             Book Appointment
           </button>
         </form>
       </div>
 
+
     </div>
 
     <div class="doctor-card-container">
-      <div class="doctor-card" *ngFor="let doctor of doctorsDetails" (click)="viewDoctorDetails(doctor)">
-        <img [src]="doctor.image" alt="{{ doctor.name }}" class="doctor-image"/>
+      <div class="doctor-card" *ngFor="let doctor of doctors" (click)="viewDoctorDetails(doctor)">
+        <img src='../../../assets/images/doctor.jpg' alt="{{ doctor.name }}" class="doctor-image"/>
         <div class="doctor-info">
-          <h3>{{ doctor.name }}</h3>
+          <h3>{{ doctor.user_name }}</h3>
           <p>{{ doctor.specialty }}</p>
           <p>{{ doctor.availability }}</p>
           <p>{{ doctor.bio }}</p>
@@ -134,11 +124,36 @@
 
 
   <div class="doctor-dashboard-container" *ngIf="isDermatologist">
-    <h2>Doctor Dashboard</h2>
+        <!--Upcoming Appointments Section -->
+        <div class="section">
+          <h3 class="section-heading">Pending Appointments</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let appointment of pendingAppointments">
+                <td>{{ appointment.patientName }}</td>
+                <td>{{ appointment.date | date }}</td>
+                <td>{{ appointment.time }}</td>
+                <td class="action-buttons">
+                  <button class="primary-button" (click)="updateAppointment(appointment._id,'approved')"> Approve</button>
+                  <button class="primary-button" (click)="updateAppointment(appointment._id,'rejected')"> Reject </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="empty" *ngIf="pendingAppointments.length==0"> There are no pending appointments at the moment. </p>
+        </div>
 
-    <!-- Appointments Section -->
+    <!--Upcoming Appointments Section -->
     <div class="section">
-      <h3>Upcoming Appointments</h3>
+      <h3 class="section-heading">Upcoming Appointments</h3>
       <table>
         <thead>
           <tr>
@@ -149,24 +164,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let appointment of appointments">
+          <tr *ngFor="let appointment of upcomingAppointments">
             <td>{{ appointment.patientName }}</td>
             <td>{{ appointment.date | date }}</td>
             <td>{{ appointment.time }}</td>
             <td class="action-buttons">
-              <button class="primary-button" (click)="initiateVideoCall(appointment)">  <mat-icon>videocam</mat-icon>  <span>Start Video Call</span> </button>
-              <button class="primary-button" (click)="initiateChat(appointment)"> <mat-icon class="mat-18">chat</mat-icon> <span>Start Chat</span> </button>
+              <!-- [disabled]="!isWithinTime(appointment.time)" -->
+              <button class="primary-button" (click)="initiateVideoCall(appointment)" ><mat-icon>videocam</mat-icon>  <span>Start Video Call</span> </button>
+              <button class="primary-button" (click)="initiateChat(appointment)" > <mat-icon class="mat-18">chat</mat-icon> <span>Start Chat</span> </button>
             </td>
           </tr>
         </tbody>
       </table>
+      <p class="empty" *ngIf="upcomingAppointments.length==0"> There are no upcoming appointments at the moment. </p>
     </div>
 
     <!-- Incoming Call Section -->
     <div class="section" *ngIf="incomingCall">
       <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
       <div class="action-buttons">
-        <button class="primary-button"   (click)="acceptVideoCall()">Accept</button>
+        <button class="primary-button"  (click)="acceptVideoCall()">Accept</button>
         <button class="primary-button"  (click)="rejectVideoCall()">Reject</button>
       </div>
 
@@ -174,11 +191,11 @@
 
     <!-- Notifications Section -->
     <div class="section">
-      <h3>Notifications</h3>
+      <h3 class="section-heading">Notifications</h3>
       <div *ngFor="let notification of notifications">
         <p>{{ notification.message }}</p>
       </div>
-      <p *ngIf="notifications.length === 0">No notifications at the moment.</p>
+      <p *ngIf="notifications.length === 0" class="empty">No notifications at the moment.</p>
     </div>
   </div>
 

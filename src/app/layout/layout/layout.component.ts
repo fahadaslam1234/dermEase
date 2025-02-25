@@ -63,7 +63,6 @@ export class LayoutComponent implements OnInit {
         this.products = products;
         this.filteredProducts = [...this.products];
         this.updatePaginatedProducts(0, this.pageSize);
-        console.log(products);
       },
       error: (err) => {
         console.error('Error fetching products:', err);

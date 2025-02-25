@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit {
   isVendor: boolean = false; // To store whether the user is an admin or not
   isSearchBarVisible: boolean = false;
   searchQuery: string = ''; // Search query property
+  username: string = '';
+
 
   constructor(
     private router: Router,
@@ -33,15 +35,17 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.getItems().subscribe(items => {
       this.cartCount = items.length;
-    });
 
-    // Get logged-in user details and check if the user is an admin
-    this.user = this.authService.getLoggedInUser();
-    if (this.user) {
-      this.isAdmin = this.user.role === 'admin'; // Assuming 'role' field in user object
-      this.isVendor = this.user.role === 'vendor'; // Assuming 'role' field in user object
     }
-    console.log(this.user);
+  );
+  this.authService.user$.subscribe(user => {
+    this.user = user;
+    this.username = user ? user.user_name : ''; // Update username dynamically
+    this.isAdmin = this.user.role === 'admin'; // Assuming 'role' field in user object
+    this.isVendor = this.user.role === 'vendor';
+  });
+
+
   }
 
   toggleSearch() {

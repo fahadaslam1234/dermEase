@@ -38,8 +38,8 @@ import { ResetPasswordComponent } from './resetPassword/resetPassword.component'
     ProductsModule,FormsModule,ReactiveFormsModule,
     MatIconModule,MatIcon,AboutUsModule,ContactUsModule,
     MatCardModule,MatFormField,MatLabel,MatPaginatorModule,MatSortModule,MatTableModule,
-    CheckOutModule,MatInputModule,MatInput,ReactiveFormsModule,MatIconModule,MatExpansionModule,
-    MatCheckboxModule,ContactUsModule
+    MatInputModule,MatInput,ReactiveFormsModule,MatIconModule,MatExpansionModule,
+    MatCheckboxModule,ContactUsModule,CheckOutModule
   ]
 })
 export class LayoutModule { }

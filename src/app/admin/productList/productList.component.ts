@@ -51,7 +51,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 getFullImageUrl(imagePath: string): string {
   // Replace backslashes with forward slashes
   const normalizedPath = imagePath.replace(/\\/g, '/'); // Global replacement of '\'
-  const fullImageUrl = `${normalizedPath}`;
+  const fullImageUrl = this.imageUrl + `${normalizedPath}`;
   console.log("Full Image URL:", fullImageUrl); // Logs the corrected full URL
   return fullImageUrl;
 }

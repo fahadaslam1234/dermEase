@@ -93,4 +93,11 @@ export class CartService {
     this.itemsInCartSubject.next(this.itemsInCart);
     this.saveCart(); // Save updated cart to localStorage
   }
+
+  public clearCart(): void {
+    this.itemsInCart = [];
+    this.itemsInCartSubject.next(this.itemsInCart);
+    localStorage.removeItem('cartItems'); // Clear from localStorage
+  }
+
 }

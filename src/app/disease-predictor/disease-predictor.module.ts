@@ -5,6 +5,8 @@ import { DiseasePredictorRoutingModule } from './disease-predictor-routing.modul
 import { DiseasePredictorComponent } from './diseasePredictor/diseasePredictor.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -12,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     DiseasePredictorRoutingModule,MatStepperModule,
-    MatIconModule
+    MatIconModule,MatExpansionModule,NgxSpinnerModule
   ]
 })
 export class DiseasePredictorModule { }

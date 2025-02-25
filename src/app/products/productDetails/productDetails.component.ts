@@ -45,9 +45,6 @@ export class ProductDetailsComponent implements OnInit {
       next: (response:any) => {
         if (response.status && response.data) {
           this.product = response.data; // Extract and assign the product details
-          console.log(this.product);
-          console.log('productName', this.product.product_name);
-          console.log('productDescription', this.product.product_description);
         } else {
           console.error('Product not found or invalid response:', response);
         }

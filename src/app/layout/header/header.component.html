@@ -29,7 +29,7 @@
         <li class="dropdown">
           <span  routerLink="/account">
             <mat-icon>account_circle</mat-icon>
-            <span *ngIf="isLoggedIn()" > {{ user?.user_name }} </span>
+            <span *ngIf="isLoggedIn()" > {{ username }} </span>
           </span>
           <ul class="dropdown-content">
             <!-- Show Admin Settings if user is an admin -->

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../../models/productModel';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
-import { ProductService } from '../../services/productService'; // Import ProductService
+import { ProductService } from '../../services/productService';
+import { Product } from '../../models/productModel';
+import { CheckoutService } from 'src/app/services/checkout.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkOutDetails',
@@ -9,45 +12,37 @@ import { ProductService } from '../../services/productService'; // Import Produc
   styleUrls: ['./checkOutDetails.component.css']
 })
 export class CheckOutDetailsComponent implements OnInit {
+  checkoutForm!: FormGroup;
   products: Product[] = [];
   countries = ['Pakistan', 'Canada', 'UK', 'Australia', 'India'];
-  selectedShippingMethod: string = 'cod'; // Default shipping method
+  selectedShippingMethod: string = 'cod';
 
   constructor(
+    private fb: FormBuilder,
     private cartService: CartService,
-    private productService: ProductService  // Inject ProductService
-  ) {}
-
-  ngOnInit(): void {
-    this.fetchCartProducts(); // Fetch products from cart
-
-    // Optionally, you can also fetch all products from the backend:
-    // this.fetchAllProducts();
+    private checkoutService: CheckoutService,
+    private router: Router
+  ) {
+    this.checkoutForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', Validators.required],
+      address: ['', Validators.required],
+      country: ['', Validators.required],
+      city: ['', Validators.required],
+      zip: ['', Validators.required],
+      shippingMethod: ['cod', Validators.required]
+    });
   }
 
-  // Fetch products in the user's cart
+  ngOnInit(): void {
+    this.fetchCartProducts();
+  }
+
   fetchCartProducts(): void {
     this.cartService.getItems().subscribe(products => {
       this.products = products;
-      console.log(this.products);
     });
-  }
-
-  // Fetch all available products from the backend (if needed)
-  fetchAllProducts(): void {
-    this.productService.getAllProducts().subscribe({
-      next: (products) => {
-        this.products = products;
-        console.log(this.products);
-      },
-      error: (err) => {
-        console.error('Error fetching products:', err);
-      }
-    });
-  }
-
-  calculateTotalOfItem(product: Product): number {
-    return product.price * (product.quantity || 1);
   }
 
   calculateSubtotal(): number {
@@ -55,10 +50,40 @@ export class CheckOutDetailsComponent implements OnInit {
   }
 
   calculateTotal(): number {
-    // Example calculations for total (add taxes, shipping, and discounts)
-    const shippingCharge = 150; // Example shipping charge
-    const discount = 200; // Example discount
-    const estimatedTax = 100; // Example tax
+    const shippingCharge = 150;
+    const discount = 200;
+    const estimatedTax = 100;
     return this.calculateSubtotal() + shippingCharge - discount + estimatedTax;
+  }
+
+  placeOrder(): void {
+    if (this.checkoutForm.valid) {
+      const orderData = {
+        ...this.checkoutForm.value,
+        products: this.products,
+        totalAmount: this.calculateTotal()
+      };
+      console.log("in order place", orderData)
+
+      if (this.checkoutForm.value.shippingMethod === 'cod') {
+        this.checkoutService.placeOrder(orderData).subscribe(response => {
+          console.log(orderData);
+          alert('Order placed successfully!');
+          this.cartService.clearCart();
+          this.checkoutForm.reset(); // Reset form
+          this.products = [];
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 3000);
+
+        });
+      } else {
+        this.checkoutService.createStripeSession(orderData).subscribe(session => {
+          window.location.href = session.url;
+        });
+      }
+    } else {
+      alert('Please fill all required fields.');
+    }
   }
 }

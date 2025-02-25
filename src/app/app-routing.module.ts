@@ -4,7 +4,6 @@ import { LayoutComponent } from './layout/layout/layout.component';
 import { AllProductsComponent } from './products/allProducts/allProducts.component';
 
 const routes: Routes = [
-  
   {
     path:'',
     component: LayoutComponent,

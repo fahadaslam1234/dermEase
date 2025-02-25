@@ -308,16 +308,18 @@ table {
 
 table, th, td {
   border: 1px solid #ddd;
+  text-align: center;
 }
 
 th, td {
   padding: 12px;
-  text-align: left;
+  text-align: center;
 }
 
 th {
   background-color: #f4f4f4;
   color: #333;
+  text-align: center;
 }
 
 td {
@@ -381,6 +383,7 @@ td {
   table, th, td {
     font-size: 14px;
     padding: 8px;
+    text-align: center;
   }
 
   button {
@@ -413,6 +416,7 @@ td {
   table, th, td {
     font-size: 12px;
     padding: 6px;
+    text-align: center;
   }
 
   button {
@@ -474,4 +478,18 @@ mat-card-subtitle {
 
 .link:hover {
   text-decoration: underline;
+}
+
+.empty{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.section-heading{
+  font-weight: 400;
+  font-size: 16px;
+  font-weight: bold;
 }

@@ -16,6 +16,7 @@
   width: 100%;
   height: 484px;
   position: relative;
+  margin-top: 10px;
 }
 
 .intro-button {
@@ -107,4 +108,59 @@ input[type="file"] {
   margin-top: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+mat-panel-title{
+  color: white;
+  padding: 0;
+  margin: 0;
+}
+.mat-expansion-panel {
+  background: whitesmoke !important;
+  color: white;
+  border-radius: 10px;
+}
+.mat-expansion-panel-header {
+  background: var(--primary-color3) !important;
+  color: white;
+  border-radius: 10px;
+}
+
+.predictions-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 10px 0px;
+}
+
+.prediction-card {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 250px;
+  background-color: #a27b5c;
+  transition: transform 0.3s ease-in-out;
+  border-radius: 10px;
+  box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.prediction-card:hover {
+  transform: scale(1.01);
+  cursor: pointer;
+}
+
+.prediction-card img {
+  margin-top: 10px;
+  cursor: pointer;
+  height: 150px;
+  object-fit: contain;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .predictions-grid {
+    flex-direction: column;
+  }
 }
