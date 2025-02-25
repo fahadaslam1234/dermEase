@@ -26,13 +26,9 @@ export class DermConnectComponent implements OnInit {
   username: String;
   email: string;
   appointmentForm: FormGroup;
-  doctors: [];
-  times: string[] = [
-    '1:00 PM - 3:00 PM',
-    '3:00 PM - 5:00 PM',
-    '5:00 PM - 7:00 PM',
-    '7:00 PM - 9:00 PM',
-  ];
+  departments: string[] = ['Cardiology', 'Neurology', 'Pediatrics', 'Orthopedics'];
+  doctors: string[] = ['Dr. John Doe', 'Dr. Jane Smith', 'Dr. William Johnson'];
+  times: string[] = ['3:00 PM - 5:00 PM', '5:00 PM - 7:00 PM', '7:00 PM - 9:00 PM'];
 
   constructor(
     private fb: FormBuilder,
