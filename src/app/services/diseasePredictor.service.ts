@@ -16,7 +16,7 @@ export class SkinDiseaseService {
   }
 
   getAllPredictions(username: String): Observable<any> {
-    return this.http.get<any>(`${this.service.API_URL}diseasePredictor/getAllPredictions?user=${username}`)
+    return this.http.get<any>(`${this.service.API_URL}diseasePredictor/getAllPredictions?userId=${username}`)
       .pipe(catchError(this.handleError));
   }
 
