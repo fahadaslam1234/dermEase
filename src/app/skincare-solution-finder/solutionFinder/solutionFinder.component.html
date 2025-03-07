@@ -8,18 +8,18 @@
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Step 1</ng-template>
           <h2>Let's start with your facial skincare.</h2>
-          <p>Please select your one top concern.</p>
+          <p>Please select your skin tone.</p>
           <div class="cards">
-            <mat-card *ngFor="let concern of concerns"
-                      (click)="selectConcern(concern)"
-                      [class.selected]="selectedConcerns === concern">
+            <mat-card *ngFor="let skinTone of skinTones"
+                      (click)="selectSkinTone(skinTone)"
+                      [class.selected]="selectedSkinTone === skinTone">
               <mat-card-content>
-                <p>{{concern}}</p>
+                <p>{{skinTone}}</p>
               </mat-card-content>
             </mat-card>
           </div>
           <div>
-            <button class="primary-button" matStepperNext [disabled]="!selectedConcerns">Next</button>
+            <button class="primary-button" matStepperNext [disabled]="!selectedSkinTone">Next</button>
           </div>
         </form>
       </mat-step>
@@ -29,82 +29,96 @@
           <h2>How does the skin on your face typically feel?</h2>
           <p>Select one</p>
           <div class="cards">
-            <mat-card *ngFor="let skinFeel of skinFeels"
-                      (click)="selectSkinFeel(skinFeel)"
-                      [class.selected]="selectedSkinFeel === skinFeel">
+            <mat-card *ngFor="let skinType of skinTypes"
+                      (click)="selectSkinType(skinType)"
+                      [class.selected]="selectedSkinType === skinType">
               <mat-card-content>
-                <p>{{skinFeel}}</p>
+                <p>{{skinType}}</p>
               </mat-card-content>
             </mat-card>
           </div>
           <div class="button-layout">
             <button class="primary-button" matStepperPrevious>Back</button>
-            <button class="primary-button" matStepperNext [disabled]="!selectedSkinFeel">Next</button>
+            <button class="primary-button" matStepperNext [disabled]="!selectedSkinType">Next</button>
           </div>
         </form>
       </mat-step>
-      <mat-step [stepControl]="fifthFormGroup" label="Step 3">
-        <form [formGroup]="fifthFormGroup">
+
+      <mat-step [stepControl]="thirdFormGroup" label="Step 3">
+        <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>Step 3</ng-template>
+          <h2>How does the skin on your face typically feel?</h2>
+          <p>Select one</p>
+          <div class="cards">
+            <mat-card *ngFor="let skinBrand of brands"
+                      (click)="selectSkinBrand(skinBrand)"
+                      [class.selected]="selectedSkinBrand === skinBrand">
+              <mat-card-content>
+                <p>{{skinBrand}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div class="button-layout">
+            <button class="primary-button" matStepperPrevious>Back</button>
+            <button class="primary-button" matStepperNext [disabled]="!selectedSkinBrand">Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="fourthFormGroup" label="Step 4">
+        <form [formGroup]="fourthFormGroup">
+          <ng-template matStepLabel>Step 4</ng-template>
           <h2>Now let's talk about your body, what type of ingredients do you prefer?</h2>
           <p>Select one</p>
           <div class="cards">
-            <mat-card *ngFor="let bodyConcern of ingredientPreferences"
-                      (click)="selectBodyConcern(bodyConcern)"
-                      [class.selected]="selectedBodyConcern === bodyConcern">
+            <mat-card *ngFor="let skinCatgeory of category"
+                      (click)="selectSkinCategory(skinCatgeory)"
+                      [class.selected]="selectedSkinCategory === skinCatgeory">
               <mat-card-content>
-                <p>{{bodyConcern}}</p>
+                <p>{{skinCatgeory}}</p>
               </mat-card-content>
             </mat-card>
           </div>
           <div class="button-layout">
             <button matStepperPrevious class="primary-button">Back</button>
-            <button (click)="showResults()" [disabled]="!selectedBodyConcern" class="primary-button">Show Results</button>
+            <button (click)="showResults()" [disabled]="!selectedSkinCategory" class="primary-button">Show Results</button>
           </div>
         </form>
       </mat-step>
     </mat-horizontal-stepper>
   </div>
-  <div *ngIf="recommendation?.data?.matchingProducts?.length > 0" class="recommendation product-grid">
+  <div *ngIf="recommendation?.success" class="recommendation product-grid">
     <h2>Hi!</h2>
-    <span>Here are your Recommended Products.</span> <br>
+    <span>Here is your recommended product.</span> <br>
     <span>Note: Check with your dermatologist for further diagnoses or treatment.</span>
 
-    <!-- Loop through all matching products and display them in a grid -->
-    <div class="product-list">
-      <div *ngFor="let product of recommendation.data.matchingProducts" class="product-card">
-        <img [src]="product?.product_image" alt="{{ product?.product_name }}">
-        <h3>{{ product?.product_name }}</h3>
-        <div class="price">
-          <span *ngIf="product?.old_price" class="old-price">Rs {{ product?.old_price }}</span>
-          <span>Rs &nbsp; {{ product?.price }}</span>
+    <div class="product-container">
+      <h2>Recommended Product</h2>
+
+      <div class="product-card">
+        <!-- Display the recommended product name -->
+        <img src="../../../assets/images/P12.png" alt="">
+        <h3 class="product-name">{{ recommendation.data.recommendedProduct }}</h3>
+
+        <!-- Always show the product URL -->
+        <div>
+          <a [href]="recommendation.data.recommendedProductUrl" target="_blank">
+            🛒 View Product on Sephora
+          </a>
         </div>
-        <div class="actions">
-          <span (click)="addToCart(product)">Add to Cart</span>
-          <span (click)="quickView(product)" class="quickView">Quickview</span>
-        </div>
+
+        <!-- Note if the product page is unavailable -->
+        <p class="search-note">⚠️ If the product page is unavailable, search for it on:</p>
+        <ul class="search-links">
+          <li>
+            <a [attr.href]="'https://www.sephora.com/search?q=' + encodeURIComponent(recommendation?.data?.recommendedProduct)" target="_blank">
+              Sephora
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <!-- If no matching products are found -->
-  <div *ngIf="recommendation?.data?.matchingProducts?.length === 0" class="no-recommendation">
-    <h2>Sorry!</h2>
-    <span>We couldn't find any matching products in our store.</span>
-    <span>But you can check the following external sources for availability:</span>
-
-    <!-- Display external links for recommendations -->
-    <ul *ngIf="recommendation?.data?.externalLinks?.length > 0">
-      <li *ngFor="let external of recommendation.data.externalLinks">
-        <h3>{{ external.name }}</h3>
-        <ul>
-          <li *ngFor="let link of external.links">
-            <a [href]="link.url" target="_blank">{{ link.name }}</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
 
   <div class="stepper-instructions">
     <h3>Looking for a dermatologist-recommended skincare routine?</h3>

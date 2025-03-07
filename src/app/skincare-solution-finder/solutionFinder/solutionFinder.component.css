@@ -97,7 +97,7 @@ button:disabled {
 .product-card {
   margin-bottom: 40px;
   padding-inline: 7px;
-  width: calc(30% - 40px);
+  width: calc(40% - 40px);
   box-sizing: border-box;
   text-align: center;
   margin: 40px auto;
@@ -188,4 +188,9 @@ button:disabled {
       width: 60%; /* Full-width buttons */
       margin: 10px 0;
   }
+}
+
+
+.product-name{
+  text-transform: capitalize;
 }

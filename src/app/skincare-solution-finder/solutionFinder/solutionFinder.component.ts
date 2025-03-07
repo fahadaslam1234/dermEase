@@ -31,35 +31,36 @@ export class SolutionFinderComponent implements OnInit {
   fourthFormGroup!: FormGroup;
   fifthFormGroup!: FormGroup;
 
-  selectedConcerns!: string;
-  selectedSkinFeel!: string;
-  selectedMakeupArea!: string;
-  selectedSunscreenPreference!: string;
-  selectedBodyConcern!: string;
+  selectedSkinTone!: string;
+  selectedSkinType!: string;
+  selectedSkinBrand!: string;
+  selectedSkinCategory!: string;
 
   recommendation: any;
 
-  concerns: string[] = [
-    "Textured Skin",
-    "Wrinkles & Fine Lines",
-    "Acne Prone Skin",
-    "Dark Spots",
-    "Itchy Skin",
-    "Psoriasis",
-    "Sun Damage",
-    "Enlarged Pores",
-    "Rough & Bumpy Skin",
-    "Body Zits",
-    "Dullness"
+  skinTones: string[] = [
+ "Medium", "Fair", "Porcelain", "Tan", "Light",
+    "Olive", "Deep", "Dark", "Ebony"
   ];
 
-  skinFeels: string[] = ['Dry', 'Oily', 'Combination'];
-  ingredientPreferences: string[] = [
-  "Natural",
-  "Organic",
-  "Hypoallergenic",
-  "Vegan",
-  "Fragrance Free"
+  skinTypes: string[] = ['Dry', 'Oily', 'Combination','Normal'];
+  brands: string[] = [
+    "YOUTH TO THE PEOPLE", "SEPHORA COLLECTION", "PHILOSOPHY", "DRUNK ELEPHANT",
+    "TATCHA", "FRESH", "CLINIQUE", "LANCÔME", "OLEHENRIKSEN", "CAUDALIE",
+    "SHISEIDO", "KATE SOMERVILLE", "ORIGINS", "KIEHL'S SINCE 1851", "KORRES",
+    "INDIE LEE", "BELIF", "LA MER", "BAREMINERALS", "FIRST AID BEAUTY",
+    "BOBBI BROWN", "TARTE", "DR. JART+", "BIOSSANCE", "PETER THOMAS ROTH",
+    "JOSIE MARAN", "PERRICONE MD", "GLAMGLOW", "AMOREPACIFIC", "LANEIGE",
+    "REN CLEAN SKINCARE", "MURAD", "HERBIVORE", "CHARLOTTE TILBURY", "SMASHBOX",
+    "ESTÉE LAUDER", "MILK MAKEUP", "DR. DENNIS GROSS SKINCARE", "KOPARI",
+    "SATURDAY SKIN", "ALGENIST", "BOSCIA", "SK-II", "GLOW RECIPE",
+    "MAKE UP FOR EVER", "EVE LOM", "FARMACY", "JACK BLACK", "SUNDAY RILEY",
+    "KOH GEN DO", "CLARINS", "LANCER", "NUFACE", "VOLITION BEAUTY", "DIOR",
+    "PEACE OUT", "FARSÁLI", "BECCA", "IT COSMETICS", "GUERLAIN"
+  ];
+  category:string[] = [
+    "Cleanser","Moisturizer","Face Mask","Treatment",
+
   ];
 
   constructor(private _formBuilder: FormBuilder,private service : RecommendationService,
@@ -80,8 +81,11 @@ export class SolutionFinderComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: ['', Validators.required]
     });
-    this.fifthFormGroup = this._formBuilder.group({
-      fifthCtrl: ['', Validators.required]
+    this.thirdFormGroup = this._formBuilder.group({
+      thirdCtrl: ['', Validators.required]
+    });
+    this.fourthFormGroup = this._formBuilder.group({
+      fourthCtrl: ['', Validators.required]
     });
   }
 
@@ -89,40 +93,40 @@ export class SolutionFinderComponent implements OnInit {
     this.isIntro = false;
   }
 
-  selectConcern(concern: string) {
-    // Clear the previous selection
-    this.selectedConcerns = concern;
-    // Update the form control value
-    this.firstFormGroup.controls['firstCtrl'].setValue(concern);
+  selectSkinTone(skinTone: string) {
+    this.selectedSkinTone = skinTone;
+    this.firstFormGroup.controls['firstCtrl'].setValue(this.selectedSkinTone);
   }
-  selectSkinFeel(skinFeel: string) {
-    this.selectedSkinFeel = skinFeel;
-    this.secondFormGroup.controls['secondCtrl'].setValue(this.selectedSkinFeel);
+  selectSkinType(skinType: string) {
+    this.selectedSkinType = skinType;
+    this.secondFormGroup.controls['secondCtrl'].setValue(this.selectedSkinType);
   }
 
-  selectBodyConcern(bodyConcern: string) {
-    this.selectedBodyConcern = bodyConcern;
-    this.fifthFormGroup.controls['fifthCtrl'].setValue(this.selectedBodyConcern);
+
+  selectSkinBrand(skinBrand: string) {
+    this.selectedSkinBrand = skinBrand;
+    this.thirdFormGroup.controls['thirdCtrl'].setValue(this.selectedSkinBrand);
   }
+
+  selectSkinCategory(skinCatgeory: string) {
+    this.selectedSkinCategory = skinCatgeory;
+    this.fourthFormGroup.controls['fourthCtrl'].setValue(this.selectedSkinCategory);
+  }
+
 
   showResults() {
     this.spinner.show();
     const data = {
-      skin_conditions: this.selectedConcerns,
-      skin_feel: this.selectedSkinFeel,
-      ingredient_preferences:  this.selectedBodyConcern,
+      skin_tone: this.selectedSkinTone,
+      skin_type: this.selectedSkinType,
+      brand:  this.selectedSkinBrand,
+      category: this.selectedSkinCategory
     };
+    console.log(data)
 
     this.service.getRecommendation(data).subscribe(
       response => {
         this.spinner.hide();
-        const baseUrl = this.commonService.imageUrl;
-        if (response?.data?.matchingProducts?.length > 0) {
-          response.data.matchingProducts.forEach(product => {
-            // Prepend the base URL and replace '\\' with '/'
-            product.product_image = (baseUrl + product.product_image).replace(/\\/g, '/');
-          });
-        }
         this.recommendation = response;
         console.log(this.recommendation);
         this.showStepper = false;
