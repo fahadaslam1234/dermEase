@@ -92,7 +92,6 @@ export class SolutionFinderComponent implements OnInit {
   startStepper() {
     this.isIntro = false;
   }
-
   selectSkinTone(skinTone: string) {
     this.selectedSkinTone = skinTone;
     this.firstFormGroup.controls['firstCtrl'].setValue(this.selectedSkinTone);
@@ -101,21 +100,15 @@ export class SolutionFinderComponent implements OnInit {
     this.selectedSkinType = skinType;
     this.secondFormGroup.controls['secondCtrl'].setValue(this.selectedSkinType);
   }
-
-
   selectSkinBrand(skinBrand: string) {
     this.selectedSkinBrand = skinBrand;
     this.thirdFormGroup.controls['thirdCtrl'].setValue(this.selectedSkinBrand);
   }
-
   selectSkinCategory(skinCatgeory: string) {
     this.selectedSkinCategory = skinCatgeory;
     this.fourthFormGroup.controls['fourthCtrl'].setValue(this.selectedSkinCategory);
   }
-
-
   showResults() {
-    this.spinner.show();
     const data = {
       skin_tone: this.selectedSkinTone,
       skin_type: this.selectedSkinType,
@@ -123,6 +116,7 @@ export class SolutionFinderComponent implements OnInit {
       category: this.selectedSkinCategory
     };
     console.log(data)
+    this.spinner.show();
 
     this.service.getRecommendation(data).subscribe(
       response => {
@@ -138,7 +132,6 @@ export class SolutionFinderComponent implements OnInit {
     );
     this.spinner.hide();
   }
-
   quickView(product: Product) {
     const dialogRef = this.dialog.open(QuickViewProductComponent, {
       width: '80%',
@@ -150,14 +143,12 @@ export class SolutionFinderComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
-
   addToCart(product: Product) {
     this.cartService.addToCart(product);
     this.cartVisible = true; // Show the cart sidebar when an item is added
     this.subscribeToCartUpdates();
     this.overlayService.openCart();
   }
-
   subscribeToCartUpdates() {
     this.cartService.getItems().subscribe(items => {
       this.cartItems = items;

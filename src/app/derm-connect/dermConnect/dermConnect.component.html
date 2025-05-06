@@ -109,7 +109,7 @@
       <div class="doctor-card" *ngFor="let doctor of doctors" (click)="viewDoctorDetails(doctor)">
         <img src='../../../assets/images/doctor.jpg' alt="{{ doctor.name }}" class="doctor-image"/>
         <div class="doctor-info">
-          <h3>{{ doctor.user_name }}</h3>
+          <!-- <h3>{{ doctor.user_name }}</h3> -->
           <p>{{ doctor.specialty }}</p>
           <p>{{ doctor.availability }}</p>
           <p>{{ doctor.bio }}</p>
@@ -166,9 +166,17 @@
             <td>{{ appointment.date | date }}</td>
             <td>{{ appointment.time }}</td>
             <td class="action-buttons">
-              <!-- [disabled]="!isWithinTime(appointment.time)" -->
-              <button class="primary-button" (click)="initiateVideoCall(appointment)" ><mat-icon>videocam</mat-icon>  <span>Start Video Call</span> </button>
-              <button class="primary-button" (click)="initiateChat(appointment)" > <mat-icon class="mat-18">chat</mat-icon> <span>Start Chat</span> </button>
+              <button class="primary-button"
+                      [disabled]="!isWithinTime(appointment.time)"
+                      (click)="initiateVideoCall(appointment)">
+                <mat-icon>videocam</mat-icon> <span>Start Video Call</span>
+              </button>
+
+              <button class="primary-button"
+                      [disabled]="!isWithinTime(appointment.time)"
+                      (click)="initiateChat(appointment)">
+                <mat-icon class="mat-18">chat</mat-icon> <span>Start Chat</span>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -176,15 +184,21 @@
       <p class="empty" *ngIf="upcomingAppointments.length==0"> There are no upcoming appointments at the moment. </p>
     </div>
 
-    <!-- Incoming Call Section -->
-    <div class="section" *ngIf="incomingCall">
-      <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
-      <div class="action-buttons">
-        <button class="primary-button"  (click)="acceptVideoCall()">Accept</button>
-        <button class="primary-button"  (click)="rejectVideoCall()">Reject</button>
-      </div>
+  <!-- Incoming Call Section -->
+<div class="section incoming-call" *ngIf="incomingCall">
+  <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
+  <div class="action-buttons">
+    <button mat-raised-button color="primary"
+            (click)="acceptVideoCall()">
+      Accept
+    </button>
+    <button mat-raised-button color="warn"
+            (click)="rejectVideoCall()">
+      Reject
+    </button>
+  </div>
+</div>
 
-    </div>
 
     <!-- Notifications Section -->
     <div class="section">

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { VideoCallComponent } from '../videoCall/videoCall.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ChatComponent } from '../chat/chat.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { DermConnectService } from 'src/app/services/dermConnect.service';
@@ -18,17 +18,18 @@ export class DermConnectComponent implements OnInit {
   pendingAppointments = [];
   upcomingAppointments = [];
   isDoctor!: boolean;
-  incomingCall: any = null; // Store details of an incoming call
-  currentVideoCall: any = null;
-  notifications: { message: string }[] = []; // Notifications array
+  incomingCall: any = null;
+  currentVideoCall: MatDialogRef<VideoCallComponent> | null = null;
+  notifications: { message: string }[] = [];
   user: any = null;
   isDermatologist: boolean = false;
-  username: String;
-  email: string;
+  username: string = '';
+  email: string = '';
   appointmentForm: FormGroup;
   departments: string[] = ['Cardiology', 'Neurology', 'Pediatrics', 'Orthopedics'];
-  doctors: string[] = ['Dr. John Doe', 'Dr. Jane Smith', 'Dr. William Johnson'];
+  doctors: any[] = [];
   times: string[] = ['3:00 PM - 5:00 PM', '5:00 PM - 7:00 PM', '7:00 PM - 9:00 PM'];
+  private ws: WebSocket | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -40,8 +41,8 @@ export class DermConnectComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {
     this.appointmentForm = this.fb.group({
-      patientName: [this.username],
-      email: [this.email],
+      patientName: [''],
+      email: [''],
       phone: ['', Validators.required],
       department: ['', Validators.required],
       doctor: ['', Validators.required],
@@ -52,31 +53,78 @@ export class DermConnectComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllDerms();
-
     this.user = this.authService.getLoggedInUser();
-    this.username = this.user.user_name;
-    this.getAppointments();
-    this.getUpcomingAppointments();
-    console.log(this.username);
-    this.email = this.user.email;
 
-    this.appointmentForm.setValue({
-      patientName: this.username,
-      email: this.email,
-      phone: '',
-      department: '',
-      doctor: '',
-      date: '',
-      time: '',
-      message: '',
-    });
+    if (this.user && this.user.user_name) {
+      this.username = this.user.user_name;
+      this.email = this.user.email;
+      this.isDermatologist = this.user.role === 'dermatologist';
 
-    if (this.user) {
-      this.isDermatologist = this.user.role === 'dermatologist'; // Assuming 'role' field in user object
+      this.setupWebSocket();
+
+      this.getAllDerms();
+      this.getAppointments();
+      this.getUpcomingAppointments();
+
+      this.appointmentForm.setValue({
+        patientName: this.username,
+        email: this.email,
+        phone: '',
+        department: '',
+        doctor: '',
+        date: '',
+        time: '',
+        message: '',
+      });
     }
-    // Example: Simulate an incoming call after 5 seconds (for testing)
-    setTimeout(() => this.simulateIncomingCall(), 5000);
+  }
+
+  setupWebSocket() {
+    this.ws = new WebSocket('ws://localhost:8081');
+
+    this.ws.onopen = () => {
+      if (this.username) {
+        this.ws.send(JSON.stringify({ type: 'register', userId: this.username }));
+      }
+    };
+
+    this.ws.onmessage = (msg) => {
+      const data = JSON.parse(msg.data);
+      if (!data) return;
+
+      if (data.type === 'callRequest') {
+        this.incomingCall = {
+          patientName: data.from,
+          roomId: data.roomId
+        };
+        this.notifications.push({ message: `Incoming video call from ${data.from}` });
+      }
+
+      if (data.type === 'callAccepted') {
+        const dialogRef = this.dialog.open(VideoCallComponent, {
+          width: '90%',
+          maxWidth: '600px',
+          data: {
+            roomId: data.roomId,
+            isCaller: true,
+            localUser: this.username,
+            remoteUser: data.by,
+            showRemote: false // initially false; will update via enableRemote
+          },
+        });
+
+        this.currentVideoCall = dialogRef;
+      }
+
+      if (data.type === 'enableRemote') {
+        console.log('📩 Received enableRemote signal for preview');
+        this.currentVideoCall?.componentInstance?.enableRemotePreviewWithLocal();
+      }
+    };
+
+    this.ws.onerror = (err) => {
+      console.error('❌ WebSocket error:', err);
+    };
   }
 
   toggleUserType() {
@@ -89,67 +137,35 @@ export class DermConnectComponent implements OnInit {
 
   getAllDerms() {
     this.dcService.getAllDerms().subscribe({
-      next: (response) => {
-        this.doctors = response;
-      },
-      error: (error) => {
-        console.log(error);
-      },
+      next: (response) => { this.doctors = response; },
+      error: (error) => { console.log(error); },
     });
   }
 
   getAppointments() {
     this.dcService.getAllAppointments(this.username).subscribe({
-      next: (response) => {
-        this.pendingAppointments = response;
-      },
-      error: (error) => {
-        this.toastService.showToast(error, 'danger');
-      },
+      next: (response) => { this.pendingAppointments = response; },
+      error: (error) => { this.toastService.showToast(error, 'danger'); },
     });
   }
 
   getUpcomingAppointments() {
     this.dcService.getAllApprovedAppointments(this.username).subscribe({
-      next: (response) => {
-        this.upcomingAppointments = response;
-      },
-      error: (error) => {
-        this.toastService.showToast(error, 'danger');
-      },
-    });
-  }
-
-  updateAppointment(id: any, status: any) {
-    this.dcService.updateAppointment(id, status).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.toastService.showToast(
-          `Respected appointment has been ${status} `,
-          'success'
-        );
-        this.getAppointments();
-      },
-      error: (error) => {
-        this.toastService.showToast(error, 'danger');
-      },
+      next: (response) => { this.upcomingAppointments = response; },
+      error: (error) => { this.toastService.showToast(error, 'danger'); },
     });
   }
 
   onSubmit() {
     this.spinner.show();
-    const formValues = this.appointmentForm.value;
-    this.dcService.createAppointment(formValues).subscribe({
-      next: (response) => {
-        console.log(response);
+    this.dcService.createAppointment(this.appointmentForm.value).subscribe({
+      next: () => {
         this.spinner.hide();
-        this.toastService.showToast(
-          'Your appointment has been pending on the respected dermatologist',
-          'success'
-        );
+        this.toastService.showToast('Your appointment has been submitted.', 'success');
         this.appointmentForm.reset();
       },
       error: (error) => {
+        this.spinner.hide();
         this.toastService.showToast(error, 'danger');
       },
     });
@@ -158,100 +174,87 @@ export class DermConnectComponent implements OnInit {
   isWithinTime(timeRange: string): boolean {
     const [startTime, endTime] = timeRange.split(' - ');
     const now = new Date();
-
-    // Parse start time
     const start = this.parseTime(startTime, now);
-    // Parse end time
     const end = this.parseTime(endTime, now);
-
-    // Check if current time falls within the range
     return now >= start && now <= end;
   }
 
   parseTime(time: string, referenceDate: Date): Date {
     const [hours, minutes, period] = time.split(/[: ]/);
     const date = new Date(referenceDate);
-
     let hour = parseInt(hours, 10);
-    if (period === 'PM' && hour < 12) {
-      hour += 12;
-    }
-    if (period === 'AM' && hour === 12) {
-      hour = 0;
-    }
-
+    if (period === 'PM' && hour < 12) hour += 12;
+    if (period === 'AM' && hour === 12) hour = 0;
     date.setHours(hour, parseInt(minutes, 10), 0, 0);
     return date;
   }
 
-  simulateIncomingCall() {
-    const validAppointment = this.upcomingAppointments.find((appointment) =>
-      this.isWithinTime(appointment.time)
-    );
-    if (validAppointment) {
-      this.incomingCall = {
-        patientName: validAppointment.patientName,
-        time: validAppointment.time,
-      };
+  initiateVideoCall(appointment: any) {
+    if (this.isWithinTime(appointment.time)) {
+      const roomId = `room-${Date.now()}`;
+      this.ws?.send(JSON.stringify({
+        type: 'callRequest',
+        from: this.username,
+        target: appointment.doctor.user_name || appointment.doctor,
+        roomId
+      }));
     } else {
-      console.log('No valid appointments for an incoming call at this time.');
+      this.toastService.showToast('Video call not allowed outside scheduled time.', 'warning');
     }
   }
 
   acceptVideoCall() {
-    this.currentVideoCall = this.incomingCall;
-    this.incomingCall = null;
+    if (!this.ws || !this.incomingCall || !this.username) {
+      console.warn("❌ Missing WebSocket or call details.");
+      return;
+    }
+
+    const { roomId, patientName } = this.incomingCall;
+
     const dialogRef = this.dialog.open(VideoCallComponent, {
       width: '90%',
       maxWidth: '600px',
-      data: { patientName: this.currentVideoCall.patientName },
+      data: {
+        roomId,
+        isCaller: false,
+        localUser: this.username,
+        remoteUser: patientName,
+        showRemote: true
+      },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      this.currentVideoCall = null;
-    });
-  }
+    dialogRef.afterOpened().subscribe(() => {
+      this.ws!.send(JSON.stringify({
+        type: 'acceptCall',
+        roomId,
+        by: this.username,
+        to: patientName
+      }));
 
-  rejectVideoCall() {
-    const timestamp = new Date().toLocaleTimeString();
-    this.notifications.push({
-      message: `You rejected a call from ${this.incomingCall.patientName} at ${timestamp}`,
+      setTimeout(() => {
+        this.ws!.send(JSON.stringify({
+          type: 'enableRemote',
+          roomId,
+          to: patientName,
+          from: this.username
+        }));
+      }, 500); // slight delay to ensure caller dialog is ready
     });
+
     this.incomingCall = null;
   }
 
-  initiateVideoCall(appointment: any) {
-    if (this.isWithinTime(appointment.time)) {
-      this.currentVideoCall = appointment;
-      const dialogRef = this.dialog.open(VideoCallComponent, {
-        width: '90%',
-        maxWidth: '600px',
-        data: { patientName: appointment.patientName },
-      });
-
-      dialogRef.afterClosed().subscribe(() => {
-        this.currentVideoCall = null;
-      });
-    } else {
-      console.log('Cannot start a video call outside the scheduled time.');
-    }
+  rejectVideoCall() {
+    this.notifications.push({ message: `Call from ${this.incomingCall.patientName} was rejected.` });
+    this.incomingCall = null;
   }
 
   initiateChat(appointment: any) {
-    const dialogRef = this.dialog.open(ChatComponent, {
+    this.dialog.open(ChatComponent, {
       width: '90%',
       maxWidth: '600px',
       data: { patientName: appointment.patientName },
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      // Handle chat closure
-    });
-  }
-
-  receiveChatNotification(message: string) {
-    const timestamp = new Date().toLocaleTimeString();
-    this.notifications.push({ message: `${message} at ${timestamp}` });
   }
 
   isLoggedIn(): boolean {

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
-import { ProductService } from '../../services/productService';
 import { Product } from '../../models/productModel';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { Router } from '@angular/router';
@@ -15,7 +14,7 @@ export class CheckOutDetailsComponent implements OnInit {
   checkoutForm!: FormGroup;
   products: Product[] = [];
   countries = ['Pakistan', 'Canada', 'UK', 'Australia', 'India'];
-  selectedShippingMethod: string = 'cod';
+  selectedShippingMethod: string = 'cod'; // 👈 Added this line
 
   constructor(
     private fb: FormBuilder,
@@ -61,29 +60,42 @@ export class CheckOutDetailsComponent implements OnInit {
       const orderData = {
         ...this.checkoutForm.value,
         products: this.products,
-        totalAmount: this.calculateTotal()
+        totalAmount: this.calculateTotal(),
+        shippingMethod: this.selectedShippingMethod // 👈 Use selectedShippingMethod
       };
-      console.log("in order place", orderData)
+      console.log("in order place", orderData);
 
-      if (this.checkoutForm.value.shippingMethod === 'cod') {
+      if (this.selectedShippingMethod === 'cod') {
+        // COD flow
         this.checkoutService.placeOrder(orderData).subscribe(response => {
-          console.log(orderData);
           alert('Order placed successfully!');
           this.cartService.clearCart();
-          this.checkoutForm.reset(); // Reset form
+          this.checkoutForm.reset();
           this.products = [];
           setTimeout(() => {
             this.router.navigate(['/']);
           }, 3000);
-
         });
-      } else {
-        this.checkoutService.createStripeSession(orderData).subscribe(session => {
-          window.location.href = session.url;
+      } else if (this.selectedShippingMethod === 'stripe') {
+        // Stripe flow
+        this.checkoutService.createStripeSession(orderData).subscribe(response => {
+          if (response && response.url) {
+            window.location.href = response.url; // Redirect to Stripe checkout page
+          } else {
+            alert('Something went wrong with Stripe session.');
+          }
+        }, error => {
+          console.error('Stripe session creation error:', error);
+          alert('Stripe session creation failed.');
         });
       }
     } else {
       alert('Please fill all required fields.');
     }
+  }
+
+  // 👇 Add method to update shipping method dynamically
+  onShippingMethodChange(method: string): void {
+    this.selectedShippingMethod = method;
   }
 }

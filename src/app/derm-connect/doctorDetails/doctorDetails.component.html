@@ -1,12 +1,12 @@
-<div class="doctor-details-container">
+<div class="doctor-details-container" >
   <!-- Doctor Information Section -->
    <div>
-    <div class="doctor-info">
+    <div class="doctor-info" *ngIf="doctor">
       <div class="doctor-image-container">
-        <img [src]="doctor.image" alt="{{ doctor.name }}">
+        <img src="../../../assets/images/doctor.jpg" alt="{{ doctor.user_name }}">
       </div>
       <div class="doctor-details">
-        <h2>{{ doctor.name }}</h2>
+        <h2>{{ doctor.user_name }}</h2>
         <p>{{ doctor.specialty }}</p>
         <p>{{ doctor.education }}</p>
         <p><strong>Contact:</strong> {{ doctor.contact }}</p>
@@ -15,15 +15,15 @@
 
     <div class="communication-buttons">
       <!-- <button class="video-call-btn" (click)="startVideoCall()">Video Call</button> -->
-      <button class="chat-btn primary-button" (click)="startChat()">Get in Touch</button>
+      <button class="chat-btn primary-button" (click)="openVideoCall()">Video call</button>
+      <button class="chat-btn primary-button" (click)="openChat()">Chat</button>
     </div>
       </div>
     </div>
 
 
     <div class="doctor-biography">
-      <h3>Biography Of {{ doctor.name }}</h3>
-      <p>{{ doctor.bio }}</p>
+      <!-- <h3>Biography Of {{ doctor.user_name }}</h3> -->
       <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam eligendi officiis illo optio
         vitae explicabo officia ullam, iusto nihil corrupti nesciunt, consequuntur doloremque quam voluptate vel similique.
         Ipsum quos fuga molestiae explicabo,

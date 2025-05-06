@@ -13,10 +13,11 @@ import { DoctorDetailsComponent } from './doctorDetails/doctorDetails.component'
 import { MatIconModule } from '@angular/material/icon';
 import { ChatComponent } from './chat/chat.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VideoCallComponent } from './videoCall/videoCall.component';
 
 
 @NgModule({
-  declarations: [DermConnectComponent,DoctorDetailsComponent, ChatComponent],
+  declarations: [DermConnectComponent,DoctorDetailsComponent, ChatComponent,VideoCallComponent],
   imports: [
     CommonModule,
     DermConnectRoutingModule,

@@ -55,7 +55,7 @@
 
     <mat-card class="shipping-info mt-6">
       <mat-card-title>Shipping Method</mat-card-title>
-      <mat-radio-group formControlName="shippingMethod">
+      <mat-radio-group formControlName="shippingMethod" (change)="onShippingMethodChange($event.value)">
         <mat-radio-button value="cod">Cash on Delivery (COD)</mat-radio-button>
         <mat-radio-button value="stripe">Stripe</mat-radio-button>
       </mat-radio-group>
