@@ -101,15 +101,12 @@
           </button>
         </form>
       </div>
-
-
     </div>
 
     <div class="doctor-card-container">
       <div class="doctor-card" *ngFor="let doctor of doctors" (click)="viewDoctorDetails(doctor)">
         <img src='../../../assets/images/doctor.jpg' alt="{{ doctor.name }}" class="doctor-image"/>
         <div class="doctor-info">
-          <!-- <h3>{{ doctor.user_name }}</h3> -->
           <p>{{ doctor.specialty }}</p>
           <p>{{ doctor.availability }}</p>
           <p>{{ doctor.bio }}</p>
@@ -118,37 +115,33 @@
     </div>
   </div>
 
-
-
   <div class="doctor-dashboard-container" *ngIf="isDermatologist">
-        <!--Upcoming Appointments Section -->
-        <div class="section">
-          <h3 class="section-heading">Pending Appointments</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Patient Name</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let appointment of pendingAppointments">
-                <td>{{ appointment.patientName }}</td>
-                <td>{{ appointment.date | date }}</td>
-                <td>{{ appointment.time }}</td>
-                <td class="action-buttons">
-                  <button class="primary-button" (click)="updateAppointment(appointment._id,'approved')"> Approve</button>
-                  <button class="primary-button" (click)="updateAppointment(appointment._id,'rejected')"> Reject </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p class="empty" *ngIf="pendingAppointments.length==0"> There are no pending appointments at the moment. </p>
-        </div>
+    <div class="section">
+      <h3 class="section-heading">Pending Appointments</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let appointment of pendingAppointments">
+            <td>{{ appointment.patientName }}</td>
+            <td>{{ appointment.date | date }}</td>
+            <td>{{ appointment.time }}</td>
+            <td class="action-buttons">
+              <button class="primary-button" (click)="updateAppointment(appointment._id,'approved')"> Approve</button>
+              <button class="primary-button" (click)="updateAppointment(appointment._id,'rejected')"> Reject </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="empty" *ngIf="pendingAppointments.length==0"> There are no pending appointments at the moment. </p>
+    </div>
 
-    <!--Upcoming Appointments Section -->
     <div class="section">
       <h3 class="section-heading">Upcoming Appointments</h3>
       <table>
@@ -173,7 +166,6 @@
               </button>
 
               <button class="primary-button"
-                      [disabled]="!isWithinTime(appointment.time)"
                       (click)="initiateChat(appointment)">
                 <mat-icon class="mat-18">chat</mat-icon> <span>Start Chat</span>
               </button>
@@ -184,36 +176,27 @@
       <p class="empty" *ngIf="upcomingAppointments.length==0"> There are no upcoming appointments at the moment. </p>
     </div>
 
-  <!-- Incoming Call Section -->
-<div class="section incoming-call" *ngIf="incomingCall">
-  <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
-  <div class="action-buttons">
-    <button mat-raised-button color="primary"
-            (click)="acceptVideoCall()">
-      Accept
-    </button>
-    <button mat-raised-button color="warn"
-            (click)="rejectVideoCall()">
-      Reject
-    </button>
-  </div>
-</div>
+    <div class="section incoming-call" *ngIf="incomingCall">
+      <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
+      <div class="action-buttons">
+        <button mat-raised-button color="primary"
+                (click)="acceptVideoCall()">
+          Accept
+        </button>
+        <button mat-raised-button color="warn"
+                (click)="rejectVideoCall()">
+          Reject
+        </button>
+      </div>
+    </div>
 
-
-    <!-- Notifications Section -->
     <div class="section">
       <h3 class="section-heading">Notifications</h3>
       <div *ngFor="let notification of notifications">
         <p>{{ notification.message }}</p>
+        <button *ngIf="notification.message.includes('💬 New message')" (click)="openChatFromNotification()">Open Chat</button>
       </div>
       <p *ngIf="notifications.length === 0" class="empty">No notifications at the moment.</p>
     </div>
   </div>
-
 </div>
-
-
-
-
-
-

@@ -1,225 +1,161 @@
-import {
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
-  OnDestroy,
-  AfterViewInit
-} from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import * as Video from 'twilio-video';
 
 @Component({
   selector: 'app-video-call',
   templateUrl: './videoCall.component.html',
   styleUrls: ['./videoCall.component.css']
 })
-export class VideoCallComponent implements OnInit, OnDestroy, AfterViewInit {
+export class VideoCallComponent implements OnInit, OnDestroy {
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('remoteVideo') remoteVideo!: ElementRef<HTMLVideoElement>;
 
-  ws!: WebSocket;
-  peerConnection!: RTCPeerConnection;
-  localStream!: MediaStream;
-  isCaller!: boolean;
-  roomId!: string;
-  localUser!: string;
-  remoteUser!: string;
-  peerReady = false;
-  pendingCandidates: RTCIceCandidate[] = [];
-  showRemote = false;
+  room!: Video.Room;
+  isMicOn: boolean = true;
+  isVideoOn: boolean = true;
+  remoteUserLeft: boolean = false;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<VideoCallComponent>
-  ) {
-    if (!data?.roomId || !data?.localUser || !data?.remoteUser) {
-      console.error("🚫 Invalid dialog data!", data);
-      this.dialogRef.close();
-      return;
-    }
-
-    this.roomId = data.roomId;
-    this.isCaller = data.isCaller;
-    this.localUser = data.localUser;
-    this.remoteUser = data.remoteUser;
-    this.showRemote = data.showRemote || false;
-    console.log("🎯 Constructor data:", data);
-  }
+    @Inject(MAT_DIALOG_DATA) public data: {
+      roomId: string,
+      localUser: string,
+      remoteUser: string
+    },
+    private dialogRef: MatDialogRef<VideoCallComponent>,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
-    this.setupWebSocket();
+    this.joinTwilioRoom();
   }
 
-  async ngAfterViewInit(): Promise<void> {
-    await this.setupMedia();
-    this.setupPeerConnection();
-    this.peerReady = true;
-    this.flushPendingCandidates();
+  joinTwilioRoom() {
+    const { roomId, localUser } = this.data;
 
-    if (this.isCaller) {
-      await this.makeOffer();
-    }
-  }
+    this.http.post<any>('http://localhost:3002/token', {
+      identity: localUser,
+      room: roomId
+    }).subscribe(async res => {
+      this.room = await Video.connect(res.token, {
+        name: roomId,
+        audio: true,
+        video: { width: 640 }
+      });
 
-  async setupMedia() {
-    this.localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-    this.localVideo.nativeElement.srcObject = this.localStream;
+      // Attach local video
+      this.room.localParticipant.videoTracks.forEach(pub => {
+        const track = pub.track;
+        if (track.kind === 'video') {
+          const videoTrack = track as Video.LocalVideoTrack;
+          this.localVideo.nativeElement.append(videoTrack.attach());
+        }
+      });
 
-    if (this.showRemote && this.remoteVideo) {
-      this.remoteVideo.nativeElement.srcObject = this.localStream;
-      console.log("🧪 Showing local stream as remote (initial)");
-    }
-  }
+      // Existing participants
+      this.room.participants.forEach(participant => {
+        this.subscribeToParticipantTracks(participant);
+      });
 
-  setupPeerConnection() {
-    this.peerConnection = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+      // New participant connects
+      this.room.on('participantConnected', participant => {
+        this.remoteUserLeft = false;
+        this.subscribeToParticipantTracks(participant);
+      });
+
+      // Participant disconnects
+      this.room.on('participantDisconnected', participant => {
+        console.log(`${participant.identity} disconnected`);
+        this.remoteUserLeft = true;
+
+        participant.tracks.forEach(publication => {
+          if (publication.track && publication.track.kind === 'video') {
+            publication.track.detach().forEach(el => el.remove());
+          }
+        });
+      });
+
+      // Cleanup
+      this.room.on('disconnected', () => {
+        this.room.localParticipant.videoTracks.forEach(pub => {
+          const track = pub.track;
+          if (track.kind === 'video' || track.kind === 'audio') {
+            (track as Video.LocalVideoTrack | Video.LocalAudioTrack).stop();
+            track.detach().forEach(el => el.remove());
+          }
+        });
+      });
     });
+  }
 
-    this.peerConnection.oniceconnectionstatechange = () => {
-      console.log("🔄 ICE connection state:", this.peerConnection.iceConnectionState);
-    };
+  subscribeToParticipantTracks(participant: Video.RemoteParticipant) {
+    participant.tracks.forEach(publication => {
+      if (publication.track && publication.track.kind === 'video') {
+        const videoTrack = publication.track as Video.VideoTrack;
+        const element = videoTrack.attach();
+        this.remoteVideo.nativeElement.appendChild(element);
 
-    this.peerConnection.ontrack = (event) => {
-      if (this.showRemote) {
-        console.log("🧪 Skipping ontrack (demo mode)");
-        return;
+        videoTrack.on('disabled', () => {
+          videoTrack.detach().forEach(el => el.remove());
+        });
+
+        videoTrack.on('enabled', () => {
+          const newElement = videoTrack.attach();
+          this.remoteVideo.nativeElement.appendChild(newElement);
+        });
       }
 
-      const stream = event.streams[0];
-      if (stream && this.remoteVideo) {
-        this.remoteVideo.nativeElement.srcObject = stream;
-        console.log("✅ Remote stream attached");
-      }
-    };
+      publication.on('subscribed', track => {
+        if (track.kind === 'video') {
+          const videoTrack = track as Video.VideoTrack;
+          const element = videoTrack.attach();
+          this.remoteVideo.nativeElement.appendChild(element);
 
-    this.localStream.getTracks().forEach(track => {
-      this.peerConnection.addTrack(track, this.localStream);
+          videoTrack.on('disabled', () => {
+            videoTrack.detach().forEach(el => el.remove());
+          });
+
+          videoTrack.on('enabled', () => {
+            const newElement = videoTrack.attach();
+            this.remoteVideo.nativeElement.appendChild(newElement);
+          });
+        }
+      });
     });
-
-    this.peerConnection.onicecandidate = (event) => {
-      if (event.candidate) {
-        this.sendMessage('candidate', { candidate: event.candidate });
-      }
-    };
   }
 
-  async makeOffer() {
-    const offer = await this.peerConnection.createOffer();
-    await this.peerConnection.setLocalDescription(offer);
-    this.sendMessage('offer', { offer });
+  toggleMic() {
+    this.room.localParticipant.audioTracks.forEach(publication => {
+      const track = publication.track;
+      this.isMicOn ? track.disable() : track.enable();
+    });
+    this.isMicOn = !this.isMicOn;
   }
 
-  setupWebSocket() {
-    this.ws = new WebSocket('ws://localhost:8081');
-
-    this.ws.onopen = () => {
-      console.log("✅ WebSocket connected");
-    };
-
-    this.ws.onmessage = async (event) => {
-      const data = JSON.parse(event.data);
-      if (data.roomId !== this.roomId) return;
-
-      switch (data.type) {
-        case 'offer':
-          this.showRemote = true;
-          await this.setupMedia();
-          this.setupPeerConnection();
-          await this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
-          const answer = await this.peerConnection.createAnswer();
-          await this.peerConnection.setLocalDescription(answer);
-          this.sendMessage('answer', { answer });
-          this.peerReady = true;
-          this.flushPendingCandidates();
-          if (this.remoteVideo && this.localStream) {
-            this.remoteVideo.nativeElement.srcObject = this.localStream;
-          }
-          break;
-
-        case 'answer':
-          this.showRemote = true;
-          await this.peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
-          this.peerReady = true;
-          this.flushPendingCandidates();
-          if (this.remoteVideo && this.localStream) {
-            this.remoteVideo.nativeElement.srcObject = this.localStream;
-          }
-          break;
-
-        case 'candidate':
-          if (this.peerReady && this.peerConnection.remoteDescription) {
-            try {
-              await this.peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
-            } catch (err) {
-              console.error('🚫 ICE error:', err);
-            }
-          } else {
-            this.pendingCandidates.push(data.candidate);
-          }
-          break;
-
-        case 'leave':
-          this.closeCall();
-          break;
-
-        case 'enableRemote':
-          this.enableRemotePreviewWithLocal();
-          break;
-      }
-    };
-
-    this.ws.onerror = (err) => {
-      console.error("WebSocket error:", err);
-    };
-  }
-
-  flushPendingCandidates() {
-    this.pendingCandidates.forEach(async candidate => {
-      try {
-        await this.peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
-        console.log("✅ Flushed ICE candidate");
-      } catch (err) {
-        console.warn("⚠️ Error flushing ICE:", err);
+  toggleVideo() {
+    this.room.localParticipant.videoTracks.forEach(publication => {
+      const track = publication.track;
+      if (this.isVideoOn) {
+        track.disable();
+        track.detach().forEach(el => el.remove());
+      } else {
+        const element = track.attach();
+        this.localVideo.nativeElement.appendChild(element);
+        track.enable();
       }
     });
-    this.pendingCandidates = [];
-  }
-
-  sendMessage(type: string, payload: any) {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(JSON.stringify({
-        type,
-        roomId: this.roomId,
-        from: this.localUser,
-        to: this.remoteUser,
-        ...payload
-      }));
-    }
+    this.isVideoOn = !this.isVideoOn;
   }
 
   endCall() {
-    this.sendMessage('leave', {});
-    this.closeCall();
-  }
-
-  closeCall() {
-    if (this.peerConnection) this.peerConnection.close();
-    if (this.localStream) this.localStream.getTracks().forEach(track => track.stop());
-    if (this.ws) this.ws.close();
+    if (this.room) {
+      this.room.disconnect();
+    }
     this.dialogRef.close();
   }
 
   ngOnDestroy(): void {
     this.endCall();
-  }
-
-  enableRemotePreviewWithLocal() {
-    this.showRemote = true;
-    if (this.remoteVideo && this.localStream) {
-      this.remoteVideo.nativeElement.srcObject = this.localStream;
-      console.log('🧪 Remote preview updated manually (enableRemotePreviewWithLocal)');
-    }
   }
 }

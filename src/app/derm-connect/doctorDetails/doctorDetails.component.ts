@@ -98,7 +98,10 @@ export class DoctorDetailsComponent implements OnInit {
     this.dialog.open(ChatComponent, {
       width: '600px',
       maxWidth: '600px',
-      data: { doctor: this.doctor }
+      data: {
+        localUser: this.loggedInUser?.user_name,
+        remoteUser: this.doctor?.user_name
+      }
     });
   }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { VideoCallComponent } from '../videoCall/videoCall.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { VideoCallComponent } from '../videoCall/videoCall.component';
 import { ChatComponent } from '../chat/chat.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { DermConnectService } from 'src/app/services/dermConnect.service';
@@ -61,7 +61,6 @@ export class DermConnectComponent implements OnInit {
       this.isDermatologist = this.user.role === 'dermatologist';
 
       this.setupWebSocket();
-
       this.getAllDerms();
       this.getAppointments();
       this.getUpcomingAppointments();
@@ -109,16 +108,18 @@ export class DermConnectComponent implements OnInit {
             isCaller: true,
             localUser: this.username,
             remoteUser: data.by,
-            showRemote: false // initially false; will update via enableRemote
+            showRemote: false
           },
         });
-
         this.currentVideoCall = dialogRef;
       }
 
-      if (data.type === 'enableRemote') {
-        console.log('📩 Received enableRemote signal for preview');
-        this.currentVideoCall?.componentInstance?.enableRemotePreviewWithLocal();
+      if (data.type === 'chat') {
+        const chatOpen = this.dialog.openDialogs.some(dialog => dialog.componentInstance instanceof ChatComponent);
+        if (!chatOpen) {
+          this.notifications.push({ message: `💬 New message from ${data.from}` });
+          this.incomingCall = { patientName: data.from }; // reused for chat target
+        }
       }
     };
 
@@ -204,10 +205,7 @@ export class DermConnectComponent implements OnInit {
   }
 
   acceptVideoCall() {
-    if (!this.ws || !this.incomingCall || !this.username) {
-      console.warn("❌ Missing WebSocket or call details.");
-      return;
-    }
+    if (!this.ws || !this.incomingCall || !this.username) return;
 
     const { roomId, patientName } = this.incomingCall;
 
@@ -238,7 +236,7 @@ export class DermConnectComponent implements OnInit {
           to: patientName,
           from: this.username
         }));
-      }, 500); // slight delay to ensure caller dialog is ready
+      }, 500);
     });
 
     this.incomingCall = null;
@@ -253,8 +251,25 @@ export class DermConnectComponent implements OnInit {
     this.dialog.open(ChatComponent, {
       width: '90%',
       maxWidth: '600px',
-      data: { patientName: appointment.patientName },
+      data: {
+        localUser: this.username,
+        remoteUser: appointment.patientName
+      },
     });
+  }
+
+  openChatFromNotification() {
+    if (this.incomingCall?.patientName) {
+      this.dialog.open(ChatComponent, {
+        width: '90%',
+        maxWidth: '600px',
+        data: {
+          localUser: this.username,
+          remoteUser: this.incomingCall.patientName
+        },
+      });
+      this.incomingCall = null;
+    }
   }
 
   isLoggedIn(): boolean {

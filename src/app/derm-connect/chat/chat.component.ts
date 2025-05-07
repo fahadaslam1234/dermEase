@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { VideoCallComponent } from '../videoCall/videoCall.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-chat',
@@ -8,54 +9,103 @@ import { VideoCallComponent } from '../videoCall/videoCall.component';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
-
-  doctor: any;
-
-  conversations = [
-    { name: 'John Doe', messages: [{ text: 'Hello, how can I help you?', sentByUser: false }, { text: 'I have a question about my skin condition.', sentByUser: true }] },
-    { name: 'Jane Smith', messages: [{ text: 'Hi, any updates on my report?', sentByUser: false }] },
-    // Add more conversations here
-  ];
-
-  selectedConversation: any = this.conversations[0];
+  localUser: string = '';
+  remoteUser: string = '';
+  ws!: WebSocket;
   newMessage: string = '';
-
-  selectConversation(conversation: any) {
-    this.selectedConversation = conversation;
-  }
-
+  attachmentFile?: File;
+  messages: { text?: string, sentByUser: boolean, attachment?: string, attachmentName?: string }[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<ChatComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialog: MatDialog
+    private http: HttpClient,
+    private common: CommonService
   ) {}
 
+  ngOnInit(): void {
+    this.localUser = this.data.localUser;
+    this.remoteUser = this.data.remoteUser;
+    this.connectWebSocket();
+  }
+
+  connectWebSocket(): void {
+    this.ws = new WebSocket('ws://localhost:8081');
+
+    this.ws.onopen = () => {
+      this.ws.send(JSON.stringify({ type: 'register', userId: this.localUser }));
+    };
+
+    this.ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+
+      if (data.type === 'chat') {
+        const isSentByMe = data.from === this.localUser;
+        const isChatBetweenUsers =
+          (data.from === this.localUser && data.to === this.remoteUser) ||
+          (data.from === this.remoteUser && data.to === this.localUser);
+
+        if (isChatBetweenUsers) {
+          // ✅ Construct URL to GET from uploads folder
+          const fileUrl = data.attachment
+            ? `${this.common.imageUrl}uploads/${data.attachment}`
+            : undefined;
+
+          this.messages.push({
+            text: data.message,
+            sentByUser: isSentByMe,
+            attachment: fileUrl,
+            attachmentName: data.attachmentName
+          });
+        }
+      }
+    };
+  }
+
+  async sendMessage(): Promise<void> {
+    if (!this.newMessage.trim() && !this.attachmentFile) return;
+
+    let uploadedFileName: string | undefined;
+
+    if (this.attachmentFile) {
+      const formData = new FormData();
+      formData.append('file', this.attachmentFile);
+
+      // ✅ Upload to server (POST request)
+      const response: any = await this.http.post(`${this.common.API_URL}upload`, formData).toPromise();
+      uploadedFileName = response.filename;
+    }
+
+    const msgPayload = {
+      type: 'chat',
+      from: this.localUser,
+      to: this.remoteUser,
+      message: this.newMessage || '',
+      attachment: uploadedFileName,
+      attachmentName: this.attachmentFile?.name
+    };
+
+    this.ws.send(JSON.stringify(msgPayload));
+
+    // ✅ Also show immediately for sender
+    this.messages.push({
+      text: this.newMessage || '',
+      sentByUser: true,
+      attachment: uploadedFileName ? `${this.common.imageUrl}uploads/${uploadedFileName}` : undefined,
+      attachmentName: this.attachmentFile?.name
+    });
+
+    this.newMessage = '';
+    this.attachmentFile = undefined;
+  }
+
+  onFileSelected(event: any): void {
+    const file = event.target.files[0];
+    if (file) this.attachmentFile = file;
+  }
+
   closeDialog(): void {
+    if (this.ws) this.ws.close();
     this.dialogRef.close();
   }
-
-  ngOnInit() {
-  }
-
-  sendMessage() {
-    if (this.newMessage.trim()) {
-      this.selectedConversation.messages.push({ text: this.newMessage, sentByUser: true });
-      this.newMessage = '';
-      // Add logic to send the message to the server or other user
-    }
-  }
-
-  startVideoCall() {
-    const dialogRef = this.dialog.open(VideoCallComponent, {
-      width: '90%', // Adjust the width as needed
-      maxWidth: '600px', // Maximum width for larger screens
-      data: { doctor: this.doctor }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Video call dialog was closed');
-    });
-  }
-
 }

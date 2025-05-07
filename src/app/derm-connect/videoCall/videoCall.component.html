@@ -1,27 +1,29 @@
-<div class="video-call-container">
-  <h3>Room: Demo Presentation</h3>
-
-
-
-  <!-- Show videos only after showRemote becomes true -->
-  <div style="display: flex; gap: 20px;">
-
-      <!-- Show "Connecting..." before call is accepted -->
-  <div *ngIf="!showRemote" class="connecting-message">
-    <p>🔄 Connecting to {{ remoteUser }}...</p>
-  </div>
-    <div *ngIf="showRemote">
-      <h4>Remote User: {{ remoteUser }}</h4>
-      <video #remoteVideo autoplay playsinline></video>
+<div class="video-call-wrapper">
+  <div class="video-container video-remote">
+    <div *ngIf="remoteUserLeft" class="user-left-message">
+      {{ data.remoteUser }} has left the call
     </div>
 
-    <div>
-      <h4>Local User: {{ localUser }}</h4>
-      <video #localVideo autoplay muted playsinline></video>
-    </div>
+    <div *ngIf="!remoteUserLeft" #remoteVideo autoplay playsinline class="video-remote"></div>
+    <div class="user-label remote-label">{{ data.remoteUser }}</div>
   </div>
 
-  <div class="controls">
-    <button mat-raised-button color="warn" (click)="endCall()">End Call</button>
+  <div class="video-container local">
+    <div #localVideo autoplay playsinline class="video-local"></div>
+    <div class="user-label local-label">You</div>
+  </div>
+
+  <div class="control-bar">
+    <button class="end-button" (click)="endCall()">
+      <span class="material-icons">call_end</span>
+    </button>
+
+    <button class="toggle-button" (click)="toggleMic()">
+      <span class="material-icons">{{ isMicOn ? 'mic' : 'mic_off' }}</span>
+    </button>
+
+    <button class="toggle-button" (click)="toggleVideo()">
+      <span class="material-icons">{{ isVideoOn ? 'videocam' : 'videocam_off' }}</span>
+    </button>
   </div>
 </div>
