@@ -15,12 +15,20 @@ import { EditProductDialogComponent } from '../EditProductDialogComponent/EditPr
   styleUrls: ['./productList.component.css']
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['product_name', 'product_description', 'product_image', 'price', 'actions'];
+  displayedColumns: string[] = ['serialNumber','product_name', 'product_description', 'product_image', 'price', 'actions'];
   dataSource = new MatTableDataSource<Product>([]);
   searchText: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  
   @ViewChild(MatSort) sort!: MatSort;
+  getSerialNumber(index: number): number {
+    if (this.paginator) {
+      return this.paginator.pageIndex * this.paginator.pageSize + index + 1;
+    }
+    return index + 1;
+  }
+  
 
   constructor(private productService: ProductService, private commonService: CommonService, private dialog: MatDialog) {}
 

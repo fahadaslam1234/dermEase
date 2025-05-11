@@ -1,0 +1,80 @@
+<div class="component-container">
+  <div class="component-header">
+    <h4>All Orders</h4>
+    <div class="search-bar">
+      <input type="text" placeholder="Search by Customer Name" [(ngModel)]="searchText" (keyup)="filterOrders()"/>
+    </div>
+  </div>
+
+  <div class="mat-elevation-z8 mat-table-responsive">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- Serial Number Column -->
+      <ng-container matColumnDef="serialNumber">
+        <th mat-header-cell *matHeaderCellDef> S.No </th>
+        <td mat-cell *matCellDef="let row; let i = index" data-header="S.No">
+          {{ getSerialNumber(i) }}
+        </td>
+      </ng-container>
+
+      <!-- Customer Name -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+        <td mat-cell *matCellDef="let order" data-header="Customer">
+          {{ order.name }}
+        </td>
+      </ng-container>
+
+      <!-- Email -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <td mat-cell *matCellDef="let order" data-header="Email">
+          {{ order.email }}
+        </td>
+      </ng-container>
+
+      <!-- Total Amount -->
+      <ng-container matColumnDef="totalAmount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount </th>
+        <td mat-cell *matCellDef="let order" data-header="Total Amount">
+          {{ order.totalAmount | currency:'Rs ' }}
+        </td>
+      </ng-container>
+
+      <!-- Payment Status -->
+      <ng-container matColumnDef="paymentStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Status </th>
+        <td mat-cell *matCellDef="let order" data-header="Payment Status">
+          {{ order.paymentStatus }}
+        </td>
+      </ng-container>
+
+      <!-- Created At -->
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created At </th>
+        <td mat-cell *matCellDef="let order" data-header="Created At">
+          {{ order.createdAt | date:'short' }}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let order" data-header="Actions">
+          <button mat-icon-button color="primary" (click)="viewOrder(order)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteOrder(order._id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

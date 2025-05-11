@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,8 +13,9 @@ import { ToastService } from 'src/app/services/toastService';
 })
 export class UsersComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['user_name', 'email','role', 'actions'];
+  displayedColumns: string[] = ['serialNumber', 'user_name', 'email', 'role', 'actions'];
   dataSource = new MatTableDataSource<User>([]);
+  searchText: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -22,37 +23,49 @@ export class UsersComponent implements OnInit, AfterViewInit {
   constructor(private userService: UserService, private toastService: ToastService) { }
 
   ngOnInit() {
-    this.fetchUsers(); // Fetch the users when component initializes
+    this.fetchUsers();
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  getSerialNumber(index: number): number {
+    if (this.paginator) {
+      return this.paginator.pageIndex * this.paginator.pageSize + index + 1;
+    }
+    return index + 1;
   }
 
   fetchUsers(): void {
     this.userService.getAllUsers().subscribe({
       next: (response: any) => {
-        const users = response.data; // Extract the users from the 'data' array
-        this.dataSource.data = users; // Set the dataSource with the users from backend
-        this.toastService.showToast('Users fetched successfully!', 'success'); // Success notification
+        const users = response.data;
+        this.dataSource.data = users;
+        this.toastService.showToast('Users fetched successfully!', 'success');
       },
       error: () => {
-        this.toastService.showToast('Failed to fetch users', 'error'); // Error notification
+        this.toastService.showToast('Failed to fetch users', 'error');
       }
     });
   }
 
-
-  ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  filterTable() {
+    this.dataSource.filter = this.searchText.trim().toLowerCase();
   }
 
-  deleteUser(user: User) {
+  deleteUser(user: User): void {
     if (confirm(`Are you sure you want to delete user: ${user.user_name}?`)) {
       this.userService.deleteUser(user._id).subscribe({
         next: () => {
-          this.fetchUsers(); // Refresh the list after deletion
-          this.toastService.showToast('User deleted successfully!', 'success'); // Success notification
+          this.fetchUsers();
+          this.toastService.showToast('User deleted successfully!', 'success');
         },
         error: () => {
-          this.toastService.showToast('Failed to delete user', 'error'); // Error notification
+          this.toastService.showToast('Failed to delete user', 'error');
         }
       });
     }

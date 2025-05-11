@@ -1,63 +1,109 @@
-<div class="flex-container">
-  <mat-card class="login-card">
-    <mat-card-header>
-      <mat-card-title>{{ isLoginMode ? 'Sign In' : 'Sign Up' }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" enctype="multipart/form-data">
-        <!-- Username Field -->
-        <mat-form-field appearance="fill" class="full-width">
-          <input matInput id="username" type="text" placeholder="Username" required [(ngModel)]="username" name="username">
-        </mat-form-field>
-        <div *ngIf="usernameError" class="error-message">{{ usernameError }}</div>
+<link href="https://fonts.googleapis.com/css2?family=Inter&family=Lato&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 
-        <!-- Email Field (Only for Sign Up) -->
-        <mat-form-field appearance="fill" class="full-width" *ngIf="!isLoginMode">
-          <input matInput id="email" type="email" placeholder="Email" required [(ngModel)]="email" name="email">
-        </mat-form-field>
-        <div *ngIf="emailError" class="error-message">{{ emailError }}</div>
+<div class="auth-container">
+  <div class="auth-overlay"></div>
 
-        <!-- Password Field -->
-        <mat-form-field appearance="fill" class="full-width">
-          <input matInput id="password" type="password" placeholder="Password" required [(ngModel)]="password" name="password">
-        </mat-form-field>
-        <div *ngIf="passwordError" class="error-message">{{ passwordError }}</div>
+  <div class="auth-wrapper">
+    <!-- Heading above the card -->
+    <div class="auth-heading">
+      <h1>{{ isLoginMode ? 'Welcome Back!' : 'Hello!' }}</h1>
+      <p>{{ isLoginMode ? "Let's Login to Your Account" : "Let's Register Your Account" }}</p>
+    </div>
 
+    <mat-card class="login-card">
+      <mat-card-content>
+        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" enctype="multipart/form-data">
 
-        <!-- Checkbox for Dermatologist -->
-        <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isDermatologist" name="isDermatologist" (change)="onCheckboxChange('isDermatologist')">
-          Is Dermatologist
-        </mat-checkbox>
+          <!-- Username -->
+          <div class="form-field-container">
+            <label class="field-label">Enter Username</label>
+            <div *ngIf="usernameError" class="error-message">{{ usernameError }}</div>
+            <mat-form-field appearance="outline" class="rounded-field">
+              <input matInput type="text" required placeholder="Enter your username (e.g., sarah)" [(ngModel)]="username" name="username">
+            </mat-form-field>
+          </div>
 
-        <!-- Checkbox for Vendor -->
-        <mat-checkbox *ngIf="!isLoginMode" [(ngModel)]="isVendor" name="isVendor" (change)="onCheckboxChange('isVendor')">
-          Is Vendor
-        </mat-checkbox>
+          <!-- Email -->
+          <div *ngIf="!isLoginMode" class="form-field-container">
+            <label class="field-label">Enter Email</label>
+            <div *ngIf="emailError" class="error-message">{{ emailError }}</div>
+            <mat-form-field appearance="outline" class="rounded-field">
+              <input matInput type="email" required placeholder="Enter a valid email (e.g., sarah@example.com)" [(ngModel)]="email" name="email">
+            </mat-form-field>
+          </div>
 
-        <!-- File Upload for Certification -->
-        <div *ngIf="!isLoginMode && (isDermatologist || isVendor)">
-          <label for="certification">Upload Certification</label>
-          <input type="file" id="certification" (change)="onFileSelected($event)">
-          <div *ngIf="fileError" class="error-message">{{ fileError }}</div>
+          <!-- Password -->
+          <div class="form-field-container">
+            <label class="field-label">Enter Password</label>
+            <div *ngIf="passwordError" class="error-message">{{ passwordError }}</div>
+            <mat-form-field appearance="outline" class="rounded-field password-field">
+              <input matInput [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password (min. 6 characters)" [(ngModel)]="password" name="password" required>
+              <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()" class="eye-button">
+                <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+
+          <!-- Confirm Password -->
+          <div *ngIf="!isLoginMode" class="form-field-container">
+            <label class="field-label">Confirm Password</label>
+            <div *ngIf="confirmPasswordError" class="error-message">{{ confirmPasswordError }}</div>
+            <mat-form-field appearance="outline" class="rounded-field password-field">
+              <input matInput [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Re-enter your password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+              <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()" class="eye-button">
+                <mat-icon>{{ showConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+
+          <!-- Role Selection -->
+          <div *ngIf="!isLoginMode" class="role-selection">
+            <label class="role-title">Select your role:</label>
+
+            <div class="role-option">
+              <mat-checkbox [(ngModel)]="isDermatologist" name="isDermatologist" (change)="onCheckboxChange('isDermatologist')">
+                🧑‍⚕️ <strong>Dermatologist</strong>
+              </mat-checkbox>
+              <div class="role-desc">I provide skin consultations to patients.</div>
+            </div>
+
+            <div class="role-option">
+              <mat-checkbox [(ngModel)]="isVendor" name="isVendor" (change)="onCheckboxChange('isVendor')">
+                🛍️ <strong>Vendor</strong>
+              </mat-checkbox>
+              <div class="role-desc">I sell skincare and cosmetic products.</div>
+            </div>
+
+            <div class="role-option">
+              <mat-checkbox [(ngModel)]="isPatient" name="isPatient" (change)="onCheckboxChange('isPatient')">
+                🙋‍♂️ <strong>Patient/User</strong>
+              </mat-checkbox>
+              <div class="role-desc">I am looking for skincare advice or products.</div>
+            </div>
+          </div>
+
+          <!-- Upload Certification -->
+          <div *ngIf="!isLoginMode && (isDermatologist || isVendor)">
+            <label for="certification" class="field-label">Upload Certification</label>
+            <input type="file" id="certification" (change)="onFileSelected($event)">
+            <div *ngIf="fileError" class="error-message">{{ fileError }}</div>
+          </div>
+
+          <!-- Submit -->
+          <div class="signIn">
+            <button class="primary-button" type="submit">{{ isLoginMode ? 'Sign In' : 'Sign Up' }}</button>
+          </div>
+
+          <span *ngIf="isLoginMode" class="forgetPassword" (click)="toFogetPassword()">Forget Password?</span>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions class="text-center">
+        <span>{{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}</span>
+        <div class="textSign" (click)="onSwitchMode()">
+          {{ isLoginMode ? 'Sign Up Here' : 'Sign In Here' }}
         </div>
-
-        <!-- Submit Button -->
-        <div class="signIn">
-          <button class="primary-button" type="submit">
-            {{ isLoginMode ? 'Sign In' : 'Sign Up' }}
-          </button>
-        </div>
-
-        <span (click)="toFogetPassword()" class="forgetPassword" *ngIf="isLoginMode">Forget Password ?</span>
-      </form>
-    </mat-card-content>
-
-    <!-- Switch Mode Section -->
-    <mat-card-actions class="text-center">
-      <span>{{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}</span>
-      <div (click)="onSwitchMode()" class="textSign">
-        {{ isLoginMode ? 'Sign Up Here' : 'Sign In Here' }}
-      </div>
-    </mat-card-actions>
-  </mat-card>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

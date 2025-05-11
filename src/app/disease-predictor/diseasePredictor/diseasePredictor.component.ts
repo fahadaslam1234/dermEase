@@ -113,4 +113,12 @@ export class DiseasePredictorComponent implements OnInit {
   startStepper(): void {
     this.isIntro = false;
   }
+  goBackToIntro(): void {
+  this.isIntro = true;
+  this.isDisease = false;
+  this.imagePreview = null;
+  this.selectedFile = null;
+  this.disease = null;
+}
+
 }

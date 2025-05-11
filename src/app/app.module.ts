@@ -1,4 +1,4 @@
-import { NgModule, Inject, PLATFORM_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,13 +18,12 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AdminModule } from './admin/admin.module';
-import { isPlatformBrowser } from '@angular/common';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DermConnectModule } from './derm-connect/derm-connect.module';
 import { DiseasePredictorModule } from './disease-predictor/disease-predictor.module';
 import { CheckOutModule } from './check-out/check-out.module';
-import { ToastComponentComponent } from './toastComponent/toastComponent.component';
 import { ContactUsModule } from './contact-us/contact-us.module';
+import { ToastComponentComponent } from './toastComponent/toastComponent.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -49,24 +48,17 @@ import { ContactUsModule } from './contact-us/contact-us.module';
     MatIconModule,
     SkincareSolutionFinderModule,
     MatCardModule,
-    HttpClientModule,
+    HttpClientModule,   // ✅ already correct for APIs
     AdminModule,
     DermConnectModule,
     DiseasePredictorModule,
+    CheckOutModule,
     ContactUsModule
   ],
   providers: [
     provideClientHydration(),
-    provideAnimationsAsync()
+    provideAnimationsAsync() // ✅ Correct
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (isPlatformBrowser(this.platformId)) {
-      import('@angular/platform-browser/animations').then(module => {
-        const BrowserAnimationsModule = module.BrowserAnimationsModule;
-      });
-    }
-  }
-}
+export class AppModule { }

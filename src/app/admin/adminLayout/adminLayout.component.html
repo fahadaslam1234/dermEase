@@ -5,21 +5,30 @@
       <h2 *ngIf="isAdmin">Admin Dashboard</h2>
       <h2 *ngIf="isVendor">Vendor Dashboard</h2>
     </div>
-    <div >
-      <mat-icon (click)="onHome()"  class="menuIcon">home</mat-icon>
+    <div>
+      <mat-icon (click)="onHome()" class="menuIcon">home</mat-icon>
     </div>
   </div>
-
 </mat-toolbar>
 
 <mat-sidenav-container autosize>
-  <mat-sidenav [ngClass]="!isCollapsed ? 'expanded' : ''" [mode]="isMobile ? 'over' : 'side'" [opened]="!isMobile">
+  <mat-sidenav 
+    [ngClass]="!isCollapsed ? 'expanded' : ''" 
+    [mode]="isMobile ? 'over' : 'side'" 
+    [opened]="!isMobile"
+  >
     <mat-nav-list>
       <ng-container *ngFor="let item of navItems">
-        <ng-container >
-          <span class="mat-nav-item" mat-list-item *ngFor="let tile of item.tiles" (click)="loadComponent(tile)" [ngClass]="{ active: active === tile.title }">
-            <span class="entry" (click)="toggleMenu()">
-              <mat-icon >{{ tile.icon }}</mat-icon>
+        <ng-container>
+          <span 
+            class="mat-nav-item" 
+            mat-list-item 
+            *ngFor="let tile of item.tiles" 
+            (click)="loadComponent(tile)" 
+            [ngClass]="{ active: active === tile.title }"
+          >
+            <span class="entry">
+              <mat-icon>{{ tile.icon }}</mat-icon>
               <span *ngIf="!isCollapsed">{{ tile.title }}</span>
             </span>
           </span>
@@ -27,7 +36,8 @@
       </ng-container>
     </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content style="padding: 8px 20px;">
-    <div #componentContainer ></div>
+    <div #componentContainer></div>
   </mat-sidenav-content>
 </mat-sidenav-container>

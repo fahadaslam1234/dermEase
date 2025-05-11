@@ -14,17 +14,24 @@ export class LoginSignupComponent implements OnInit {
   isLoginMode = true;
   email: string = '';
   password: string = '';
+  confirmPassword: string = '';
   username: string = '';
   isDermatologist = false;
   isVendor = false;
+  isPatient: boolean = false;
   selectedFile: File | null = null;
 
   // Validation Errors
-  errorMessage: string = ''; // Store error message
+  errorMessage: string = '';
   emailError: string = '';
   passwordError: string = '';
+  confirmPasswordError: string = '';
   usernameError: string = '';
   fileError: string = '';
+
+  // Password visibility toggles
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -36,99 +43,114 @@ export class LoginSignupComponent implements OnInit {
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
-    this.clearErrors(); // Clear errors when switching modes
+    this.clearErrors();
     this.email = '';
     this.password = '';
+    this.confirmPassword = '';
     this.username = '';
     this.isDermatologist = false;
     this.isVendor = false;
+    this.isPatient = false;
     this.selectedFile = null;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleConfirmPasswordVisibility() {
+    this.showConfirmPassword = !this.showConfirmPassword;
   }
 
   onCheckboxChange(checkboxType: string): void {
     if (checkboxType === 'isDermatologist') {
-      this.isVendor = false; // Uncheck Vendor checkbox
+      this.isVendor = false;
+      this.isPatient = false;
     } else if (checkboxType === 'isVendor') {
-      this.isDermatologist = false; // Uncheck Dermatologist checkbox
+      this.isDermatologist = false;
+      this.isPatient = false;
+    } else if (checkboxType === 'isPatient') {
+      this.isDermatologist = false;
+      this.isVendor = false;
     }
   }
 
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    console.log('Selected file:', this.selectedFile);
   }
 
   validateForm(): boolean {
-    this.clearErrors(); // Reset all error messages
+    this.clearErrors();
+    let isValid = true;
 
-    let isValid = true; // Track overall validation status
-
-    // Email validation
-    if (!this.isLoginMode) {
-    if (!this.email || !this.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      this.emailError = 'Please enter a valid email address.';
+    if (!this.username || this.username.length < 3) {
+      this.usernameError = 'Username must be at least 3 characters.';
       isValid = false;
     }
-  }
+    else if (!/[a-zA-Z]/.test(this.username)) {
+      this.usernameError = 'Username must contain at least one alphabet.';
+      isValid = false;
+    }
 
-    // Password validation
+
     if (!this.password || this.password.length < 6) {
-      this.passwordError = 'Password must be at least 6 characters long.';
+      this.passwordError = 'Password must be at least 6 characters.';
       isValid = false;
     }
 
     if (!this.isLoginMode) {
-      // Username validation for signup
-      if (!this.username) {
-        this.usernameError = 'Username is required.';
+      if (!this.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.email)) {
+        this.emailError = 'Please enter a valid email address.';
+        isValid = false;
+      }
+
+      if (!this.confirmPassword || this.confirmPassword !== this.password) {
+        this.confirmPasswordError = 'Passwords do not match.';
         isValid = false;
       }
     }
 
-    return isValid; // Return overall validation status
+    return isValid;
   }
 
   clearErrors(): void {
     this.emailError = '';
     this.passwordError = '';
+    this.confirmPasswordError = '';
     this.usernameError = '';
     this.errorMessage = '';
+    this.fileError = '';
   }
 
   onSubmit(form: NgForm) {
     if (form.invalid || !this.validateForm()) {
       this.toastService.showToast('Please correct the errors in the form.', 'danger');
-      return; // Stop submission if form is invalid
+      return;
     }
 
-    this.errorMessage = ''; // Clear any previous errors
+    this.errorMessage = '';
 
     if (this.isLoginMode) {
-      // Handle login
       this.authService.login(this.username, this.password).subscribe({
         next: (response: any) => {
           if (response.status) {
             this.toastService.showToast('Login successful!', 'success');
-            // window.location.reload();
-              this.router.navigate(['']);
-
-
+            this.router.navigate(['']);
           } else {
             this.errorMessage = response.message || 'Login failed. Please try again.';
             this.toastService.showToast(this.errorMessage, 'danger');
           }
         },
         error: () => {
-          this.toastService.showToast('An error occurred during login. Please try again.', 'danger');
+          this.toastService.showToast('Incorrect username or password. Please try again.', 'danger');
         }
       });
     } else {
-      // Handle signup
       this.authService.signup(this.username, this.email, this.password, this.isDermatologist, this.isVendor, this.selectedFile).subscribe({
         next: (response: any) => {
           if (response.status) {
             this.toastService.showToast('Signup Successful! Please log in.', 'success');
-            this.isLoginMode = true; // Switch to login mode
+            this.isLoginMode = true;
           } else {
             this.toastService.showToast(response.message || 'Signup failed. Please try again.', 'danger');
           }
@@ -140,8 +162,7 @@ export class LoginSignupComponent implements OnInit {
     }
   }
 
-  toFogetPassword()
-  {
+  toFogetPassword() {
     this.router.navigate(['forgetPassword']);
   }
 }

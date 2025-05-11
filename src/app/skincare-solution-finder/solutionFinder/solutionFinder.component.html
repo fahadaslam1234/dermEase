@@ -1,13 +1,19 @@
 <div class="container">
   <div class="intro" *ngIf="isIntro">
+    <video autoplay muted loop playsinline class="background-video">
+      <source src="../../../assets/videos/finder.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
     <button class="intro-button primary-button" (click)="startStepper()">LET'S GO!</button>
   </div>
+
   <div *ngIf="!isIntro && showStepper">
     <mat-horizontal-stepper [linear]="true" #stepper>
+      <!-- Step 1 -->
       <mat-step [stepControl]="firstFormGroup" label="Step 1">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Step 1</ng-template>
-          <h2>Let's start with your facial skincare.</h2>
+          <h2>Let's start with your Skincare routine.</h2>
           <p>Please select your skin tone.</p>
           <div class="cards">
             <mat-card *ngFor="let skinTone of skinTones"
@@ -23,10 +29,12 @@
           </div>
         </form>
       </mat-step>
+
+      <!-- Step 2 -->
       <mat-step [stepControl]="secondFormGroup" label="Step 2">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Step 2</ng-template>
-          <h2>How does the skin on your face typically feel?</h2>
+          <h2>How would you classify your skin’s texture and moisture level?</h2>
           <p>Select one</p>
           <div class="cards">
             <mat-card *ngFor="let skinType of skinTypes"
@@ -44,10 +52,11 @@
         </form>
       </mat-step>
 
+      <!-- Step 3 -->
       <mat-step [stepControl]="thirdFormGroup" label="Step 3">
         <form [formGroup]="thirdFormGroup">
           <ng-template matStepLabel>Step 3</ng-template>
-          <h2>How does the skin on your face typically feel?</h2>
+          <h2>Which skincare brand would you like to choose for your skincare routine?</h2>
           <p>Select one</p>
           <div class="cards">
             <mat-card *ngFor="let skinBrand of brands"
@@ -64,10 +73,12 @@
           </div>
         </form>
       </mat-step>
+
+      <!-- Step 4 -->
       <mat-step [stepControl]="fourthFormGroup" label="Step 4">
         <form [formGroup]="fourthFormGroup">
           <ng-template matStepLabel>Step 4</ng-template>
-          <h2>Now let's talk about your body, what type of ingredients do you prefer?</h2>
+          <h2>Which product category do you prefer for your skincare routine?</h2>
           <p>Select one</p>
           <div class="cards">
             <mat-card *ngFor="let skinCatgeory of category"
@@ -86,6 +97,8 @@
       </mat-step>
     </mat-horizontal-stepper>
   </div>
+
+  <!-- Recommendation Section -->
   <div *ngIf="recommendation?.success" class="recommendation product-grid">
     <h2>Hi!</h2>
     <span>Here is your recommended product.</span> <br>
@@ -95,30 +108,32 @@
       <h2>Recommended Product</h2>
 
       <div class="product-card">
-        <!-- Display the recommended product name -->
         <img src="../../../assets/images/P12.png" alt="">
-        <h3 class="product-name">{{ recommendation.data.recommendedProduct }}</h3>
+        <h4 class="product-name">{{ recommendation.data.recommendedProduct }}</h4>
 
-        <!-- Always show the product URL -->
         <div>
           <a [href]="recommendation.data.recommendedProductUrl" target="_blank">
-            🛒 View Product on Sephora
+            <h3><b>🛒 View Product on Sephora</b></h3>
           </a>
         </div>
 
-        <!-- Note if the product page is unavailable -->
-        <p class="search-note">⚠️ If the product page is unavailable, search for it on:</p>
-        <ul class="search-links">
-          <li>
-            <a [attr.href]="'https://www.sephora.com/search?q=' + encodeURIComponent(recommendation?.data?.recommendedProduct)" target="_blank">
-              Sephora
-            </a>
-          </li>
-        </ul>
+        <h3 class="search-note">⚠️ If the product page is unavailable, search for it on:</h3>
+        <div class="search-links">
+          <a [attr.href]="'https://www.sephora.com/search?q=' + encodeURIComponent(recommendation?.data?.recommendedProduct)" target="_blank">
+            <h2><b>Sephora</b></h2> 
+            OR <h2><b>On the Web</b></h2>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
+    <!-- ✅ Back to Start Button -->
+    <div class="back-button-container">
+      <button class="primary-button" (click)="goBackToIntro()">
+        ← Back to Start
+      </button>
+    </div>
+  </div>
 
   <div class="stepper-instructions">
     <h3>Looking for a dermatologist-recommended skincare routine?</h3>
@@ -129,4 +144,4 @@
   </div>
 </div>
 
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "rgb(202, 56, 185)" type = "ball-fussion" [fullScreen] = "true"></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="rgb(202, 56, 185)" type="ball-fussion" [fullScreen]="true"></ngx-spinner>
