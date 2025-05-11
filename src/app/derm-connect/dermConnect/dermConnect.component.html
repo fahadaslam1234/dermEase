@@ -107,9 +107,9 @@
       <div class="doctor-card" *ngFor="let doctor of doctors" (click)="viewDoctorDetails(doctor)">
         <img src='../../../assets/images/doctor.jpg' alt="{{ doctor.name }}" class="doctor-image"/>
         <div class="doctor-info">
-          <p>{{ doctor.specialty }}</p>
-          <p>{{ doctor.availability }}</p>
-          <p>{{ doctor.bio }}</p>
+          <p>{{ doctor.user_name }}</p>
+          <p>{{ doctor.email }}</p>
+          <!-- <p>{{ doctor.bio }}</p> -->
         </div>
       </div>
     </div>

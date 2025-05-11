@@ -138,7 +138,11 @@ export class DermConnectComponent implements OnInit {
 
   getAllDerms() {
     this.dcService.getAllDerms().subscribe({
-      next: (response) => { this.doctors = response; },
+      next: (response) => { this.doctors = response;
+      console.log(this.doctors);
+
+      },
+
       error: (error) => { console.log(error); },
     });
   }
@@ -146,14 +150,14 @@ export class DermConnectComponent implements OnInit {
   getAppointments() {
     this.dcService.getAllAppointments(this.username).subscribe({
       next: (response) => { this.pendingAppointments = response; },
-      error: (error) => { this.toastService.showToast(error, 'danger'); },
+      error: (error) => {  },
     });
   }
 
   getUpcomingAppointments() {
     this.dcService.getAllApprovedAppointments(this.username).subscribe({
       next: (response) => { this.upcomingAppointments = response; },
-      error: (error) => { this.toastService.showToast(error, 'danger'); },
+      error: (error) => {  },
     });
   }
 
