@@ -25,6 +25,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OrderDetailsDialogComponent } from './order-details-dialog/order-details-dialog.component';
+import { MatDialogActions, MatDialogContent } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductListComponent,
     EditProductDialogComponent,
     ApprovalsComponent,
-    OrdersComponent // ✅ Added OrdersComponent
+    OrdersComponent ,
+    OrderDetailsDialogComponent// ✅ Added OrdersComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +56,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogActions,MatDialogContent
   ]
 })
 export class AdminModule { }

@@ -4,6 +4,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderService } from 'src/app/services/orderservice'; // Correct import
+import { OrderDetailsDialogComponent } from '../order-details-dialog/order-details-dialog.component';
+
+
 
 @Component({
   selector: 'app-orders',
@@ -63,8 +66,10 @@ export class OrdersComponent implements OnInit, AfterViewInit {
   }
 
   viewOrder(order: any): void {
-    alert('Order Details:\n' + JSON.stringify(order, null, 2));
-    // You can replace this with a Dialog popup later
+    this.dialog.open(OrderDetailsDialogComponent, {
+      width: '600px',
+      data: order
+    });
   }
 
   ngAfterViewInit(): void {

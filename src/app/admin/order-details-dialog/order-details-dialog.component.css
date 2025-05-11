@@ -1,0 +1,15 @@
+.order-details-content mat-card {
+  margin-bottom: 15px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mt-3 {
+  margin-top: 20px;
+}
+
+mat-card-content{
+  margin-top: 5px;
+}
