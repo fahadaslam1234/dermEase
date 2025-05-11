@@ -59,8 +59,8 @@ export class ProductDetailsComponent implements OnInit {
   getProductReviews(productId: string): void {
     // Replace with an actual API call
     this.reviews = [
-      { username: 'John Doe', email: 'john@example.com', comments: 'Great product!' },
-      { username: 'Jane Smith', email: 'jane@example.com', comments: 'Highly recommend it!' },
+      { username: 'Sara ali', email: 'sara@example.com', comments: 'Great product!' },
+      { username: 'Ali', email: 'ali@example.com', comments: 'Highly recommend it!' },
     ];
   }
 

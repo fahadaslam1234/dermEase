@@ -51,7 +51,7 @@ export class ApprovalsComponent implements OnInit, AfterViewInit {
         this.toastService.showToast('Approvals loaded successfully!', 'success');
       },
       error: () => {
-        this.toastService.showToast('Failed to load approvals.', 'error');
+        //this.toastService.showToast('Failed to load approvals.', 'error');
       }
     });
   }

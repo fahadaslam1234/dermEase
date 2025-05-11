@@ -150,7 +150,7 @@
             <th>Patient Name</th>
             <th>Date</th>
             <th>Time</th>
-            <th>Actions</th>
+      
           </tr>
         </thead>
         <tbody>
@@ -158,18 +158,9 @@
             <td>{{ appointment.patientName }}</td>
             <td>{{ appointment.date | date }}</td>
             <td>{{ appointment.time }}</td>
-            <td class="action-buttons">
-              <button class="primary-button"
-                      [disabled]="!isWithinTime(appointment.time)"
-                      (click)="initiateVideoCall(appointment)">
-                <mat-icon>videocam</mat-icon> <span>Start Video Call</span>
-              </button>
+            
 
-              <button class="primary-button"
-                      (click)="initiateChat(appointment)">
-                <mat-icon class="mat-18">chat</mat-icon> <span>Start Chat</span>
-              </button>
-            </td>
+             
           </tr>
         </tbody>
       </table>

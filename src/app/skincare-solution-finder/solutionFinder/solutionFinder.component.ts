@@ -155,4 +155,10 @@ export class SolutionFinderComponent implements OnInit {
       this.cartVisible = items.length > 0; // Automatically show cart when items are added
     });
   }
+  goBackToIntro(): void {
+  this.isIntro = true;
+  this.showStepper = false;
+  this.recommendation = null;
+}
+
 }

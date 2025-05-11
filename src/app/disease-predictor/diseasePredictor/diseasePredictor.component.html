@@ -1,6 +1,6 @@
 <div class="container">
 
-  <mat-expansion-panel  *ngIf="pastPredictions.length > 0 && isIntro" >
+  <mat-expansion-panel *ngIf="pastPredictions.length > 0 && isIntro">
     <mat-expansion-panel-header>
       <mat-panel-title> My Cases</mat-panel-title>
     </mat-expansion-panel-header>
@@ -21,51 +21,73 @@
     </div>
   </mat-expansion-panel>
 
+  <!-- 🔁 Background Video Section -->
   <div class="intro" *ngIf="isIntro">
+    <video autoplay muted loop playsinline class="background-video">
+      <source src="../../../assets/videos/dpA.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
     <button class="intro-button primary-button" (click)="startStepper()">LET'S FIND YOUR SKIN DISEASE !</button>
   </div>
 
+  <!-- Stepper Section -->
   <div *ngIf="!isIntro && showStepper && !isDisease">
     <mat-horizontal-stepper [linear]="true" #stepper class="custom-stepper">
       <mat-step>
         <form [formGroup]="firstFormGroup">
           <h2>Upload Your Skin Image</h2>
-          <p>Please attach an image for analysis.</p>
+          <h2>&  Predict Your Skin Disease</h2>
           <div class="file-input-container">
-            <button class="primary-button" type="button"  (click)="fileInput.click()"> <mat-icon> attach_file</mat-icon> BROWSE</button>
-            <input
-              type="file"
-              hidden
-              #fileInput
-              accept="image/*"
-              (change)="onFileSelected($event)" />
+            <button class="primary-button" type="button" (click)="fileInput.click()">
+              <mat-icon>attach_file</mat-icon> BROWSE
+            </button>
+            <input type="file" hidden #fileInput accept="image/*" (change)="onFileSelected($event)" />
           </div>
           <div class="image-preview" *ngIf="imagePreview">
             <img [src]="imagePreview" alt="Selected Image" />
           </div>
           <div>
-            <button class="primary-button" type="button"  [disabled]="!selectedFile" (click)="onUpload(selectedFile)">PREDIT DISEASE</button>
+            <button class="primary-button" type="button" [disabled]="!selectedFile" (click)="onUpload()">
+              PREDICT DISEASE
+            </button>
           </div>
         </form>
       </mat-step>
     </mat-horizontal-stepper>
-
   </div>
 
-  <div *ngIf="disease">
-    <h2>Analysis Result</h2>
-    <div class="image-preview" *ngIf="imagePreview">
-      <img [src]="imagePreview" alt="Selected Image" />
-    </div>
-    <p >Identified Disease: {{ disease }}</p>
+  <!-- Result Section -->
+<div *ngIf="disease">
+  <h2>Analysis Result</h2>
+
+  <div class="image-preview" *ngIf="imagePreview">
+    <img [src]="imagePreview" alt="Selected Image" />
   </div>
 
-  <div class="stepper-instructions">
-    <h3>Curious about what's affecting your skin?</h3>
-    <h4>DermEase's Skin Disease Predictor is here to guide you!</h4>
-    <p>This tool is designed to provide insights into common skin conditions. For accurate diagnosis and personalized care, we recommend consulting a qualified dermatologist or healthcare professional.</p>
+  <p class="identified-disease"><strong>Identified Disease:</strong> {{ disease }}</p>
+
+  <!-- ✅ Back to Start Button with spacing -->
+  <div class="back-button-container">
+    <button class="primary-button" (click)="goBackToIntro()">
+      ← Back to Start
+    </button>
   </div>
 </div>
 
 
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "rgba(205, 160, 121, 1)" type = "ball-fussion" [fullScreen] = "true"></ngx-spinner>
+  <!-- Informational Block -->
+  <div class="stepper-instructions">
+    <h3>Curious about what's affecting your skin?</h3>
+    <h4>DermEase's Skin Disease Predictor is here to guide you!</h4>
+    <p>
+      Our system is capable of predicting the following skin diseases based on your uploaded image:
+      Benign Keratosis, Normal Skin, Psoriasis, Seborrheic Keratoses, and Warts/Molluscum.
+    </p>
+    <p>
+      This tool is designed to provide insights into common skin conditions. For accurate diagnosis
+      and personalized care, we recommend consulting a qualified dermatologist or healthcare professional.
+    </p>
+  </div>
+</div>
+
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="rgba(205, 160, 121, 1)" type="ball-fussion" [fullScreen]="true"></ngx-spinner>
