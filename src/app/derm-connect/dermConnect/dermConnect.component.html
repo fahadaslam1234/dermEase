@@ -177,17 +177,21 @@
     </div>
 
     <div class="section incoming-call" *ngIf="incomingCall">
-      <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
-      <div class="action-buttons">
-        <button mat-raised-button color="primary"
-                (click)="acceptVideoCall()">
-          Accept
-        </button>
-        <button mat-raised-button color="warn"
-                (click)="rejectVideoCall()">
-          Reject
-        </button>
+      <div>
+        <h3 *ngIf="incomingCall.type === 'video'">Incoming Video Call from {{ incomingCall.patientName }}</h3>
+        <h3 *ngIf="incomingCall.type === 'chat'">💬 New Chat Message from {{ incomingCall.patientName }}</h3>
+        <div class="action-buttons"  *ngIf="incomingCall.type === 'video'">
+          <button mat-raised-button color="primary"
+                  (click)="acceptVideoCall()">
+            Accept
+          </button>
+          <button mat-raised-button color="warn"
+                  (click)="rejectVideoCall()">
+            Reject
+          </button>
+        </div>
       </div>
+
     </div>
 
     <div class="section">
