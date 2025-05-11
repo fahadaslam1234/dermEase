@@ -17,4 +17,8 @@ export class CheckoutService {
   createStripeSession(orderData: any): Observable<any> {
     return this.http.post(`${this.service.API_URL}orders/createStripeSession`, orderData);
   }
+  updateOrderStatus(orderId: string, status: string) {
+    return this.http.put(`${this.service.API_URL}/orders/${orderId}`, { paymentStatus: status });
+  }
+
 }

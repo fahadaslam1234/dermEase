@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/productModel';
 import { CheckoutService } from 'src/app/services/checkout.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-checkOutDetails',
@@ -14,13 +14,14 @@ export class CheckOutDetailsComponent implements OnInit {
   checkoutForm!: FormGroup;
   products: Product[] = [];
   countries = ['Pakistan', 'Canada', 'UK', 'Australia', 'India'];
-  selectedShippingMethod: string = 'cod'; // 👈 Added this line
+  selectedShippingMethod: string = 'cod';
 
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
     private checkoutService: CheckoutService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.checkoutForm = this.fb.group({
       name: ['', Validators.required],
@@ -35,7 +36,21 @@ export class CheckOutDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchCartProducts();
+    const sessionId = this.route.snapshot.queryParamMap.get('session_id');
+    const savedForm = localStorage.getItem('checkoutData');
+
+    if (savedForm) {
+      this.checkoutForm.setValue(JSON.parse(savedForm));
+    }
+
+    // ✅ Fetch cart products and then check for Stripe return
+    this.cartService.getItems().subscribe(products => {
+      this.products = products;
+
+      if (sessionId) {
+        this.placeOrderAfterStripe(); // ✅ Called after products are loaded
+      }
+    });
   }
 
   fetchCartProducts(): void {
@@ -61,32 +76,26 @@ export class CheckOutDetailsComponent implements OnInit {
         ...this.checkoutForm.value,
         products: this.products,
         totalAmount: this.calculateTotal(),
-        shippingMethod: this.selectedShippingMethod // 👈 Use selectedShippingMethod
+        shippingMethod: this.selectedShippingMethod
       };
-      console.log("in order place", orderData);
 
       if (this.selectedShippingMethod === 'cod') {
-        // COD flow
-        this.checkoutService.placeOrder(orderData).subscribe(response => {
+        this.checkoutService.placeOrder(orderData).subscribe(() => {
           alert('Order placed successfully!');
-          this.cartService.clearCart();
-          this.checkoutForm.reset();
-          this.products = [];
-          setTimeout(() => {
-            this.router.navigate(['/']);
-          }, 3000);
+          this.clearOrderState();
         });
       } else if (this.selectedShippingMethod === 'stripe') {
-        // Stripe flow
-        this.checkoutService.createStripeSession(orderData).subscribe(response => {
+        localStorage.setItem('checkoutData', JSON.stringify(this.checkoutForm.value));
+
+        this.checkoutService.createStripeSession({
+          ...orderData,
+          successUrl: 'http://localhost:4200/checkout?session_id={CHECKOUT_SESSION_ID}' // Change in production
+        }).subscribe(response => {
           if (response && response.url) {
-            window.location.href = response.url; // Redirect to Stripe checkout page
+            window.location.href = response.url;
           } else {
-            alert('Something went wrong with Stripe session.');
+            alert('Stripe session failed.');
           }
-        }, error => {
-          console.error('Stripe session creation error:', error);
-          alert('Stripe session creation failed.');
         });
       }
     } else {
@@ -94,7 +103,34 @@ export class CheckOutDetailsComponent implements OnInit {
     }
   }
 
-  // 👇 Add method to update shipping method dynamically
+  placeOrderAfterStripe(): void {
+    const orderData = {
+      ...this.checkoutForm.value,
+      products: this.products,
+      totalAmount: this.calculateTotal(),
+      shippingMethod: 'stripe',
+      paymentStatus: 'Paid'
+    };
+
+    console.log('📦 Sending order after Stripe:', orderData);
+
+    this.checkoutService.placeOrder(orderData).subscribe(() => {
+      alert('Stripe payment successful, order placed!');
+      this.clearOrderState();
+    }, error => {
+      // console.error('❌ Failed to save order after Stripe:', error);
+      // alert('Something went wrong after payment.');
+    });
+  }
+
+  clearOrderState(): void {
+    this.cartService.clearCart();
+    this.checkoutForm.reset();
+    this.products = [];
+    localStorage.removeItem('checkoutData');
+    setTimeout(() => this.router.navigate(['/']), 3000);
+  }
+
   onShippingMethodChange(method: string): void {
     this.selectedShippingMethod = method;
   }
