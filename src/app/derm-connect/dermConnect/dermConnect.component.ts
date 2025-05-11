@@ -62,6 +62,7 @@ export class DermConnectComponent implements OnInit {
 
       this.setupWebSocket();
       this.getAllDerms();
+      // this.pendingAppointments();
       this.getAppointments();
       this.getUpcomingAppointments();
 
@@ -94,7 +95,8 @@ export class DermConnectComponent implements OnInit {
       if (data.type === 'callRequest') {
         this.incomingCall = {
           patientName: data.from,
-          roomId: data.roomId
+          roomId: data.roomId,
+          type: 'video'
         };
         this.notifications.push({ message: `Incoming video call from ${data.from}` });
       }
@@ -108,7 +110,8 @@ export class DermConnectComponent implements OnInit {
             isCaller: true,
             localUser: this.username,
             remoteUser: data.by,
-            showRemote: false
+            showRemote: false,
+            type: 'video'
           },
         });
         this.currentVideoCall = dialogRef;
@@ -118,7 +121,7 @@ export class DermConnectComponent implements OnInit {
         const chatOpen = this.dialog.openDialogs.some(dialog => dialog.componentInstance instanceof ChatComponent);
         if (!chatOpen) {
           this.notifications.push({ message: `💬 New message from ${data.from}` });
-          this.incomingCall = { patientName: data.from }; // reused for chat target
+          this.incomingCall = { patientName: data.from,type: 'chat' }; // reused for chat target
         }
       }
     };
@@ -138,7 +141,11 @@ export class DermConnectComponent implements OnInit {
 
   getAllDerms() {
     this.dcService.getAllDerms().subscribe({
-      next: (response) => { this.doctors = response; },
+      next: (response) => { this.doctors = response;
+      console.log(this.doctors);
+
+      },
+
       error: (error) => { console.log(error); },
     });
   }
@@ -146,14 +153,30 @@ export class DermConnectComponent implements OnInit {
   getAppointments() {
     this.dcService.getAllAppointments(this.username).subscribe({
       next: (response) => { this.pendingAppointments = response; },
-      error: (error) => { this.toastService.showToast(error, 'danger'); },
+      error: (error) => {  },
     });
   }
 
   getUpcomingAppointments() {
     this.dcService.getAllApprovedAppointments(this.username).subscribe({
       next: (response) => { this.upcomingAppointments = response; },
-      error: (error) => { this.toastService.showToast(error, 'danger'); },
+      error: (error) => {  },
+    });
+  }
+
+  updateAppointment(id: any, status: any) {
+    this.dcService.updateAppointment(id, status).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.toastService.showToast(
+          `Respected appointment has been ${status} `,
+          'success'
+        );
+        this.getAppointments();
+      },
+      error: (error) => {
+       // this.toastService.showToast(error, 'danger');
+      },
     });
   }
 
@@ -212,6 +235,7 @@ export class DermConnectComponent implements OnInit {
     const dialogRef = this.dialog.open(VideoCallComponent, {
       width: '90%',
       maxWidth: '600px',
+      // height: '480px',
       data: {
         roomId,
         isCaller: false,

@@ -107,9 +107,9 @@
       <div class="doctor-card" *ngFor="let doctor of doctors" (click)="viewDoctorDetails(doctor)">
         <img src='../../../assets/images/doctor.jpg' alt="{{ doctor.name }}" class="doctor-image"/>
         <div class="doctor-info">
-          <p>{{ doctor.specialty }}</p>
-          <p>{{ doctor.availability }}</p>
-          <p>{{ doctor.bio }}</p>
+          <p>{{ doctor.user_name }}</p>
+          <p>{{ doctor.email }}</p>
+          <!-- <p>{{ doctor.bio }}</p> -->
         </div>
       </div>
     </div>
@@ -168,17 +168,21 @@
     </div>
 
     <div class="section incoming-call" *ngIf="incomingCall">
-      <h3>Incoming Video Call from {{ incomingCall.patientName }}</h3>
-      <div class="action-buttons">
-        <button mat-raised-button color="primary"
-                (click)="acceptVideoCall()">
-          Accept
-        </button>
-        <button mat-raised-button color="warn"
-                (click)="rejectVideoCall()">
-          Reject
-        </button>
+      <div>
+        <h3 *ngIf="incomingCall.type === 'video'">Incoming Video Call from {{ incomingCall.patientName }}</h3>
+        <h3 *ngIf="incomingCall.type === 'chat'">💬 New Chat Message from {{ incomingCall.patientName }}</h3>
+        <div class="action-buttons"  *ngIf="incomingCall.type === 'video'">
+          <button mat-raised-button color="primary"
+                  (click)="acceptVideoCall()">
+            Accept
+          </button>
+          <button mat-raised-button color="warn"
+                  (click)="rejectVideoCall()">
+            Reject
+          </button>
+        </div>
       </div>
+
     </div>
 
     <div class="section">

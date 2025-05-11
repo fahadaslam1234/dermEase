@@ -76,12 +76,14 @@ export class DoctorDetailsComponent implements OnInit {
     this.dialog.open(VideoCallComponent, {
       width: '90%',
       maxWidth: '600px',
+      // height: '480px',
       data: {
         roomId,
         isCaller: true,
         localUser: this.loggedInUser?.user_name,
         remoteUser: this.doctor?.user_name,
-        showRemote : false
+        showRemote : false,
+        type: 'video'
       },
     });
 
